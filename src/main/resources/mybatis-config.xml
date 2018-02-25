@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+			"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<settings>
+		<!-- 使用列别名替代列名，默认为true，也可不设置 -->
+		<setting name="useColumnLabel" value="true"/>
+		<!-- 开启驼峰命名转化,create_time >>createTime -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<!-- 开启二级缓存 -->
+		<!-- <setting name="cacheEnabled" value="true"/> -->
+	</settings>
+	<!-- 设置分页插件 -->
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+		</plugin>
+	</plugins>
+</configuration> 
