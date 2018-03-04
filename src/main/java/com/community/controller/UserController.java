@@ -35,11 +35,15 @@ public class UserController {
             result.setMessage("用户名或密码不能为空");
             return result;
         }
-        User findUser = userService.findUserByName(user.getUserName());
+        User findUser = userService.findUserByName(user.getUserNameOrEmail());
+        if (findUser == null) {
+            findUser = userService.findUserByEmail(user.getUserNameOrEmail());
+        }
         if (findUser != null) {
             if (findUser.getPassword().equals(user.getPassword())) {
                 result.setSuccess(true);
                 request.getSession().setAttribute("username", findUser.getUserName());
+                request.getSession().setAttribute("email", findUser.getEmail());
             } else {
                 result.setSuccess(false);
                 result.setMessage("用户名或密码错误");

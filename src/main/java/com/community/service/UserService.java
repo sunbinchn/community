@@ -22,4 +22,8 @@ public class UserService {
     public User findUserByName(String userName) {
         return userDao.findUserByName(userName);
     }
+
+    public User findUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
+    }
 }

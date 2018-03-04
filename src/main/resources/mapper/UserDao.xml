@@ -4,13 +4,17 @@
     <resultMap id="userMapper" type="com.community.entity.User">
         <id column="id" jdbcType="INTEGER" property="userId" />
         <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="email" jdbcType="VARCHAR" property="password" />
         <result column="password" jdbcType="VARCHAR" property="password" />
     </resultMap>
     <insert id="insert" parameterType="com.community.entity.User">
-        insert into user(id, user_name, password)
-        values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=CHAR})
+        insert into user(id, user_name, email, password)
+        values (#{userId,jdbcType=INTEGER},#{email,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=CHAR})
     </insert>
     <select id="findUserByName" parameterType="String" resultMap="userMapper">
         select * from user where user_name = #{param}
+    </select>
+    <select id="findUserByEmail" parameterType="String" resultMap="userMapper">
+        select * from user where email = #{param}
     </select>
 </mapper>

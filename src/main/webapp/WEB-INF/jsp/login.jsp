@@ -13,7 +13,7 @@
     <script type="text/javascript" src="${PATH}static/js/jquery-2.0.3.min.js"></script>
     <link href="${PATH}static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="${PATH}static/css/signin.css" rel="stylesheet">
-    <script src="${PATH}static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="${PATH}static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="${PATH}static/js/login/login.js"></script>
     <%
         //如果用户在别的页面登录过了，在这个页面直接跳转就好
@@ -27,8 +27,8 @@
 
     <form class="form-signin" method="post" onsubmit="return;">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="name" class="sr-only">Email address</label>
-        <input type="text" id="name" class="form-control" placeholder="用户名" required autofocus>
+        <label for="username_or_email" class="sr-only">Email address</label>
+        <input type="text" id="username_or_email" class="form-control" placeholder="用户名和uoy" required autofocus>
         <label for="password" class="sr-only">密码</label>
         <input type="password" id="password" class="form-control" placeholder="密码" required>
         <div class="checkbox">

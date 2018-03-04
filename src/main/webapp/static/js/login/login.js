@@ -1,9 +1,9 @@
 // document.getElementById("name").focus();
 $(function () {
     $("#submit").click(function(){
-        var userName = $("#name").val();
+        var userNameOrEmail = $("#username_or_email").val();
         var password = $("#password").val();
-        var data = 'userName=' + userName + '&' + 'password=' + password;
+        var data = 'userNameOrEmail=' + userNameOrEmail + '&' + 'password=' + password;
         $.ajax({
             url: "/community/login/signin",
             type: "post",

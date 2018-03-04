@@ -10,6 +10,6 @@ public class HomePageController {
 
     @RequestMapping("/index.html")
     public String index(HttpServletRequest request) {
-        return "index";
+        return "category/category_all";
     }
 }
