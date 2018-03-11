@@ -28,7 +28,7 @@
     <form class="form-signin" method="post" onsubmit="return;">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="username_or_email" class="sr-only">Email address</label>
-        <input type="text" id="username_or_email" class="form-control" placeholder="用户名和uoy" required autofocus>
+        <input type="text" id="username_or_email" class="form-control" placeholder="用户名和邮箱" required autofocus>
         <label for="password" class="sr-only">密码</label>
         <input type="password" id="password" class="form-control" placeholder="密码" required>
         <div class="checkbox">

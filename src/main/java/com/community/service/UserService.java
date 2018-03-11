@@ -2,6 +2,7 @@ package com.community.service;
 
 import com.community.dao.UserDao;
 import com.community.entity.User;
+import com.community.vo.result.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +12,25 @@ public class UserService {
     @Autowired
     UserDao userDao;
 
-    public boolean saveUser(User user) {
+    public BaseResult saveUser(User user) {
+        BaseResult result = new BaseResult();
+        User userByEmail = userDao.findUserByEmail(user.getEmail());
+        if (userByEmail != null) {
+            result.setSuccess(false);
+            result.setMessage("该邮箱已被注册");
+            return result;
+        }
+        User userByName = userDao.findUserByName(user.getUserName());
+        if (userByName != null) {
+            result.setSuccess(false);
+            result.setMessage("该用户名已存在");
+            return result;
+        }
         int insert = userDao.insert(user);
         if (insert == 1) {
-            return true;
+            result.setSuccess(true);
         }
-        return false;
+        return result;
     }
 
     public User findUserByName(String userName) {

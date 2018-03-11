@@ -21,9 +21,10 @@ $(function () {
             return false;
         });
         $("#model_register_btn").click(function () {
-            var username_or_email = $("#username_or_email").val();
-            var password = $("#password").val();
-            var data = 'userNameOrEmail=' + username_or_email + '&' + 'password=' + password;
+            var reg_username = $("#reg_username").val();
+            var reg_email = $("#reg_email").val();
+            var reg_password = $("#reg_password").val();
+            var data = 'userName=' + reg_username + '&' + 'email=' + reg_email + '&password=' + reg_password;
             $.ajax({
                 url: "/community/login/register",
                 type: "post",
@@ -71,6 +72,8 @@ $(function () {
             $("#category-list-id > li:eq(6)").addClass('active');
         } else if (pathname.indexOf('explore/category-7') > -1) {
             $("#category-list-id > li:eq(7)").addClass('active');
+        } else if (pathname.indexOf('explore/category-8') > -1) {
+            $("#category-list-id > li:eq(8)").addClass('active');
         }
     }
 })

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.dao.ImageDao">
+    <select id="findById"  resultType="com.community.entity.Image" parameterType="Integer">
+        select * from tb_image where id = #{param}
+    </select>
+</mapper>

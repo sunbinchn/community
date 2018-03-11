@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.dao.ArticleDao">
+    <resultMap id="articleMapper" type="com.community.entity.Article">
+        <association property="user" column="user_id" select="com.community.dao.UserDao.findById" javaType="com.community.entity.User"></association>
+        <association property="fromArticle" column="tag_id" select="com.community.dao.ArticleDao.findById"></association>
+        <association property="articleType" column="article_type_id" select="com.community.dao.ArticleTypeDao.findById"></association>
+        <collection property="commentList" ofType="com.community.entity.Comment" column="id"
+                    select="com.community.dao.CommentDao.findAllByArticleId"></collection>
+        <collection property="tagList" ofType="com.community.entity.Comment" column="id"
+                    select="com.community.dao.TagDao.findAllByArticleId"></collection>
+    </resultMap>
+    <select id="findById" resultMap="articleMapper" parameterType="Integer">
+        select * from tb_article where id = #{param}
+    </select>
+    <select id="findAll" resultMap="articleMapper">
+        select * from tb_article
+    </select>
+    <select id="findAllByShowType" resultMap="articleMapper" parameterType="Integer">
+        select * from tb_article
+        <choose>
+            <when test="showTypeId == 1">
+                order by create_time desc
+            </when>
+            <when test="showTypeId == 2">
+                where is_recommend = 1
+            </when>
+            <when test="showTypeId == 3">
+                order by love_count desc
+            </when>
+        </choose>
+    </select>
+    <select id="findAllByArticleTypeId" resultMap="articleMapper" parameterType="Integer">
+        select * from tb_article where article_type_id = #{param}
+    </select>
+    <select id="findAllByArticleTypeIdAndShowType" resultMap="articleMapper">
+        select * from tb_article where article_type_id = #{articleTypeId}
+        <choose>
+            <when test="showTypeId == 1">
+                order by create_time desc
+            </when>
+            <when test="showTypeId == 2">
+                and is_recommend = 1
+            </when>
+            <when test="showTypeId == 3">
+                order by love_count desc
+            </when>
+        </choose>
+    </select>
+
+    <insert id="save" parameterType="com.community.entity.Article">
+        insert into tb_article(article_type_id,title,content,original,user_id,create_time) values(#{articleType.id},#{title},#{content},#{original},#{user.userId},now()) ;
+    </insert>
+</mapper>

@@ -3,18 +3,19 @@
 <mapper namespace="com.community.dao.UserDao">
     <resultMap id="userMapper" type="com.community.entity.User">
         <id column="id" jdbcType="INTEGER" property="userId" />
-        <result column="user_name" jdbcType="VARCHAR" property="userName" />
-        <result column="email" jdbcType="VARCHAR" property="password" />
-        <result column="password" jdbcType="VARCHAR" property="password" />
+        <association column="icon_id" property="icon" select="com.community.dao.ImageDao.findById"></association>
     </resultMap>
     <insert id="insert" parameterType="com.community.entity.User">
-        insert into user(id, user_name, email, password)
-        values (#{userId,jdbcType=INTEGER},#{email,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=CHAR})
+        insert into tb_user(user_name, email, password)
+        values (#{userName,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=CHAR})
     </insert>
+    <select id="findById" parameterType="Integer" resultMap="userMapper">
+        select * from tb_user where id = #{param}
+    </select>
     <select id="findUserByName" parameterType="String" resultMap="userMapper">
-        select * from user where user_name = #{param}
+        select * from tb_user where user_name = #{param}
     </select>
     <select id="findUserByEmail" parameterType="String" resultMap="userMapper">
-        select * from user where email = #{param}
+        select * from tb_user where email = #{param}
     </select>
 </mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.dao.CommentDao">
+    <resultMap id="commentResultMap" type="com.community.entity.Comment">
+        <association property="user" column="user_id" select="com.community.dao.UserDao.findById"></association>
+    </resultMap>
+
+    <select id="findAllByArticleId"  resultMap="commentResultMap" parameterType="Integer">
+        select * from tb_comment where id = #{param}
+    </select>
+</mapper>

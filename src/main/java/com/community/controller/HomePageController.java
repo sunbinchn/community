@@ -10,6 +10,6 @@ public class HomePageController {
 
     @RequestMapping("/index.html")
     public String index(HttpServletRequest request) {
-        return "category/category_all";
+        return "forward:/explore/all/latest";
     }
 }

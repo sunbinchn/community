@@ -28,7 +28,7 @@ public class UserController {
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     @ResponseBody
-    public BaseResult signIn(User user, HttpServletRequest request, HttpServletResponse response) {
+    public BaseResult signIn(User user, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         if (user == null) {
             result.setSuccess(false);
@@ -55,11 +55,7 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult register(User user) {
-        BaseResult result = new BaseResult();
-        boolean saveUser = userService.saveUser(user);
-        if (saveUser) {
-            result.setSuccess(true);
-        }
+        BaseResult result = userService.saveUser(user);
         return result;
     }
 

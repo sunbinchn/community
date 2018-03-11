@@ -44,20 +44,12 @@
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
                 <form class="navbar-form navbar-right">
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target=".login-modal">登录</button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target=".register-modal">注册</button>
-                    <%--<li><a href="#">Link</a></li>--%>
-                    <%--<li class="dropdown">--%>
-                        <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"--%>
-                           <%--aria-expanded="false">Dropdown <span class="caret"></span></a>--%>
-                        <%--<ul class="dropdown-menu">--%>
-                            <%--<li><a href="#">Action</a></li>--%>
-                            <%--<li><a href="#">Another action</a></li>--%>
-                            <%--<li><a href="#">Something else here</a></li>--%>
-                            <%--<li role="separator" class="divider"></li>--%>
-                            <%--<li><a href="#">Separated link</a></li>--%>
-                        <%--</ul>--%>
-                    <%--</li>--%>
+                    <% if (request.getSession().getAttribute("username") == null){ %>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target=".login-modal">登录</button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target=".register-modal">注册</button>
+                    <% } else { %>
+                        <span>欢迎：<span style="color: blue"><%=request.getSession().getAttribute("username")%></span></span>
+                    <% } %>
                 </form>
                 <!-- 登录模态框 -->
                 <div class="modal fade login-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
@@ -124,37 +116,12 @@
     <div class="row">
         <div class="col-sm-12">
             <ul class="list" id="category-list-id">
-                <li><a href="${PATH}explore/all">全部</a></li>
-                <li>
-                    <a href="${PATH}explore/category-1">智慧运维</a>
-                </li>
-                <li>
-                    <a href="${PATH}explore/category-2">编程艺术</a>
-                </li>
-                <li>
-                    <a href="${PATH}explore/category-3">数据库</a>
-                </li>
-                <li>
-                    <a href="${PATH}explore/category-4">大数据-云计算</a>
-                </li>
-                <li>
-                    <a href="${PATH}explore/category-5">产品架构</a>
-                </li>
-                <li>
-                    <a href="${PATH}explore/category-6">开源项目</a>
-                </li>
-                <li>
-                    <a href="${PATH}explore/category-7">学习资源</a>
-                </li>
-                <li>
-                    <a href="${PATH}explore/category-8">求职招聘</a>
-                </li>
-                <li>
-                    <a href="${PATH}explore/category-9">互联网资讯</a>
-                </li>
-                <li>
-                    <a href="/extension/link/links.htm" target="_blank">友情链接</a>
-                </li>
+                <li><a href="${PATH}explore/all/latest">全部</a></li>
+                <c:forEach items="${articleTypeList}" var="articleType">
+                    <li>
+                        <a href="${PATH}explore/category-${articleType.id}/latest">${articleType.name}</a>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
     </div>
