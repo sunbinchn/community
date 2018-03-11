@@ -1,6 +1,25 @@
 $(function () {
     init_category();
     init_event();
+    init_show_type();
+
+
+    function init_show_type() {
+        var url = window.location.href.split('?')[0];
+        var subUrl = url.substring(0,url.lastIndexOf('/'));
+        var $showTypeList = $('.aw-nav-tabs > li > a');
+        //$showTypeList.eq(0),$($showTypeList[0]),$($showTypeList)三种都可以操作，但是他们是不相等的，可以在debugger中看到,content,prevObject不尽相同
+        $showTypeList.eq(0).attr('href', subUrl+'/latest');
+        $showTypeList.eq(1).attr('href', subUrl+'/hot');
+        $showTypeList.eq(2).attr('href', subUrl+'/recommend');
+        if (url.endsWith("latest")) {
+            $showTypeList.eq(0).parent().addClass('active');
+        } else if (url.endsWith("hot")) {
+            $showTypeList.eq(1).parent().addClass('active');
+        } else if (url.endsWith("recommend")) {
+            $showTypeList.eq(2).parent().addClass('active');
+        }
+    }
 
     function init_event() {
         //login in

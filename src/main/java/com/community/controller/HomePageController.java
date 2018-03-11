@@ -10,6 +10,6 @@ public class HomePageController {
 
     @RequestMapping("/index.html")
     public String index(HttpServletRequest request) {
-        return "forward:/explore/all/latest";
+        return "redirect:/explore/all/latest";
     }
 }

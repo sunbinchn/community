@@ -11,9 +11,9 @@
             <div class="col-sm-12 col-md-9 aw-main-content">
                 <h2>发现</h2>
                 <ul class="nav nav-tabs aw-nav-tabs">
-                    <li role="presentation" class="active"><a href="#">最新</a></li>
-                    <li role="presentation" ><a href="#">热门</a></li>
-                    <li role="presentation" ><a href="#">推荐</a></li>
+                    <li role="presentation" ><a href="">最新</a></li>
+                    <li role="presentation" ><a href="">热门</a></li>
+                    <li role="presentation" ><a href="">推荐</a></li>
                 </ul>
 
                 <div class="content-explore-list">
