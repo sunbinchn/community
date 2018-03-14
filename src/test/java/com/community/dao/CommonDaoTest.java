@@ -32,7 +32,7 @@ public class CommonDaoTest {
 
     @Test
     public void findCommentByArticleId() {
-        List<Comment> allByArticleId = commentDao.findAllByArticleId(2);
+        List<Comment> allByArticleId = commentDao.findAllByArticleId(1);
         logger.error(allByArticleId.size()+""
         );
     }

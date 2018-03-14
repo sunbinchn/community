@@ -7,4 +7,6 @@ import java.util.List;
 public interface CommentDao {
 
     List<Comment> findAllByArticleId(Integer id);
+
+    Comment findById(Integer id);
 }

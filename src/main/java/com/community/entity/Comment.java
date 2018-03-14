@@ -7,7 +7,7 @@ public class Comment {
     private Article article;
     private User user;
     private Integer loveCount;
-    private User targetUser;
+    private Comment targetComment;
     private String content;
     private Date createTime;
     private Date updateTime;
@@ -44,12 +44,12 @@ public class Comment {
         this.loveCount = loveCount;
     }
 
-    public User getTargetUser() {
-        return targetUser;
+    public Comment getTargetComment() {
+        return targetComment;
     }
 
-    public void setTargetUser(User targetUser) {
-        this.targetUser = targetUser;
+    public void setTargetComment(Comment targetComment) {
+        this.targetComment = targetComment;
     }
 
     public String getContent() {

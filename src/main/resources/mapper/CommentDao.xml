@@ -3,9 +3,13 @@
 <mapper namespace="com.community.dao.CommentDao">
     <resultMap id="commentResultMap" type="com.community.entity.Comment">
         <association property="user" column="user_id" select="com.community.dao.UserDao.findById"></association>
+        <association property="targetComment" column="target_comment_id" select="com.community.dao.CommentDao.findById"></association>
     </resultMap>
 
     <select id="findAllByArticleId"  resultMap="commentResultMap" parameterType="Integer">
         select * from tb_comment where article_id = #{param}
+    </select>
+    <select id="findById"  resultMap="commentResultMap" parameterType="Integer">
+        select * from tb_comment where id = #{param}
     </select>
 </mapper>
