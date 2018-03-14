@@ -27,10 +27,26 @@
                                     <div class="explore-title">
                                         <p>
                                             <a href="${PATH}people/${article.user.userName}" class="user-name">${article.user.userName}</a>
-                                            <span class="text-color-999">发表了文章 • ${fn:length(article.commentList)} 个评论 • ${article.readCount} 次浏览 •
+                                            <span class="text-color-999">发表了文章 • ${fn:length(article.commentList)} 个评论 • ${fn:length(article.readUserList)} 次浏览 •
                                                 <fmt:formatDate value="${article.createTime}"  type="both" /></span>
                                         </p>
                                         <h4>${article.title}</h4>
+                                    </div>
+
+                                    <div class="explore-buttons">
+                                        <%--<button type="button" class="btn btn-sm">--%>
+                                            <%--<span class="glyphicon glyphicon-heart"></span>--%>
+                                        <%--</button>--%>
+                                        <button type="button" class="btn btn-sm">
+                                            <span class="glyphicon glyphicon-heart-empty"></span>
+                                            <span>${fn:length(article.loveUserList)}</span>
+                                        </button>
+                                        <%--<button type="button" class="btn btn-sm">--%>
+                                            <%--<span class="glyphicon glyphicon-star"></span>--%>
+                                        <%--</button>--%>
+                                        <button type="button" class="btn btn-sm">
+                                            <span class="glyphicon glyphicon-star-empty"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </c:forEach>

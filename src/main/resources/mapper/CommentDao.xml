@@ -6,6 +6,6 @@
     </resultMap>
 
     <select id="findAllByArticleId"  resultMap="commentResultMap" parameterType="Integer">
-        select * from tb_comment where id = #{param}
+        select * from tb_comment where article_id = #{param}
     </select>
 </mapper>

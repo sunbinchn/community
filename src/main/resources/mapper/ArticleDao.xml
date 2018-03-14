@@ -5,6 +5,12 @@
         <association property="user" column="user_id" select="com.community.dao.UserDao.findById" javaType="com.community.entity.User"></association>
         <association property="fromArticle" column="tag_id" select="com.community.dao.ArticleDao.findById"></association>
         <association property="articleType" column="article_type_id" select="com.community.dao.ArticleTypeDao.findById"></association>
+        <collection property="readUserList" column="id"
+                    select="com.community.dao.UserArticleReadDao.findUserListByArticleId"></collection>
+        <collection property="keepUserList" column="id"
+                    select="com.community.dao.UserArticleKeepDao.findUserListByArticleId"></collection>
+        <collection property="loveUserList" column="id"
+                    select="com.community.dao.UserArticleLoveDao.findUserListByArticleId"></collection>
         <collection property="commentList" ofType="com.community.entity.Comment" column="id"
                     select="com.community.dao.CommentDao.findAllByArticleId"></collection>
         <collection property="tagList" ofType="com.community.entity.Comment" column="id"

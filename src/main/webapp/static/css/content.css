@@ -93,3 +93,11 @@
 .explore-foot {
     float: right;
 }
+.explore-buttons > button {
+    background: #ebebeb;
+    height:24px;
+    width: 50px;
+}
+.explore-buttons > button > span {
+    color: #676262;
+}

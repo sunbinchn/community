@@ -7,8 +7,9 @@ public class Article {
     private Integer id;
     private String title;
     private String content;
-    private Integer readCount;
-    private Integer loveCount;
+    private List<User> readUserList;
+    private List<User> loveUserList;
+    private List<User> keepUserList;//收藏的用户
     private Integer original;
     private Integer isRecommend;
     private Article fromArticle;
@@ -43,20 +44,28 @@ public class Article {
         this.content = content;
     }
 
-    public Integer getReadCount() {
-        return readCount;
+    public List<User> getReadUserList() {
+        return readUserList;
     }
 
-    public void setReadCount(Integer readCount) {
-        this.readCount = readCount;
+    public void setReadUserList(List<User> readUserList) {
+        this.readUserList = readUserList;
     }
 
-    public Integer getLoveCount() {
-        return loveCount;
+    public List<User> getLoveUserList() {
+        return loveUserList;
     }
 
-    public void setLoveCount(Integer loveCount) {
-        this.loveCount = loveCount;
+    public void setLoveUserList(List<User> loveUserList) {
+        this.loveUserList = loveUserList;
+    }
+
+    public List<User> getKeepUserList() {
+        return keepUserList;
+    }
+
+    public void setKeepUserList(List<User> keepUserList) {
+        this.keepUserList = keepUserList;
     }
 
     public Integer getOriginal() {
