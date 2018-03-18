@@ -54,49 +54,49 @@ public class CategoryListController {
     @RequestMapping("/category-1/{showType}")
     public String category_1(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable String showType, HttpServletRequest request) {
         commonSetting(request, pn, ArticleTypeConstant.OPEN_SOURCE.getId(), showType);
-        return "category/category_1";
+        return "category/category_all";
     }
 
     @RequestMapping("/category-2/{showType}")
     public String category_2(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable String showType, HttpServletRequest request) {
         commonSetting(request, pn, ArticleTypeConstant.DATABSE.getId(), showType);
-        return "category/category_2";
+        return "category/category_all";
     }
 
     @RequestMapping("/category-3/{showType}")
     public String category_3(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable String showType, HttpServletRequest request) {
         commonSetting(request, pn, ArticleTypeConstant.CLOUD_COMPUTING.getId(), showType);
-        return "category/category_3";
+        return "category/category_all";
     }
 
     @RequestMapping("/category-4/{showType}")
     public String category_4(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable String showType, HttpServletRequest request) {
         commonSetting(request, pn, ArticleTypeConstant.ARTIFICIA_SELF_ENERGY.getId(), showType);
-        return "category/category_4";
+        return "category/category_all";
     }
 
     @RequestMapping("/category-5/{showType}")
     public String category_5(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable String showType, HttpServletRequest request) {
         commonSetting(request, pn, ArticleTypeConstant.FRONT.getId(), showType);
-        return "category/category_5";
+        return "category/category_all";
     }
 
     @RequestMapping("/category-6/{showType}")
     public String category_6(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable String showType, HttpServletRequest request) {
         commonSetting(request, pn, ArticleTypeConstant.BACK.getId(), showType);
-        return "category/category_6";
+        return "category/category_all";
     }
 
     @RequestMapping("/category-7/{showType}")
     public String category_7(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable String showType, HttpServletRequest request) {
         commonSetting(request, pn, ArticleTypeConstant.RESOURCES.getId(), showType);
-        return "category/category_7";
+        return "category/category_all";
     }
 
     @RequestMapping("/category-8/{showType}")
     public String category_8(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable String showType, HttpServletRequest request) {
         commonSetting(request, pn, ArticleTypeConstant.JOB.getId(), showType);
-        return "category/category_8";
+        return "category/category_all";
     }
 
 }

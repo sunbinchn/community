@@ -12,4 +12,9 @@
     <select id="findById"  resultMap="commentResultMap" parameterType="Integer">
         select * from tb_comment where id = #{param}
     </select>
+    <insert id="insert" parameterType="com.community.entity.Comment"  keyProperty="id" useGeneratedKeys="true" >
+        insert into tb_comment(article_id,user_id,target_comment_id,content,create_time)
+        values(#{article.id},#{user.userId},#{targetComment.id},#{content},now())
+
+    </insert>
 </mapper>

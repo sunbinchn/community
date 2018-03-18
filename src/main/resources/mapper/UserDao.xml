@@ -6,8 +6,8 @@
         <association column="icon_id" property="icon" select="com.community.dao.ImageDao.findById"></association>
     </resultMap>
     <insert id="insert" parameterType="com.community.entity.User">
-        insert into tb_user(user_name, email, password)
-        values (#{userName,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=CHAR})
+        insert into tb_user(user_name, email, password, icon_id)
+        values (#{userName,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, #{icon.id})
     </insert>
     <select id="findById" parameterType="Integer" resultMap="userMapper">
         select * from tb_user where id = #{param}

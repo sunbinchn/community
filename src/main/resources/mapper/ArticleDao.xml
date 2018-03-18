@@ -2,9 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.dao.ArticleDao">
     <resultMap id="articleMapper" type="com.community.entity.Article">
-        <association property="user" column="user_id" select="com.community.dao.UserDao.findById" javaType="com.community.entity.User"></association>
-        <association property="fromArticle" column="tag_id" select="com.community.dao.ArticleDao.findById"></association>
-        <association property="articleType" column="article_type_id" select="com.community.dao.ArticleTypeDao.findById"></association>
+        <id column="id" property="id" javaType="java.lang.Integer"></id>
+        <association property="user" column="user_id" select="com.community.dao.UserDao.findById"
+                     javaType="com.community.entity.User"></association>
+        <association property="fromArticle" column="tag_id"
+                     select="com.community.dao.ArticleDao.findById"></association>
+        <association property="articleType" column="article_type_id"
+                     select="com.community.dao.ArticleTypeDao.findById"></association>
         <collection property="readUserList" column="id"
                     select="com.community.dao.UserArticleReadDao.findUserListByArticleId"></collection>
         <collection property="keepUserList" column="id"
@@ -23,16 +27,19 @@
         select * from tb_article
     </select>
     <select id="findAllByShowType" resultMap="articleMapper" parameterType="Integer">
-        select * from tb_article
         <choose>
             <when test="showTypeId == 1">
+                select * from tb_article
                 order by create_time desc
             </when>
             <when test="showTypeId == 2">
+                select * from tb_article
                 where is_recommend = 1
             </when>
             <when test="showTypeId == 3">
-                order by love_count desc
+                select *,
+                (select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
+                from tb_article a order by count_b desc
             </when>
         </choose>
     </select>
@@ -40,16 +47,19 @@
         select * from tb_article where article_type_id = #{param}
     </select>
     <select id="findAllByArticleTypeIdAndShowType" resultMap="articleMapper">
-        select * from tb_article where article_type_id = #{articleTypeId}
         <choose>
             <when test="showTypeId == 1">
+                select * from tb_article where article_type_id = #{articleTypeId}
                 order by create_time desc
             </when>
             <when test="showTypeId == 2">
+                select * from tb_article where article_type_id = #{articleTypeId}
                 and is_recommend = 1
             </when>
             <when test="showTypeId == 3">
-                order by love_count desc
+                select *,
+                (select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
+                from tb_article a where article_type_id = #{articleTypeId} order by count_b desc
             </when>
         </choose>
     </select>

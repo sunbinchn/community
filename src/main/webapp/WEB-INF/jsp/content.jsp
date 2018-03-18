@@ -9,7 +9,7 @@
 
             <!-- 左侧内容栏 -->
             <div class="col-sm-12 col-md-9 aw-main-content">
-                <h2>发现</h2>
+                <h2 id = "category-list-h2">发现</h2>
                 <ul class="nav nav-tabs aw-nav-tabs">
                     <li role="presentation" ><a href="">最新</a></li>
                     <li role="presentation" ><a href="">热门</a></li>
@@ -30,7 +30,7 @@
                                             <span class="text-color-999">发表了文章 • ${fn:length(article.commentList)} 个评论 • ${fn:length(article.readUserList)} 次浏览 •
                                                 <fmt:formatDate value="${article.createTime}"  type="both" /></span>
                                         </p>
-                                        <h4>${article.title}</h4>
+                                        <h4><a href="${PATH}detail/get/${article.id}" target="_blank">${article.title}</a></h4>
                                     </div>
 
                                     <div class="explore-buttons">

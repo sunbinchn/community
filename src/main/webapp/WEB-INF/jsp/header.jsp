@@ -3,6 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <div class="container">
+    <input id="user_id_input" hidden="true" value="${userId}"/>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -57,7 +58,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h1 class="modal-title">登录</h1>
+                                <h3 class="modal-title">登录</h3>
                             </div>
                             <div class="modal-body">
                                 <form method="post" onsubmit="return;">
@@ -85,7 +86,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h1 class="modal-title">注册</h1>
+                                <h3 class="modal-title">注册</h3>
                             </div>
                             <div class="modal-body">
                                 <form method="post" onsubmit="return;">
@@ -111,18 +112,4 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-</div>
-<div class="container category">
-    <div class="row">
-        <div class="col-sm-12">
-            <ul class="list" id="category-list-id">
-                <li><a href="${PATH}explore/all/latest">全部</a></li>
-                <c:forEach items="${articleTypeList}" var="articleType">
-                    <li>
-                        <a href="${PATH}explore/category-${articleType.id}/latest">${articleType.name}</a>
-                    </li>
-                </c:forEach>
-            </ul>
-        </div>
-    </div>
 </div>

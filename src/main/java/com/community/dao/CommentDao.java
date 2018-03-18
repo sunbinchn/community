@@ -9,4 +9,6 @@ public interface CommentDao {
     List<Comment> findAllByArticleId(Integer id);
 
     Comment findById(Integer id);
+
+    boolean insert(Comment comment);
 }

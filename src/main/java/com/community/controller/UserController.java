@@ -44,6 +44,8 @@ public class UserController {
                 result.setSuccess(true);
                 request.getSession().setAttribute("username", findUser.getUserName());
                 request.getSession().setAttribute("email", findUser.getEmail());
+                request.getSession().setAttribute("userIcon", findUser.getIcon().getUrl());
+                request.getSession().setAttribute("userId", findUser.getUserId());
             } else {
                 result.setSuccess(false);
                 result.setMessage("用户名或密码错误");
