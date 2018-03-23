@@ -14,6 +14,8 @@ $(function () {
                 success: function (result) {
                     if (result.success) {
                         location.reload();
+                    } else {
+                        $('#login_error_msg').text(result.message);
                     }
                 },
             });
@@ -32,6 +34,8 @@ $(function () {
                     if (result.success) {
                         $(".register-modal").modal('hide');
                         $(".login-modal").modal('show');
+                    } else {
+                        $('#register_error_msg').text(result.message);
                     }
                 },
             });

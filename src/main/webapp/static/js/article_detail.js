@@ -3,6 +3,14 @@ $(function () {
     init_event();
 
     function init_event() {
+        $('#detail_login_a').click(function() {
+            $(".login-modal").modal('show');
+            $("#username_or_email").focus();
+        })
+        $('#detail_register_a').click(function() {
+            $(".register-modal").modal('show');
+            $("#reg_username").focus();
+        })
         $('#comment-sumbit-button').click(function() {
             var content = $(".comment-form .comment-input").val();
             var userId = $("#user_id_input").val();

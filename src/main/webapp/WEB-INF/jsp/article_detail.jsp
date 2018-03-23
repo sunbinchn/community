@@ -64,7 +64,7 @@
                             </c:forEach>
                             <c:choose>
                                 <c:when test="${empty  username}">
-                                    <p align="center" id="no-comment-auth-warning">要评论请先<a>登录</a>或<a>注册</a></p>
+                                    <p align="center" id="no-comment-auth-warning">要评论请先<a id="detail_login_a">登录</a>或<a id="detail_register_a">注册</a></p>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="comment-form">
