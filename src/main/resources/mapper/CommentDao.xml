@@ -2,12 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.dao.CommentDao">
     <resultMap id="commentResultMap" type="com.community.entity.Comment">
+        <id property="id" column="id"></id>
         <association property="user" column="user_id" select="com.community.dao.UserDao.findById"></association>
-        <association property="targetComment" column="target_comment_id" select="com.community.dao.CommentDao.findById"></association>
+        <association property="loveCount" column="id" select="com.community.dao.UserCommentLoveDao.findUserSizeByCommentId"></association>
     </resultMap>
 
     <select id="findAllByArticleId"  resultMap="commentResultMap" parameterType="Integer">
         select * from tb_comment where article_id = #{param}
+    </select>
+    <select id="findAllByOwnerCommentId"  resultMap="commentResultMap" parameterType="Integer">
+        select * from tb_comment where target_comment_id = #{param}
+    </select>
+    <select id="countAllByOwnerCommentId"  resultType="Integer" parameterType="Integer">
+        select count(id) from tb_comment where target_comment_id = #{param}
     </select>
     <select id="findById"  resultMap="commentResultMap" parameterType="Integer">
         select * from tb_comment where id = #{param}
@@ -15,6 +22,5 @@
     <insert id="insert" parameterType="com.community.entity.Comment"  keyProperty="id" useGeneratedKeys="true" >
         insert into tb_comment(article_id,user_id,target_comment_id,content,create_time)
         values(#{article.id},#{user.userId},#{targetComment.id},#{content},now())
-
     </insert>
 </mapper>

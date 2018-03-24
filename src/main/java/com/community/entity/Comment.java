@@ -11,6 +11,7 @@ public class Comment {
     private String content;
     private Date createTime;
     private Date updateTime;
+    private Integer nestCommentSize;
 
     public Integer getId() {
         return id;
@@ -74,5 +75,13 @@ public class Comment {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getNestCommentSize() {
+        return nestCommentSize;
+    }
+
+    public void setNestCommentSize(Integer nestCommentSize) {
+        this.nestCommentSize = nestCommentSize;
     }
 }

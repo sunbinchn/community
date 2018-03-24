@@ -25,7 +25,7 @@
 
 /* 公共部分 */
 html{height: 100%;}
-body{margin: 0;height: 100%;font-size:14px; line-height:160%;color: #444;background:url('../images/bg.gif') repeat;}
+body{margin: 0;font-size:14px; line-height:160%;color: #444;background:url('../images/bg.gif') repeat;}
 body, input, button, select, textarea{font-family:'Helvetica Neue', 'STHeiti', '微软雅黑', 'Microsoft YaHei', Helvetica,Arial,sans-serif;}
 ul, ol{margin:0;padding:0;list-style:none;}
 /*h1, h2, h3, h4, h5, h6{margin-top:0;font-size:100%;line-height: 1.7;}*/
@@ -38,4 +38,7 @@ table td{vertical-align: middle !important;}
 img {
     max-width: 100%;
     max-height: 100%;
+}
+.color-red {
+    color: red;
 }

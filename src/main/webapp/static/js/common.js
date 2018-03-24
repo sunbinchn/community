@@ -6,6 +6,10 @@ $(function () {
         $("#model_login_btn").click(function () {
             var username_or_email = $("#username_or_email").val();
             var password = $("#password").val();
+            if (!(username_or_email && password)){ //用户名或密码为空
+                $('#login_error_msg').text('用户名或密码不能为空');
+                return false;
+            }
             var data = 'userNameOrEmail=' + username_or_email + '&' + 'password=' + password;
             $.ajax({
                 url: "/community/login/signin",
@@ -25,6 +29,10 @@ $(function () {
             var reg_username = $("#reg_username").val();
             var reg_email = $("#reg_email").val();
             var reg_password = $("#reg_password").val();
+            if (!((reg_username || reg_email) && reg_password)){
+                $('#register_error_msg').text('用户名/邮箱或密码不能为空');
+                return false;
+            }
             var data = 'userName=' + reg_username + '&' + 'email=' + reg_email + '&password=' + reg_password;
             $.ajax({
                 url: "/community/login/register",

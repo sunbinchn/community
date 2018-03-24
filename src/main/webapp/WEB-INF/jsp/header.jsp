@@ -62,7 +62,7 @@
                             </div>
                             <div class="modal-body">
                                 <form method="post" onsubmit="return;">
-                                    <p id="login_error_msg"></p>
+                                    <p id="login_error_msg" class="color-red"></p>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="username_or_email" placeholder="请填写用户名或邮箱">
                                     </div>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="modal-body">
                                 <form method="post" onsubmit="return;">
-                                    <p id="register_error_msg"></p>
+                                    <p id="register_error_msg" class="color-red"></p>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="reg_username" placeholder="请填写用户名">
                                     </div>

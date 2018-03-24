@@ -106,7 +106,7 @@
 .comment-footer {
     min-height: 28px;
     line-height: 28px;
-    margin: 0;
+    margin: 10px 0 0 0;
     font-size: 12px;
     position: relative;
     width: 100%;
@@ -115,6 +115,51 @@
 .comment-footer .meta .text-color-999 {
     color: #999;
 }
+.comment-footer .comment-love-btn {
+    width: 50px;
+}
+.comment-footer .comment-nest-comment {
+    margin: 0px 0px 0px 10px;
+    cursor: pointer;
+}
+.nest-comment-box {
+    border: 1px solid #eaeaea;
+    border-radius: 3px;
+    margin: 10px 50px 0px 50px;
+    display: none;
+}
+.nest-comment-box .inner-box{
+    padding: 16px;
+}
+.nest-comment-box .inner-box .comment-inner-content{
+    width: 90%;
+    line-height: 1.9rem;
+    padding: .6rem;
+    border: 1px solid #ddd;
+    font-size: 1.3rem;
+    overflow: hidden;
+    word-wrap: break-word;
+    resize: none;
+    transition: border .3s;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-radius: 3%;
+    height: 35px;
+}
+.nest-comment-box .inner-box .inner-submit-button{
+    position: absolute;
+    margin: 0px 0px 0px 5px;
+    height: 35px;
+}
+
+.inner-comment-list {
+
+}
+.inner-comment-list .inner-comment-item {
+    border-bottom: 1px solid #f5f5f5;
+    margin-bottom: 15px;
+}
+
 .comment-form {
     position: relative;
     padding: 1.3rem 1.3rem 1.3rem 6rem;

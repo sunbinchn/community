@@ -18,7 +18,7 @@
     <%
         //如果用户在别的页面登录过了，在这个页面直接跳转就好
         if (request.getSession().getAttribute("name") != null && !"".equals(request.getSession().getAttribute("name"))) {
-            response.sendRedirect("/store/servlet/toIndexServlet");
+            response.sendRedirect("/community/index.html");
         }
     %>
 </head>

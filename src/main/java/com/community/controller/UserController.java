@@ -50,6 +50,9 @@ public class UserController {
                 result.setSuccess(false);
                 result.setMessage("用户名或密码错误");
             }
+        } else {
+            result.setSuccess(false);
+            result.setMessage("用户名或密码错误");
         }
         return result;
     }

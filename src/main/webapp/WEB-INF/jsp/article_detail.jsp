@@ -45,7 +45,7 @@
                         <div class="article-comment-list">
 
                             <c:forEach items="${article.commentList}" var="comment">
-                                <div class="comment-item">
+                                <div class="comment-item" data-id="${comment.id}">
                                     <div class="comment-head">
                                         <a class="comment-img" href="">
                                             <img src="${PATH}static/images/${comment.user.icon.url}" alt="${comment.user.userName}">
@@ -57,8 +57,48 @@
                                     </div>
                                     <div class="comment-footer">
                                         <div class="meta">
+                                            <button type="button" class="btn btn-default btn-xs comment-love-btn">
+                                                <span class="glyphicon glyphicon-triangle-top" style="color: #777573;"></span>
+                                                <span style="color: #1b1a19;">${comment.loveCount}</span>
+                                            </button>
+                                            <span class="comment-nest-comment">
+                                                <span class="glyphicon glyphicon-comment" style="color: #737270;"></span>
+                                                <span id="nest-comment-span" style="color:#737171;">${comment.nestCommentSize}条评论</span>
+                                            </span>
+
                                             <span class="pull-right text-color-999"><fmt:formatDate value="${comment.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
                                         </div>
+                                    </div>
+                                    <div class="nest-comment-box">
+                                        <div class="inner-box">
+                                            <div class="inner-comment-list">
+                                                <div class="inner-comment-item">
+                                                    <div class="comment-head">
+                                                        <a class="comment-img" href="">
+                                                            <img src="${PATH}static/images/user/user_icon_boy.png" alt="">
+                                                        </a>
+                                                        <p><a href="">名字</a></p>
+                                                    </div>
+                                                    <div class="comment-body">
+                                                        <div class="markitup-box">提的一些要求，仔细分析是否为过分要求，如果是过分要求，我们应该要敢于拒绝，善于拒绝。</div>
+                                                    </div>
+                                                </div>
+                                                <div class="inner-comment-item">
+                                                    <div class="comment-head">
+                                                        <a class="comment-img" href="">
+                                                            <img src="${PATH}static/images/user/user_icon_boy.png" alt="">
+                                                        </a>
+                                                        <p><a href="">名字</a></p>
+                                                    </div>
+                                                    <div class="comment-body">
+                                                        <div class="markitup-box">内松</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <textarea cols="2" rows="1" placeholder="你想对ta说的话" class="comment-inner-content" data-target-id=""></textarea>
+                                            <button type="button" class="btn btn-success inner-submit-button" disabled="disabled">评论</button>
+                                        </div>
+
                                     </div>
                                 </div>
                             </c:forEach>
@@ -73,7 +113,7 @@
                                         </div>
                                         <textarea placeholder="发表你的看法" class="comment-input"></textarea>
                                         <div class="submit-div">
-                                            <button id="comment-sumbit-button" type="button" class="btn btn-success submit-button">评论</button>
+                                            <button id="comment-sumbit-button" type="button" class="btn btn-success submit-button" disabled="disabled">评论</button>
                                         </div>
                                     </div>
                                 </c:otherwise>

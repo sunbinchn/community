@@ -33,4 +33,17 @@ public class RelationTableDaoTest {
     public void getUserCommentLoveDao() {
         List<User> userListByCommentId = userCommentLoveDao.findUserListByCommentId(1);
     }
+    @Test
+    public void testUserCommentLoveDao() {
+        Integer commentId = 22;
+        Integer userId= 1;
+        boolean insert = userCommentLoveDao.insert(commentId, userId);
+        logger.info(insert+"");
+        Integer countByCommentIdAndUserId = userCommentLoveDao.getCountByCommentIdAndUserId(commentId, userId);
+        logger.info(countByCommentIdAndUserId+"");
+        boolean delete = userCommentLoveDao.delete(commentId, userId);
+        logger.info(delete+"");
+        Integer countByCommentIdAndUserId2 = userCommentLoveDao.getCountByCommentIdAndUserId(commentId, userId);
+        logger.info(countByCommentIdAndUserId2+"");
+    }
 }
