@@ -27,8 +27,8 @@
                             <a href="#" class="content-user-name">
                                 ${article.user.userName}
                             </a>
-                            <div>
-                                <span class="color-999">2018 年 03 月 17 日</span>
+                            <div style="margin-top: 10px;">
+                                <span class="color-999"><fmt:formatDate value="${article.createTime}" pattern="yyyy年MM月dd日"/></span>
                             </div>
                         </div>
                     </div>

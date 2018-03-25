@@ -5,9 +5,9 @@
         <id column="id" jdbcType="INTEGER" property="userId" />
         <association column="icon_id" property="icon" select="com.community.dao.ImageDao.findById"></association>
     </resultMap>
-    <insert id="insert" parameterType="com.community.entity.User">
-        insert into tb_user(user_name, email, password, icon_id)
-        values (#{userName,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, #{icon.id})
+    <insert id="insert" parameterType="com.community.entity.User" keyProperty="userId"  useGeneratedKeys="true">
+        insert into tb_user(user_name, email, password, icon_id,signature)
+        values (#{userName,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, #{icon.id}, #{signature})
     </insert>
     <select id="findById" parameterType="Integer" resultMap="userMapper">
         select * from tb_user where id = #{param}

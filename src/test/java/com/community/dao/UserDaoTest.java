@@ -22,7 +22,6 @@ public class UserDaoTest {
 	@Test
 	public void testSave(){
 		User user = new User();
-		user.setUserId(1);
 		user.setUserName("test");
 		user.setPassword("123456");
 		int insert = userDao.insert(user);

@@ -34,7 +34,7 @@ public class InsertArticleTest {
             User user = new User();
             user.setUserId(1);
             article.setUser(user);
-            articleDao.save(article);
+            articleDao.insert(article);
         }
     }
 }

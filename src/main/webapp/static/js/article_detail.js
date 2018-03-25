@@ -16,9 +16,9 @@ $(function () {
                     if(result.success) {
                         var $loveCountSpan = $($commentItem.find('.comment-love-btn').children()[1]);
                         if (result.data === 'delete') {
-                            $loveCountSpan.text(parseFloat($loveCountSpan.text()) - 1)
+                            $loveCountSpan.text(parseFloat($loveCountSpan.text()) - 1);
                         } else if (result.data === 'insert') {
-                            $loveCountSpan.text(parseFloat($loveCountSpan.text()) + 1)
+                            $loveCountSpan.text(parseFloat($loveCountSpan.text()) + 1);
                         }
 
                     }

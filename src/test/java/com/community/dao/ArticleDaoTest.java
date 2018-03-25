@@ -1,6 +1,9 @@
 package com.community.dao;
 
 import com.community.entity.Article;
+import com.community.entity.ArticleType;
+import com.community.entity.User;
+import com.community.enums.ArticleTypeConstant;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -8,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sun.nio.cs.US_ASCII;
 
 import java.util.List;
 
@@ -22,6 +26,16 @@ public class ArticleDaoTest {
 	private ArticleDao articleDao;
 
 	@Test
+	public void insert() {
+		Article article = new Article();
+		User user =new User();
+		user.setUserId(1);
+		article.setUser(user);
+		article.setTitle("title");
+		article.setContent("content");
+		articleDao.insert(article);
+	}
+	@Test
 	public void findById() {
 		Article article = articleDao.findById(1);
 		logger.info(article.getTitle());
@@ -31,5 +45,17 @@ public class ArticleDaoTest {
 	@Test
 	public void findAllByArticleTypeId() {
 		List<Article> allByShowType = articleDao.findAllByShowType(1);
+	}
+	@Test
+	public void update() {
+		// [0,1)
+
+		List<Article> all = articleDao.findAll();
+		for (Article article : all) {
+			ArticleType articleType = new ArticleType();
+			articleType.setId((int)(Math.random() * 8 +1));
+			article.setArticleType(articleType);
+			articleDao.update(article);
+		}
 	}
 }

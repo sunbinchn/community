@@ -8,13 +8,16 @@ import java.util.List;
 public interface ArticleDao {
 
     List<Article> findAll();
+
     List<Article> findAllByShowType(@Param("showTypeId") Integer showTypeId);
 
     List<Article> findAllByArticleTypeId(Integer id);
 
-    List<Article> findAllByArticleTypeIdAndShowType(@Param("articleTypeId") Integer id,@Param("showTypeId") Integer showTypeId);
+    List<Article> findAllByArticleTypeIdAndShowType(@Param("articleTypeId") Integer id, @Param("showTypeId") Integer showTypeId);
 
     Article findById(Integer id);
 
-    boolean save(Article article);
+    boolean insert(Article article);
+
+    boolean update(Article article);
 }
