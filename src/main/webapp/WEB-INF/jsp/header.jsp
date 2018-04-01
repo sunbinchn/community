@@ -54,6 +54,9 @@
                     </li>
                 </ul>
                 <% } %>
+                <form class="navbar-form navbar-right">
+                    <button type="button" class="btn btn-primary" id="write-article-button">写文章</button>
+                </form>
 
                 <!-- 登录模态框 -->
                 <div class="modal fade login-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">

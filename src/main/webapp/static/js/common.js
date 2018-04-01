@@ -2,6 +2,15 @@ $(function () {
     init_event();
     init_date();
     function init_event() {
+        //write-article-button
+        $("#write-article-button").click(function () {
+            if (_.isEmpty($("#user_id_input").val())) {
+                $(".login-modal").modal('show');
+            } else {
+                window.location.href = '/community/writeArticle/index';
+            }
+           return false;
+        });
         //login in
         $("#model_login_btn").click(function () {
             var username_or_email = $("#username_or_email").val();
