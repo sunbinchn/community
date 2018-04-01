@@ -64,8 +64,8 @@
         </choose>
     </select>
 
-    <insert id="insert" parameterType="com.community.entity.Article">
-        insert into tb_article(article_type_id,title,content,original,user_id,create_time) values(#{articleType.id},#{title},#{content},#{original},#{user.userId},#{createTime}) ;
+    <insert id="insert" parameterType="com.community.entity.Article"  keyProperty="id" useGeneratedKeys="true" >
+        insert into tb_article(article_type_id,title,content,original,user_id,create_time) values(#{articleType.id},#{title},#{content},#{original},#{user.userId},#{createTime})
     </insert>
     <update id="update" parameterType="com.community.entity.Article">
         update tb_article set  title = #{title}, article_type_id = #{articleType.id},content = #{content},
