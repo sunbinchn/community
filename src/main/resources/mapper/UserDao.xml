@@ -18,4 +18,19 @@
     <select id="findUserByEmail" parameterType="String" resultMap="userMapper">
         select * from tb_user where email = #{param}
     </select>
+    <select id="findAllByRole" parameterType="Integer" resultMap="userMapper">
+        select id,user_name,email,signature,visits,is_shut_up,is_ban from tb_user where role <![CDATA[ < ]]> #{role}
+    </select>
+    <update id="shutUpByUserId" parameterType="Integer">
+        update tb_user set is_shut_up = 1 where id = #{param};
+    </update>
+    <update id="cancelShutUpByUserId" parameterType="Integer">
+        update tb_user set is_shut_up = 0 where id = #{param};
+    </update>
+    <update id="banByUserId" parameterType="Integer">
+        update tb_user set is_ban = 1 where id = #{param};
+    </update>
+    <update id="cancelBanByUserId" parameterType="Integer">
+        update tb_user set is_ban = 0 where id = #{param};
+    </update>
 </mapper>

@@ -12,4 +12,8 @@ public class HomePageController {
     public String index(HttpServletRequest request) {
         return "redirect:/explore/all/latest";
     }
+    @RequestMapping("/error.html")
+    public String error(HttpServletRequest request) {
+        return "error";
+    }
 }

@@ -14,6 +14,9 @@ public class User {
     private Image icon;
     private String signature;
     private Integer visits;
+    private Integer role;
+    private Integer isShutUp;
+    private Integer isBan;
 
     public Integer getUserId() {
         return userId;
@@ -85,5 +88,29 @@ public class User {
 
     public void setVisits(Integer visits) {
         this.visits = visits;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
+    public Integer getIsShutUp() {
+        return isShutUp;
+    }
+
+    public void setIsShutUp(Integer isShutUp) {
+        this.isShutUp = isShutUp;
+    }
+
+    public Integer getIsBan() {
+        return isBan;
+    }
+
+    public void setIsBan(Integer isBan) {
+        this.isBan = isBan;
     }
 }

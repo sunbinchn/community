@@ -49,6 +49,9 @@
                         <ul class="dropdown-menu">
                             <li><a href="/community/userInfo/index">个人信息</a></li>
                             <li role="separator" class="divider"></li>
+                            <c:if test="${role eq 2}">
+                                <li><a href="/community/manage/user/index">用户管理</a></li>
+                            </c:if>
                             <li><a href="/community/login/logOut">退出登录</a></li>
                         </ul>
                     </li>

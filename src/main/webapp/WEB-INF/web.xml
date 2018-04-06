@@ -21,6 +21,15 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>manageFilter</filter-name>
+    <filter-class>com.community.filter.ManageFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>manageFilter</filter-name>
+    <url-pattern>/manage/*</url-pattern>
+  </filter-mapping>
+
   <!-- springMVC提供的过滤器，这样ajax就可以直接发送put请求，
   springMVC也能获取到参数了,内部实现了重写request.getParamter -->
   <filter>
