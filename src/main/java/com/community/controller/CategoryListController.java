@@ -30,6 +30,8 @@ public class CategoryListController {
     private ArticleTypeService articleTypeService;
 
     private void commonSetting(HttpServletRequest request, Integer pn, Integer articleTypeId, String showType) {
+        Integer userId = (Integer)request.getSession().getAttribute("userId");
+        request.setAttribute("interestingUserList", articleService.getInterestingUserList(userId));
         ArticleShowTypeConstant articleShowTypeConstant = ArticleShowTypeConstant.LATEST;
         for (ArticleShowTypeConstant typeConstant : ArticleShowTypeConstant.values()) {
             if (typeConstant.getName().equals(showType)) {

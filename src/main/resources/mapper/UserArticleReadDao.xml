@@ -4,4 +4,10 @@
     <select id="findUserListByArticleId" resultMap="com.community.dao.UserDao.userMapper" parameterType="Integer">
       select * from tb_user where id in(select user_id from tb_user_article_read where article_id = #{param})
     </select>
+    <select id="findReadCountByArticleIdAndUserId" resultType="Integer">
+        select count(*) from tb_user_article_read where article_id = #{articleId} and user_id = #{userId}
+    </select>
+    <insert id="insert">
+        insert into tb_user_article_read(article_id,user_id) VALUES (#{articleId},#{userId})
+    </insert>
 </mapper>

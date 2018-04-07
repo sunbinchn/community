@@ -20,7 +20,7 @@
                     <div class="explore-body">
                         <div class="explore-common-list">
                             <c:forEach items="${pageInfo.list}" var="article" varStatus="articleStatus">
-                                <div class="item" style="<c:if test="${articleStatus.count eq 1}">border-top: 0;</c:if>">
+                                <div class="item" style="<c:if test="${articleStatus.count eq 1}">border-top: 0;</c:if>" data-id="${article.id}">
                                     <a class="user-icon">
                                         <img src="${PATH}static/images/${article.user.icon.url}" alt="">
                                     </a>
@@ -37,14 +37,14 @@
                                         <%--<button type="button" class="btn btn-sm">--%>
                                             <%--<span class="glyphicon glyphicon-heart"></span>--%>
                                         <%--</button>--%>
-                                        <button type="button" class="btn btn-sm">
+                                        <button type="button" class="btn btn-sm loveButton">
                                             <span class="glyphicon glyphicon-heart-empty"></span>
                                             <span>${fn:length(article.loveUserList)}</span>
                                         </button>
                                         <%--<button type="button" class="btn btn-sm">--%>
                                             <%--<span class="glyphicon glyphicon-star"></span>--%>
                                         <%--</button>--%>
-                                        <button type="button" class="btn btn-sm">
+                                        <button type="button" class="btn btn-sm keepButton">
                                             <span class="glyphicon glyphicon-star-empty"></span>
                                         </button>
                                     </div>
@@ -90,8 +90,27 @@
 
             <!-- 右侧栏 -->
             <div class="col-sm-12 col-md-3 aw-side-bar">
+                <div>
 
-
+                    <h4>你可能感兴趣的人</h4>
+                    <ul class="list-group">
+                        <a class="list-group-item" href="#">
+                            <img src="${PATH}static/images/user/user_icon_gril.png" style="margin-right: 10px; width: 30px;">腊肉土豆焖饭
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <img src="${PATH}static/images/user/user_icon_gril.png" style="margin-right: 10px; width: 30px;">腊肉土豆焖饭
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <img src="${PATH}static/images/user/user_icon_gril.png" style="margin-right: 10px; width: 30px;">腊肉土豆焖饭
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <img src="${PATH}static/images/user/user_icon_gril.png" style="margin-right: 10px; width: 30px;">腊肉土豆焖饭
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <img src="${PATH}static/images/user/user_icon_gril.png" style="margin-right: 10px; width: 30px;">腊肉土豆焖饭
+                        </a>
+                    </ul>
+                </div>
             </div>
         </div>
 

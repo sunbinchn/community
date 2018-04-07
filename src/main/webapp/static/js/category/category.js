@@ -26,6 +26,30 @@ $(function () {
         $(".explore-title > h4 > a").click(function() {
             $(this).addClass("color-999");
         });
+        $(".loveButton").click(function () {
+            var userId = $("#user_id_input").val();
+            if (_.isEmpty(userId)) {
+                $(".login-modal").modal('show');
+            } else {
+                var articleId = $($(this).parents('.item')[0]).attr('data-id');
+                var $countSpan = $($(this).children('span')[1]);
+                $.ajax({
+                    url: '/community/userArticleLove/toggle?articleId=' + articleId,
+                    type: 'GET',
+                    success: function (result) {
+                        if (result.success) {
+                            if (result.message == 'insert') {
+                                $countSpan.text(parseInt($countSpan.text())+1);
+                            } else {
+                                $countSpan.text(parseInt($countSpan.text())-1);
+                            }
+
+                        }
+                    }
+                })
+            }
+            return false;
+        });
     }
 
     function init_category() {

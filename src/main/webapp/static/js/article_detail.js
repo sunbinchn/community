@@ -4,6 +4,7 @@ $(function () {
     init_event();
 
     function init_event() {
+        //on事件可以保证动态添加的dom节点同样拥有这个事件
         $('body').on('click', ".comment-love-btn", function(){
             var $commentItem = $($(this).parents('.comment-item')[0]);
             var targetCommentId = $commentItem.attr('data-id');
