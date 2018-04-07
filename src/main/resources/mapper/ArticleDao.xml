@@ -72,4 +72,19 @@
                 original = #{original},from_article_id = #{fromArticle.id},update_time = now()
         where id = #{id}
     </update>
+    <select id="findAllUserByArticleIds" parameterType="java.util.List" resultMap="com.community.dao.UserDao.userMapper">
+        select DISTINCT(user_id),user_name,icon_id from tb_article,tb_user where tb_article.user_id = tb_user.id and tb_article.id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        LIMIT 5
+    </select>
+    <select id="findAllArticleListByArticleIds" parameterType="java.util.List" resultType="com.community.entity.Article">
+        select * from tb_article where id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        LIMIT 5
+    </select>
+
 </mapper>

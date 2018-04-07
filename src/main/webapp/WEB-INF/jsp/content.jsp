@@ -99,24 +99,21 @@
             <!-- 右侧栏 -->
             <div class="col-sm-12 col-md-3 aw-side-bar">
                 <div>
-
                     <h4>你可能感兴趣的人</h4>
                     <ul class="list-group">
-                        <a class="list-group-item" href="#">
-                            <img src="${PATH}static/images/user/user_icon_gril.png" style="margin-right: 10px; width: 30px;">腊肉土豆焖饭
-                        </a>
-                        <a class="list-group-item" href="#">
-                            <img src="${PATH}static/images/user/user_icon_gril.png" style="margin-right: 10px; width: 30px;">腊肉土豆焖饭
-                        </a>
-                        <a class="list-group-item" href="#">
-                            <img src="${PATH}static/images/user/user_icon_gril.png" style="margin-right: 10px; width: 30px;">腊肉土豆焖饭
-                        </a>
-                        <a class="list-group-item" href="#">
-                            <img src="${PATH}static/images/user/user_icon_gril.png" style="margin-right: 10px; width: 30px;">腊肉土豆焖饭
-                        </a>
-                        <a class="list-group-item" href="#">
-                            <img src="${PATH}static/images/user/user_icon_gril.png" style="margin-right: 10px; width: 30px;">腊肉土豆焖饭
-                        </a>
+                        <c:forEach items="${interestingUserList}" var="interestingUser">
+                            <a class="list-group-item" href="#">
+                                <img src="${PATH}static/images/${interestingUser.icon.url}" style="margin-right: 10px; width: 30px;">${interestingUser.userName}
+                            </a>
+                        </c:forEach>
+                    </ul>
+                    <h4>你可能感兴趣的文章</h4>
+                    <ul class="list-group">
+                        <c:forEach items="${interestingArticleList}" var="interestingArticle">
+                            <a class="list-group-item" href="${PATH}/detail/get/${interestingArticle.id}">
+                                ${interestingArticle.title}
+                            </a>
+                        </c:forEach>
                     </ul>
                 </div>
             </div>

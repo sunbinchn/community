@@ -1,11 +1,14 @@
 package com.community.dao;
 
 import com.community.entity.Article;
+import com.community.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ArticleDao {
+    List<User> findAllUserByArticleIds(List<Integer> list);
 
     List<Article> findAll();
 
@@ -20,4 +23,6 @@ public interface ArticleDao {
     boolean insert(Article article);
 
     boolean update(Article article);
+
+    List<Article> findAllArticleListByArticleIds(List<Integer> articleIds);
 }

@@ -12,11 +12,11 @@ $(function () {
         $showTypeList.eq(0).attr('href', subUrl+'/latest');
         $showTypeList.eq(1).attr('href', subUrl+'/hot');
         $showTypeList.eq(2).attr('href', subUrl+'/recommend');
-        if (url.endsWith("latest")) {
+        if (url.endsWith("latest") || url.endsWith("latest#")) {
             $showTypeList.eq(0).parent().addClass('active');
-        } else if (url.endsWith("hot")) {
+        } else if (url.endsWith("hot") || url.endsWith("hot#")) {
             $showTypeList.eq(1).parent().addClass('active');
-        } else if (url.endsWith("recommend")) {
+        } else if (url.endsWith("recommend") || url.endsWith("recommend#")) {
             $showTypeList.eq(2).parent().addClass('active');
         }
     }

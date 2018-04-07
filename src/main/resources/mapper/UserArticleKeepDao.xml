@@ -13,4 +13,7 @@
     <delete id="delete">
         delete from tb_user_article_keep where  article_id = #{articleId} and user_id = #{userId}
     </delete>
+    <select id="countGroupByArticleId" resultType="com.community.vo.ArticleCalculate">
+        select article_id,count(*) as amount from tb_user_article_keep GROUP BY article_id
+    </select>
 </mapper>

@@ -51,11 +51,11 @@ public class ArticleDaoTest {
 		// [0,1)
 
 		List<Article> all = articleDao.findAll();
-		for (Article article : all) {
-			ArticleType articleType = new ArticleType();
-			articleType.setId((int)(Math.random() * 8 +1));
-			article.setArticleType(articleType);
-			articleDao.update(article);
-		}
+//		for (Article article : all) {
+//			ArticleType articleType = new ArticleType();
+//			articleType.setId((int)(Math.random() * 8 +1));
+//			article.setArticleType(articleType);
+//			articleDao.update(article);
+//		}
 	}
 }

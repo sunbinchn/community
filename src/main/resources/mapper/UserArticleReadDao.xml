@@ -10,4 +10,7 @@
     <insert id="insert">
         insert into tb_user_article_read(article_id,user_id) VALUES (#{articleId},#{userId})
     </insert>
+    <select id="countGroupByArticleId" resultType="com.community.vo.ArticleCalculate">
+        select article_id,count(*) as amount from tb_user_article_read GROUP BY article_id
+    </select>
 </mapper>
