@@ -34,18 +34,26 @@
                                     </div>
 
                                     <div class="explore-buttons">
-                                        <%--<button type="button" class="btn btn-sm">--%>
-                                            <%--<span class="glyphicon glyphicon-heart"></span>--%>
-                                        <%--</button>--%>
                                         <button type="button" class="btn btn-sm loveButton">
-                                            <span class="glyphicon glyphicon-heart-empty"></span>
+                                            <c:choose>
+                                                <c:when test="${article.isLovedCurrentUser}">
+                                                    <img src="${PATH}static/images/love.png" style="vertical-align: baseline;">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src="${PATH}static/images/unlove.png" style="vertical-align: baseline;">
+                                                </c:otherwise>
+                                            </c:choose>
                                             <span>${fn:length(article.loveUserList)}</span>
                                         </button>
-                                        <%--<button type="button" class="btn btn-sm">--%>
-                                            <%--<span class="glyphicon glyphicon-star"></span>--%>
-                                        <%--</button>--%>
                                         <button type="button" class="btn btn-sm keepButton">
-                                            <span class="glyphicon glyphicon-star-empty"></span>
+                                            <c:choose>
+                                                <c:when test="${article.isKeepCurrentUser}">
+                                                    <img src="${PATH}static/images/keep.png" style="vertical-align: baseline;">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src="${PATH}static/images/unkeep.png" style="vertical-align: baseline;">
+                                                </c:otherwise>
+                                            </c:choose>
                                         </button>
                                     </div>
                                 </div>

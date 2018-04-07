@@ -20,6 +20,10 @@ public class Article {
     private List<Comment> commentList;
     private List<Tag> tagList;
 
+    //仅供显示使用，不对应数据库的字段
+    private boolean isLovedCurrentUser;
+    private boolean isKeepCurrentUser;
+
     public Integer getId() {
         return id;
     }
@@ -139,4 +143,21 @@ public class Article {
     public void setTagList(List<Tag> tagList) {
         this.tagList = tagList;
     }
+
+    public boolean getIsLovedCurrentUser() {
+        return isLovedCurrentUser;
+    }
+
+    public void setIsLovedCurrentUser(boolean lovedCurrentUser) {
+        isLovedCurrentUser = lovedCurrentUser;
+    }
+
+    public boolean getIsKeepCurrentUser() {
+        return isKeepCurrentUser;
+    }
+
+    public void setIsKeepCurrentUser(boolean keepCurrentUser) {
+        isKeepCurrentUser = keepCurrentUser;
+    }
+
 }

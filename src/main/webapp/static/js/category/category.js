@@ -32,7 +32,8 @@ $(function () {
                 $(".login-modal").modal('show');
             } else {
                 var articleId = $($(this).parents('.item')[0]).attr('data-id');
-                var $countSpan = $($(this).children('span')[1]);
+                var $countSpan = $($(this).children('span')[0]);
+                var $loveImg = $($(this).children('img')[0]);
                 $.ajax({
                     url: '/community/userArticleLove/toggle?articleId=' + articleId,
                     type: 'GET',
@@ -40,8 +41,34 @@ $(function () {
                         if (result.success) {
                             if (result.message == 'insert') {
                                 $countSpan.text(parseInt($countSpan.text())+1);
+                                $loveImg.attr('src', '/community/static/images/love.png');
                             } else {
                                 $countSpan.text(parseInt($countSpan.text())-1);
+                                $loveImg.attr('src', '/community/static/images/unlove.png');
+                            }
+
+                        }
+                    }
+                })
+            }
+            return false;
+        });
+        $(".keepButton").click(function () {
+            var userId = $("#user_id_input").val();
+            if (_.isEmpty(userId)) {
+                $(".login-modal").modal('show');
+            } else {
+                var articleId = $($(this).parents('.item')[0]).attr('data-id');
+                var $keepImg = $($(this).children('img')[0]);
+                $.ajax({
+                    url: '/community/userArticleKeep/toggle?articleId=' + articleId,
+                    type: 'GET',
+                    success: function (result) {
+                        if (result.success) {
+                            if (result.message == 'insert') {
+                                $keepImg.attr('src', '/community/static/images/keep.png');
+                            } else {
+                                $keepImg.attr('src', '/community/static/images/unkeep.png');
                             }
 
                         }

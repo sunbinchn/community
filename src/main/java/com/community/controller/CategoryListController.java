@@ -1,21 +1,21 @@
 package com.community.controller;
 
 import com.community.entity.Article;
+import com.community.entity.User;
 import com.community.enums.ArticleShowTypeConstant;
 import com.community.enums.ArticleTypeConstant;
 import com.community.service.ArticleService;
 import com.community.service.ArticleTypeService;
-import com.community.utils.PageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 @RequestMapping("explore")
@@ -44,6 +44,26 @@ public class CategoryListController {
         PageInfo<Article> pageInfo;
 //        pageInfo = new PageInfo<>(articleService.findArticleListByArticleType(articleTypeId), NAVIGATE_PAGES);
         pageInfo = new PageInfo<>(articleService.findArticleListByArticleTypeAndShowType(articleTypeId, articleShowTypeConstant), NAVIGATE_PAGES);
+        if (!CollectionUtils.isEmpty(pageInfo.getList()) && userId != null) {
+            for (Article article : pageInfo.getList()) {
+                if (!CollectionUtils.isEmpty(article.getLoveUserList())) { //判断文章是否被当前用户喜爱
+                    for (User user : article.getLoveUserList()) {
+                        if (user.getUserId().equals(userId)) {
+                            article.setIsLovedCurrentUser(true);
+                            break;
+                        }
+                    }
+                }
+                if (!CollectionUtils.isEmpty(article.getKeepUserList())) { //判断文章是否被当前用户收藏
+                    for (User user : article.getKeepUserList()) {
+                        if (user.getUserId().equals(userId)) {
+                            article.setIsKeepCurrentUser(true);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         request.setAttribute("pageInfo", pageInfo);
     }
 

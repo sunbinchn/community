@@ -1,7 +1,7 @@
 package com.community.controller;
 
 
-import com.community.dao.UserArticleLoveDao;
+import com.community.dao.UserArticleKeepDao;
 import com.community.vo.result.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/userArticleLove")
-public class UserArticleLoveController {
+@RequestMapping("/userArticleKeep")
+public class UserArticleKeepController {
     @Autowired
-    private UserArticleLoveDao userArticleLoveDao;
+    private UserArticleKeepDao userArticleKeepDao;
 
     @RequestMapping(value = "/toggle")
     @ResponseBody
-    public BaseResult toggle(@RequestParam("articleId")Integer articleId, HttpServletRequest request) {
+    public BaseResult toggle(@RequestParam("articleId") Integer articleId, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         Integer userId = (Integer) request.getSession().getAttribute("userId");
         if (userId != null) {
-            Integer count = userArticleLoveDao.findLoveCountByArticleIdAndUserId(articleId, userId);
+            Integer count = userArticleKeepDao.findKeepCountByArticleIdAndUserId(articleId, userId);
             if (count == 0) {
-                userArticleLoveDao.insert(articleId, userId);
+                userArticleKeepDao.insert(articleId, userId);
                 result.setMessage("insert");
             } else {
-                userArticleLoveDao.delete(articleId, userId);
+                userArticleKeepDao.delete(articleId, userId);
                 result.setMessage("delete");
             }
         }
