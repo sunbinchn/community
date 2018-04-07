@@ -4,7 +4,7 @@ $(function () {
     init_event();
 
     function init_event() {
-        $(".comment-love-btn").click(function(){
+        $('body').on('click', ".comment-love-btn", function(){
             var $commentItem = $($(this).parents('.comment-item')[0]);
             var targetCommentId = $commentItem.attr('data-id');
             var data = 'commentId='+targetCommentId+'&userId='+userId;
@@ -25,11 +25,10 @@ $(function () {
                 }
             })
         });
-        $('.inner-submit-button').click(function() {
+        $('body').on('click', '.inner-submit-button', function() {
             var textarea = $(this).siblings('textarea');
             var content = textarea.val().trim();
             if (_.isEmpty(content)) {
-                //todo 提示不能为空
                 return false;
             }
             var commentItem = $($(this).parents('.comment-item')[0]);
@@ -56,7 +55,7 @@ $(function () {
                 })
             }
         });
-        $('.comment-nest-comment').click(function() {
+        $('body').on('click','.comment-nest-comment', function() {
             var commentItem = $($(this).parents('.comment-item')[0]);
             var nestCommentBox = commentItem.children('.nest-comment-box');
             nestCommentBox.find('.inner-comment-list').html('');
@@ -90,27 +89,27 @@ $(function () {
             $(".register-modal").modal('show');
             $("#reg_username").focus();
         });
-        $('.comment-inner-content').mouseover(function(){
+        $('body').on('mouseover', '.comment-inner-content', function(){
             $(this).next('.inner-submit-button').removeAttr('disabled');
         });
-        $('.comment-inner-content').mouseout(function(){
+        $('body').on('mouseout', '.comment-inner-content', function(){
             if (_.isEmpty($(this).val())) {
                 $(this).next('.inner-submit-button').attr('disabled','disabled')
             } else {
                 $(this).next('.inner-submit-button').removeAttr('disabled');
             }
         });
-        $('.comment-input').mouseover(function(){
+        $('body').on('mouseover', '.comment-input', function(){
             $('.comment-input').next('.submit-div').children('.submit-button').removeAttr('disabled');
         });
-        $('.comment-input').mouseout(function(){
+        $('body').on('mouseout', '.comment-input', function(){
             if (_.isEmpty($(this).val())) {
                 $('.comment-input').next('.submit-div').children('.submit-button').attr('disabled','disabled')
             } else {
                 $('.comment-input').next('.submit-div').children('.submit-button').removeAttr('disabled');
             }
         });
-        $('#comment-sumbit-button').click(function() {
+        $('body').on('click', '#comment-sumbit-button', function() {
             var content = $(".comment-form .comment-input").val();
             var path = window.location.pathname;
             var articleId = path.substr(path.lastIndexOf('/') +1);
@@ -133,17 +132,19 @@ $(function () {
                     if (result && result.success) {
                         var comment = result.data;
                         var lastItem = $('.article-comment-list .comment-item:last');
-                        var commentItem = $('<div class="comment-item"></div>');
+                        var commentItem = $('<div class="comment-item" data-id="'+ comment.id +'"></div>');
                         var commentHead = $('<div class="comment-head"></div>');
                         var commentBody = $('<div class="comment-body"></div>');
                         var commentFoot = $('<div class="comment-footer"></div>');
+                        var nestCommentBox = $('<div class="nest-comment-box"><div class="inner-box"><div class="inner-comment-list"><div class="inner-comment-item"><div class="comment-head"><a class="comment-img" href=""><img src="/community/static/images/user/user_icon_boy.png" alt=""></a><p><a href=""></a></p></div><div class="comment-body"><div class="markitup-box"></div></div></div><div class="inner-comment-item"><div class="comment-head"><a class="comment-img" href=""><img src="/community/static/images/user/user_icon_boy.png" alt=""></a><p><a href=""></a></p></div><div class="comment-body"><div class="markitup-box"></div></div></div></div><textarea cols="2" rows="1" placeholder="你想对ta说的话" class="comment-inner-content" data-target-id=""></textarea><button type="button" class="btn btn-success inner-submit-button" disabled="disabled">评论</button></div></div>');
                         $('<a class="comment-img" href=""><img src="/community/static/images/'+comment.user.icon.url+'" alt="'+comment.user.userName+'"></a>').appendTo(commentHead);
                         $('<p><a href="">'+comment.user.userName+'</a></p>').appendTo(commentHead);
                         $('<div class="markitup-box">'+comment.content+'</div>’').appendTo(commentBody);
-                        $('<div class="meta"><span class="pull-right text-color-999">'+new Date(comment.createTime).Format("yyyy-MM-dd HH:mm:ss")+'</span></div>').appendTo(commentFoot);
+                        $('<div class="meta"><button type="button" class="btn btn-default btn-xs comment-love-btn"><span class="glyphicon glyphicon-triangle-top" style="color: #777573;"></span><span style="color: #1b1a19;">0</span></button><span class="comment-nest-comment"><span class="glyphicon glyphicon-comment" style="color: #737270;"></span><span id="nest-comment-span" style="color:#737171;">0条评论</span></span><span class="pull-right text-color-999">'+new Date(comment.createTime).Format("yyyy-MM-dd HH:mm:ss")+'</span></div>').appendTo(commentFoot);
                         commentHead.appendTo(commentItem);
                         commentBody.appendTo(commentItem);
                         commentFoot.appendTo(commentItem);
+                        nestCommentBox.appendTo(commentItem);
                         lastItem.after(commentItem);
                         $('.comment-input').val('');
                     } else {

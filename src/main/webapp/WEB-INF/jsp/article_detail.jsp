@@ -77,10 +77,10 @@
                                                         <a class="comment-img" href="">
                                                             <img src="${PATH}static/images/user/user_icon_boy.png" alt="">
                                                         </a>
-                                                        <p><a href="">名字</a></p>
+                                                        <p><a href=""></a></p>
                                                     </div>
                                                     <div class="comment-body">
-                                                        <div class="markitup-box">提的一些要求，仔细分析是否为过分要求，如果是过分要求，我们应该要敢于拒绝，善于拒绝。</div>
+                                                        <div class="markitup-box"></div>
                                                     </div>
                                                 </div>
                                                 <div class="inner-comment-item">
@@ -88,10 +88,10 @@
                                                         <a class="comment-img" href="">
                                                             <img src="${PATH}static/images/user/user_icon_boy.png" alt="">
                                                         </a>
-                                                        <p><a href="">名字</a></p>
+                                                        <p><a href=""></a></p>
                                                     </div>
                                                     <div class="comment-body">
-                                                        <div class="markitup-box">内松</div>
+                                                        <div class="markitup-box"></div>
                                                     </div>
                                                 </div>
                                             </div>
