@@ -1,5 +1,6 @@
 package com.community.dao;
 
+import com.community.entity.Article;
 import com.community.entity.User;
 import com.community.vo.ArticleCalculate;
 import org.apache.ibatis.annotations.Param;
@@ -17,4 +18,8 @@ public interface UserArticleLoveDao {
 
 
     List<ArticleCalculate> countGroupByArticleId();
+
+    List<Article> findLoveArticleListByUserId(Integer userId);
+
+    Integer countByUserId(Integer userId);
 }

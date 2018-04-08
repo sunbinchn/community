@@ -48,9 +48,9 @@
                            aria-expanded="false">${username} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/community/writeArticle/index">写文章</a></li>
-                            <li><a href="/community/userHomePage/myHome">我的主页</a></li>
-                            <li><a href="/community/userHomePage/myHome">我喜欢的</a></li>
-                            <li><a href="/community/userHomePage/myHome">我的收藏</a></li>
+                            <li><a href="/community/userHomePage/${userId}/read">我的主页</a></li>
+                            <li><a href="/community/userHomePage/${userId}/love">我喜欢的</a></li>
+                            <li><a href="/community/userHomePage/${userId}/keep">我的收藏</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/community/userInfo/profile">个人信息</a></li>
                             <li><a href="/community/userInfo/password">修改密码</a></li>

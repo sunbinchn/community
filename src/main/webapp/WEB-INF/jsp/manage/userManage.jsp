@@ -24,12 +24,15 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>用户名</th>
-                <th>邮箱</th>
-                <th>电话</th>
-                <th>个性签名</th>
-                <th>访问数</th>
-                <th>操作</th>
+                <th style="min-width: 50px;">用户名</th>
+                <th style="min-width: 50px;">昵称</th>
+                <th style="min-width: 50px;">邮箱</th>
+                <th style="min-width: 50px;">电话</th>
+                <th style="min-width: 50px;">公司</th>
+                <th style="min-width: 50px;">职位</th>
+                <th style="min-width: 50px;">个性签名</th>
+                <th style="min-width: 50px;">访问数</th>
+                <th style="min-width: 80px;">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -39,8 +42,11 @@
                         <tr class="success" data-id="${userItem.userId}">
                             <td>${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}</td>
                             <td>${userItem.userName}</td>
+                            <td>${userItem.nickname}</td>
                             <td>${userItem.email}</td>
                             <td>${userItem.phone}</td>
+                            <td>${userItem.company}</td>
+                            <td>${userItem.jobTitle}</td>
                             <td>${userItem.signature}</td>
                             <td>${userItem.visits}</td>
                             <td>
@@ -67,8 +73,11 @@
                         <tr  class="info" data-id="${userItem.userId}">
                             <td>${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}</td>
                             <td>${userItem.userName}</td>
+                            <td>${userItem.nickname}</td>
                             <td>${userItem.email}</td>
                             <td>${userItem.phone}</td>
+                            <td>${userItem.company}</td>
+                            <td>${userItem.jobTitle}</td>
                             <td>${userItem.signature}</td>
                             <td>${userItem.visits}</td>
                             <td>
@@ -98,6 +107,7 @@
         <!-- 分页 -->
         <c:if test="${pageInfo.pages gt 1}">
             <div style="float:right">
+            <c:if test="${pageInfo.pages gt 1}">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <c:if test="${pageInfo.hasPreviousPage}">
@@ -127,6 +137,7 @@
                         </c:if>
                     </ul>
                 </nav>
+            </c:if>
             </div> <!-- 分页结束 -->
         </c:if>
     </div>

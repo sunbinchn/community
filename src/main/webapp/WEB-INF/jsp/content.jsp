@@ -61,6 +61,7 @@
                         </div>
                     </div>
                     <div class="explore-foot">
+                        <c:if test="${pageInfo.pages gt 1}">
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
                                 <c:if test="${pageInfo.hasPreviousPage}">
@@ -90,6 +91,7 @@
                                 </c:if>
                             </ul>
                         </nav>
+                        </c:if>
                     </div> <!-- explore-foot end -->
 
                 </div>

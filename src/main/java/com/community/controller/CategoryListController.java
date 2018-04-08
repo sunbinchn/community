@@ -6,6 +6,7 @@ import com.community.enums.ArticleShowTypeConstant;
 import com.community.enums.ArticleTypeConstant;
 import com.community.service.ArticleService;
 import com.community.service.ArticleTypeService;
+import com.community.utils.ArticleUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,28 +43,8 @@ public class CategoryListController {
         request.setAttribute("articleTypeList", articleTypeService.findAll());
         PageHelper.startPage(pn, PAGE_SIZE); // PageHelper 只对紧跟着的第一个 SQL 语句起作用
         PageInfo<Article> pageInfo;
-//        pageInfo = new PageInfo<>(articleService.findArticleListByArticleType(articleTypeId), NAVIGATE_PAGES);
         pageInfo = new PageInfo<>(articleService.findArticleListByArticleTypeAndShowType(articleTypeId, articleShowTypeConstant), NAVIGATE_PAGES);
-        if (!CollectionUtils.isEmpty(pageInfo.getList()) && userId != null) {
-            for (Article article : pageInfo.getList()) {
-                if (!CollectionUtils.isEmpty(article.getLoveUserList())) { //判断文章是否被当前用户喜爱
-                    for (User user : article.getLoveUserList()) {
-                        if (user.getUserId().equals(userId)) {
-                            article.setIsLovedCurrentUser(true);
-                            break;
-                        }
-                    }
-                }
-                if (!CollectionUtils.isEmpty(article.getKeepUserList())) { //判断文章是否被当前用户收藏
-                    for (User user : article.getKeepUserList()) {
-                        if (user.getUserId().equals(userId)) {
-                            article.setIsKeepCurrentUser(true);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        ArticleUtil.setIsLovedAndkeepCurrentUser(pageInfo, userId);
         request.setAttribute("pageInfo", pageInfo);
     }
 

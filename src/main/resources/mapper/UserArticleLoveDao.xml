@@ -8,12 +8,18 @@
         select count(*) from tb_user_article_love where article_id = #{articleId} and user_id = #{userId}
     </select>
     <insert id="insert">
-        insert into tb_user_article_love(article_id,user_id) VALUES (#{articleId},#{userId})
+        insert into tb_user_article_love(article_id,user_id,create_time) VALUES (#{articleId},#{userId},now())
     </insert>
     <delete id="delete">
         delete from tb_user_article_love where  article_id = #{articleId} and user_id = #{userId}
     </delete>
     <select id="countGroupByArticleId" resultType="com.community.vo.ArticleCalculate">
         select article_id,count(*) as amount from tb_user_article_love GROUP BY article_id
+    </select>
+    <select id="findLoveArticleListByUserId" parameterType="Integer" resultMap="com.community.dao.ArticleDao.articleMapper">
+        select a.* from tb_user_article_love love,tb_article a where love.article_id = a.id and love.user_id = #{param} ORDER BY love.create_time desc
+    </select>
+    <select id="countByUserId" parameterType="Integer" resultType="Integer">
+        select count(id) from tb_user_article_love where user_id = #{param}
     </select>
 </mapper>

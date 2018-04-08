@@ -8,9 +8,15 @@
         select count(*) from tb_user_article_read where article_id = #{articleId} and user_id = #{userId}
     </select>
     <insert id="insert">
-        insert into tb_user_article_read(article_id,user_id) VALUES (#{articleId},#{userId})
+        insert into tb_user_article_read(article_id,user_id,create_time) VALUES (#{articleId},#{userId},now())
     </insert>
     <select id="countGroupByArticleId" resultType="com.community.vo.ArticleCalculate">
         select article_id,count(*) as amount from tb_user_article_read GROUP BY article_id
+    </select>
+    <select id="findLoveArticleListByUserId" parameterType="Integer" resultMap="com.community.dao.ArticleDao.articleMapper">
+        select a.* from tb_user_article_read aread,tb_article a where aread.article_id = a.id and aread.user_id = #{param} ORDER BY aread.create_time desc
+    </select>
+    <select id="countByUserId" parameterType="Integer" resultType="Integer">
+        select count(id) from tb_user_article_read where user_id = #{param}
     </select>
 </mapper>
