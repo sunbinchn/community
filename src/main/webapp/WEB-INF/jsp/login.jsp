@@ -17,7 +17,7 @@
     <script src="${PATH}static/js/login/login.js"></script>
     <%
         //如果用户在别的页面登录过了，在这个页面直接跳转就好
-        if (request.getSession().getAttribute("name") != null && !"".equals(request.getSession().getAttribute("name"))) {
+        if (request.getSession().getAttribute("username") != null && !"".equals(request.getSession().getAttribute("username"))) {
             response.sendRedirect("/community/index.html");
         }
     %>

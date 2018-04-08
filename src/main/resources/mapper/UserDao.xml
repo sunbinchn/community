@@ -33,4 +33,10 @@
     <update id="cancelBanByUserId" parameterType="Integer">
         update tb_user set is_ban = 0 where id = #{param};
     </update>
+    <select id="findNickName" parameterType="java.lang.String">
+        select count(id) from tb_user where nick_name = #{param}
+    </select>
+    <update id="updatePassword" parameterType="com.community.vo.UserVo">
+        update tb_user set password = #{newPassword} where id = #{userId}
+    </update>
 </mapper>

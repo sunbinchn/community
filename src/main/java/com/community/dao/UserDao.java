@@ -1,6 +1,7 @@
 package com.community.dao;
 
 import com.community.entity.User;
+import com.community.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -24,4 +25,8 @@ public interface UserDao {
     boolean cancelShutUpByUserId(Integer userId);
 
     boolean cancelBanByUserId(Integer userId);
+
+    Integer findNickName(String nickName);
+
+    boolean updatePassword(UserVo userVo);
 }

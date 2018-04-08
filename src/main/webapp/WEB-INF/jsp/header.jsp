@@ -47,7 +47,14 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">${username} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/community/userInfo/index">个人信息</a></li>
+                            <li><a href="/community/writeArticle/index">写文章</a></li>
+                            <li><a href="/community/userHomePage/index">我的主页</a></li>
+                            <li><a href="/community/userHomePage/index">我喜欢的</a></li>
+                            <li><a href="/community/userHomePage/index">我的收藏</a></li>
+                        </ul>
+                        <ul class="dropdown-menu">
+                            <li><a href="/community/userInfo/profile">个人信息</a></li>
+                            <li><a href="/community/userInfo/password">修改密码</a></li>
                             <li role="separator" class="divider"></li>
                             <c:if test="${role eq 2}">
                                 <li><a href="/community/manage/user/index">用户管理</a></li>
