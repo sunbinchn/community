@@ -22,12 +22,16 @@
   </filter-mapping>
 
   <filter>
-    <filter-name>manageFilter</filter-name>
-    <filter-class>com.community.filter.ManageFilter</filter-class>
+    <filter-name>loginFilter</filter-name>
+    <filter-class>com.community.filter.LoginFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>manageFilter</filter-name>
+    <filter-name>loginFilter</filter-name>
     <url-pattern>/manage/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>loginFilter</filter-name>
+    <url-pattern>/userInfo/*</url-pattern>
   </filter-mapping>
 
   <!-- springMVC提供的过滤器，这样ajax就可以直接发送put请求，

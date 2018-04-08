@@ -20,6 +20,9 @@ $(function(){
                 $("#email_error_span").text('邮箱不能为空！');
                 return false;
             }
+            if (!_.isEmpty($("#nickname_error_span").text())) {
+                return false;
+            }
         });
         $("#nickname").change(function () {
             if(!_.isEmpty($(this).val())) {
@@ -29,10 +32,10 @@ $(function(){
                     type: 'GET',
                     success: function (result) {
                         if (result.success) {
-                            $("#yesImg").attr('display','block');
+                            $("#yesImg").css('display','block');
                             $("#nickname_error_span").text('');
                         } else {
-                            $("#yesImg").attr('display','none');
+                            $("#yesImg").css('display','none');
                             $("#nickname_error_span").text(result.message);
                         }
                     }

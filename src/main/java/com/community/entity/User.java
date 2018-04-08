@@ -7,10 +7,13 @@ public class User {
     private Integer userId;
     private String userNameOrEmail;
     private String userName;
+    private String nickname;
     private String password;
     @Email
     private String email;
     private String phone;
+    private String company;
+    private String jobTitle;
     private Image icon;
     private String signature;
     private Integer visits;
@@ -112,5 +115,29 @@ public class User {
 
     public void setIsBan(Integer isBan) {
         this.isBan = isBan;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 }

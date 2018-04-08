@@ -26,7 +26,15 @@ public interface UserDao {
 
     boolean cancelBanByUserId(Integer userId);
 
-    Integer findNickName(String nickName);
+    /**
+     * 不包括自己已经用的昵称
+     * @param nickname
+     * @param userId
+     * @return
+     */
+    Integer findNickName(@Param("nickname") String nickname,@Param("userId") Integer userId);
 
     boolean updatePassword(UserVo userVo);
+
+    boolean update(User user);
 }

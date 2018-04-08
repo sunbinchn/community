@@ -16,11 +16,11 @@
     <!-- 左侧内容栏 -->
     <div class="col-sm-12 col-md-9 user-info-panel">
         <div class="user-icon-div">
-            <img src="${PATH}static/images/user/user_icon_boy.png" alt="" style="width: 100px"/>
+            <img src="${PATH}static/images/${userInfo.icon.url}" alt="" style="width: 100px"/>
         </div>
         <div class="user-info-div">
-            <h3>名字</h3>
-            <span>个性签名</span>
+            <h3>${userInfo.userName}</h3>
+            <span>${userInfo.signature}</span>
         </div>
         <div>
             <button type="button" class="btn btn-primary edit-my-profile">编辑个人资料</button>

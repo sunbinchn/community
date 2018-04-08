@@ -4,4 +4,7 @@
     <select id="findById"  resultType="com.community.entity.Image" parameterType="Integer">
         select * from tb_image where id = #{param}
     </select>
+    <insert id="insert" parameterType="com.community.entity.Image"  keyProperty="id" useGeneratedKeys="true" >
+        insert into tb_image(url,description) values(#{url},#{description})
+    </insert>
 </mapper>

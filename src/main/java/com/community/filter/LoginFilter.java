@@ -9,11 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ManageFilter extends OncePerRequestFilter {
+public class LoginFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-//        Integer role = (Integer) httpServletRequest.getSession().getAttribute("role");
-        Integer role = 2;   //todo 为了调试更快，需要改回来
+        Integer role = (Integer) httpServletRequest.getSession().getAttribute("role");
         if (UserRoleConstant.ADMIN.getId().equals(role)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         } else {

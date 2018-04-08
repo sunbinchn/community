@@ -31,9 +31,9 @@ $(function(){
                 contentType : 'application/json;charset=utf-8',
                 data: JSON.stringify(userVo),
                 success: function (result) {
-                    $("#oldPassword").text('');
-                    $("#newPassword1").text('');
-                    $("#newPassword2").text('');
+                    $("#oldPassword").val('');
+                    $("#newPassword1").val('');
+                    $("#newPassword2").val('');
                     if (result.success) {
                         alert('保存成功');
                     } else {

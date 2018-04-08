@@ -1,5 +1,6 @@
 package com.community.controller;
 
+import com.community.dao.ImageDao;
 import com.community.dao.UserDao;
 import com.community.entity.Image;
 import com.community.entity.User;
@@ -24,13 +25,15 @@ import java.io.IOException;
 public class UserInfoController {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private ImageDao imageDao;
 
 
     @RequestMapping("profile")
     public String profile(HttpServletRequest request) {
-//        Integer userId = (Integer)request.getSession().getAttribute("userId");
-//        User user = userDao.findById(userId);
-//        request.setAttribute("userInfo", user);
+        Integer userId = (Integer) request.getSession().getAttribute("userId");
+        User user = userDao.findById(userId);
+        request.setAttribute("userInfo", user);
         return "user_info";
     }
 
@@ -42,38 +45,42 @@ public class UserInfoController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(@RequestParam("icon") MultipartFile iconFile, HttpServletRequest request) {
         Integer userId = (Integer) request.getSession().getAttribute("userId");
-        if (userId == null) {
-            return "redirect:/userInfo/index";
-        }
+        User user = userDao.findById(userId);
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         String nickname = request.getParameter("nickname");
         String company = request.getParameter("company");
         String signature = request.getParameter("signature");
         String jobTitle = request.getParameter("jobTitle");
-        String iconFileName = null;
         if (iconFile != null && iconFile.getSize() != 0 && StringUtils.isNotEmpty(iconFile.getOriginalFilename())) {
             try {
-                iconFileName = FileUploadUtil.uploadFile(iconFile, request);
+                String iconFileName = FileUploadUtil.uploadFile(iconFile, request);
+                Image image = new Image();
+                image.setUrl(iconFileName);
+                boolean insert = imageDao.insert(image);
+                if (insert) {
+                    user.setIcon(image);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        User user = userDao.findById(userId);
-        if (StringUtils.isNotEmpty(iconFileName)) {
-            Image image = new Image();
-            image.setUrl(iconFileName);
-            user.setIcon(image);
-        }
-        return "redirect:/userInfo/index";
+        user.setPhone(phone);
+        user.setEmail(email);
+        user.setNickname(nickname);
+        user.setCompany(company);
+        user.setSignature(signature);
+        user.setJobTitle(jobTitle);
+        boolean update = userDao.update(user);
+        return "redirect:/userInfo/profile";
     }
 
     @RequestMapping("nickNameQuery")
     @ResponseBody
-    public BaseResult nickNameQuery(@RequestParam("nickName") String nickName) {
+    public BaseResult nickNameQuery(@RequestParam("nickName") String nickName, HttpServletRequest request) {
+        Integer userId = (Integer) request.getSession().getAttribute("userId");
         BaseResult result = new BaseResult();
-        //todo 给User.java加属性，数据库加字段
-        Integer count = userDao.findNickName(nickName);
+        Integer count = userDao.findNickName(nickName, userId);
         if (count > 0) {
             result.setSuccess(false);
             result.setMessage("该昵称已被使用！");
@@ -88,11 +95,6 @@ public class UserInfoController {
     public BaseResult updatePassword(@RequestBody UserVo userVo, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         Integer userId = (Integer) request.getSession().getAttribute("userId");
-        if (userId == null) {
-            result.setSuccess(false);
-            result.setMessage("当前用户未登录");
-            return result;
-        }
         userVo.setUserId(userId);
         User user = userDao.findById(userId);
         if (user != null) {
