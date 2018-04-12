@@ -19,14 +19,27 @@
     margin-top: 90px;
     margin-right: 30px;
 }
+.toggle-user-relation {
+    float: right;
+    margin-top: 90px;
+    margin-right: 30px;
+}
+
 .aw-nav-tabs {
     position: relative;
     z-index: 1;
     min-height: 63px;
-    min-height: 32px\9;
+    min-height: 32px \9;
     margin: 0;
     float: right;
     padding: 30px 20px 0;
     border-color: #e6e6e6;
     width: 100%;
+}
+
+.half-div {
+    width: 50%;
+    position: relative;
+    float: left;
+    text-align: center;
 }

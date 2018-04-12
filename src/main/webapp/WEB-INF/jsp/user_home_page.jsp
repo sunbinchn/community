@@ -14,6 +14,7 @@
 <body>
 <%@ include file="header.jsp" %>
 <div class="container">
+    <input type="text" name="targetUserId" id="targetUserId" hidden="true" value="${userInfo.userId}">
     <!-- 左侧内容栏 -->
     <div class="col-sm-12 col-md-9 user-info-panel">
         <div class="user-icon-div">
@@ -24,12 +25,37 @@
             <span>${userInfo.signature}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-primary edit-my-profile">编辑个人资料</button>
+            <c:choose>
+                <c:when test="${sessionScope.userId eq userInfo.userId}">
+                    <button type="button" class="btn btn-primary edit-my-profile">编辑个人资料</button>
+                </c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${userRelationVo.isIdolOfCurrentUser}">
+                            <button type="button" class="btn btn-primary toggle-user-relation">已关注</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button type="button" class="btn btn-primary toggle-user-relation">关注</button>
+                        </c:otherwise>
+                    </c:choose>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <!-- 右侧栏 -->
-    <div class="col-sm-12 col-md-3">
-        <h1>阿萨德</h1>
+    <div class="col-sm-12 col-md-3" style="margin-top: 30px;border-bottom: 1px solid #EDEDED;">
+        <div class="half-div" style="border-right: 1px solid #EDEDED;">
+            <a>
+                <div>关注了</div>
+                <div><span  id="idolCount">${fn:length(userRelationVo.idolUserList)}</span></div>
+            </a>
+        </div>
+        <div class="half-div">
+            <a>
+                <div>关注者</div>
+                <div><span id="fansCount">${fn:length(userRelationVo.fansUserList)}</span></div>
+            </a>
+        </div>
     </div>
     <!-- 左侧内容栏 -->
     <div class="col-sm-12 col-md-9 aw-main-content" style="margin-top: -30px">

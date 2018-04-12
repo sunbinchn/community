@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.dao.UserRelationDao">
+    <resultMap id="userRelationMapper" type="com.community.entity.UserRelation">
+        <association column="user_id" property="user" select="com.community.dao.UserDao,findById"></association>
+        <association column="target_user_id" property="targetUser" select="com.community.dao.UserDao,findById"></association>
+    </resultMap>
+    <insert id="insert" parameterType="com.community.entity.UserRelation">
+        insert into tb_user_relation(user_id,target_user_id) values(#{user.userId},#{targetUser.userId})
+    </insert>
+    <select id="findAllByUserId" parameterType="Integer" resultMap="com.community.dao.UserDao.userMapper">
+      select id,user_name,nickname,phone,email,company,job_title,signature,visits,is_shut_up,is_ban from tb_user where id in (select target_user_id from tb_user_relation where user_id = #{param})
+    </select>
+    <select id="findAllByTargetUserId" parameterType="Integer" resultMap="com.community.dao.UserDao.userMapper">
+        select id,user_name,nickname,phone,email,company,job_title,signature,visits,is_shut_up,is_ban from tb_user where id in (select user_id from tb_user_relation where target_user_id = #{param})
+    </select>
+    <select id="find" parameterType="com.community.entity.UserRelation" resultType="Integer">
+        select count(id) from tb_user_relation where user_id = #{user.userId} and target_user_id = #{targetUser.userId}
+    </select>
+    <delete id="delete"  parameterType="com.community.entity.UserRelation">
+        delete from tb_user_relation where user_id = #{user.userId} and target_user_id = #{targetUser.userId}
+    </delete>
+</mapper>

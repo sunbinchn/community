@@ -11,6 +11,29 @@ $(function () {
     init_event();
 
     function init_event() {
+        $(".edit-my-profile").click(function () {
+           window.location.href = '/community/userInfo/profile';
+        });
+        $(".toggle-user-relation").click(function () {
+            var targetUserId = $("#targetUserId").val();
+            $.ajax({
+                url: '/community/userRelation/toggle/'+ targetUserId,
+                type : "GET",
+                success: function (result) {
+                    if (result.success) {
+                        if (result.message == 'cancel') {
+                            $(".toggle-user-relation").text('关注');
+                            $("#fansCount").text(parseInt($("#fansCount").text()) - 1);
+                        } else {
+                            $(".toggle-user-relation").text('已关注');
+                            $("#fansCount").text(parseInt($("#fansCount").text()) + 1);
+                        }
+                    } else {
+
+                    }
+                }
+            })
+        });
         // $("#readLi").click(function () {
         //     $("#readLi").removeClass('active');
         //     $("#loveLi").removeClass('active');

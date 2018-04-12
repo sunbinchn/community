@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <div class="container">
-    <input id="user_id_input" hidden="true" value="${userId}"/>
+    <input id="user_id_input" hidden="true" value="${sessionScope.userId}"/>
     <nav class="navbar navbar-default">
         <div class="container-fluid" style="background-color: antiquewhite;">
             <!-- Brand and toggle get grouped for better mobile display -->
