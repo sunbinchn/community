@@ -47,13 +47,13 @@
         <div class="half-div" style="border-right: 1px solid #EDEDED;">
             <a>
                 <div>关注了</div>
-                <div><span  id="idolCount">${fn:length(userRelationVo.idolCount)}</span></div>
+                <div><span  id="idolCount">${userRelationVo.idolCount}</span></div>
             </a>
         </div>
         <div class="half-div">
             <a>
                 <div>关注者</div>
-                <div><span id="fansCount">${fn:length(userRelationVo.fansCount)}</span></div>
+                <div><span id="fansCount">${userRelationVo.fansCount}</span></div>
             </a>
         </div>
     </div>
@@ -63,8 +63,9 @@
             <li role="presentation"  id="readLi"><a href="/community/userHomePage/${userInfo.userId}/read">浏览记录<span class="badge">${readCount}</span></a></li>
             <li role="presentation"  id="loveLi"><a href="/community/userHomePage/${userInfo.userId}/love">喜欢<span class="badge">${loveCount}</span></a></li>
             <li role="presentation"  id="keepLi"><a href="/community/userHomePage/${userInfo.userId}/keep">收藏<span class="badge">${keepCount}</span></a></li>
-            <li role="presentation"  id="idolLi"><a href="/community/userHomePage/${userInfo.userId}/idol">我的关注</a></li>
-            <li role="presentation"  id="fansLi"><a href="/community/userHomePage/${userInfo.userId}/fans">我的粉丝</a></li>
+            <li role="presentation"  id="articleLi"><a href="/community/userHomePage/${userInfo.userId}/article">文章<span class="badge">${articleCount}</span></a></li>
+            <li role="presentation"  id="idolLi"><a href="/community/userHomePage/${userInfo.userId}/idol">关注<span class="badge">${userRelationVo.idolCount}</span></a></li>
+            <li role="presentation"  id="fansLi"><a href="/community/userHomePage/${userInfo.userId}/fans">粉丝<span class="badge">${userRelationVo.fansCount}</span></a></li>
         </ul>
 
         <div class="content-explore-list">
@@ -72,13 +73,13 @@
                 <div class="explore-common-list">
                     <c:forEach items="${pageInfo.list}" var="article" varStatus="articleStatus">
                         <div class="item" style="<c:if test="${articleStatus.count eq 1}">border-top: 0;</c:if>" data-id="${article.id}">
-                            <a class="user-icon">
+                            <a class="user-icon" href="${PATH}userHomePage/${article.user.userId}/read" target="_blank">
                                 <img src="${PATH}static/images/${article.user.icon.url}" alt="">
                             </a>
                             <div class="explore-title">
                                 <p>
-                                    <a href="${PATH}people/${article.user.userName}" class="user-name">${article.user.userName}</a>
-                                    <span class="text-color-999">发表了文章 • ${fn:length(article.commentList)} 个评论 • ${fn:length(article.readUserList)} 次浏览 •
+                                    <a href="${PATH}userHomePage/${article.user.userId}/read" class="user-name" target="_blank">${article.user.userName}</a>
+                                    <span class="text-color-999">发表了文章 • <a href="${PATH}detail/get/${article.id}#comment-anchor" target="_blank">${fn:length(article.commentList)}</a> 个评论 • ${fn:length(article.readUserList)} 次浏览 •
                                                 <fmt:formatDate value="${article.createTime}"  type="both" /></span>
                                 </p>
                                 <h4><a href="${PATH}detail/get/${article.id}" target="_blank">${article.title}</a></h4>

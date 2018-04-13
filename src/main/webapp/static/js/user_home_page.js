@@ -11,6 +11,8 @@ $(function () {
         $("#idolLi").addClass('active');
     } else if (subUrl == 'fans') {
         $("#fansLi").addClass('active');
+    } else if (subUrl == 'article') {
+        $("#articleLi").addClass('active');
     }
     init_event();
 

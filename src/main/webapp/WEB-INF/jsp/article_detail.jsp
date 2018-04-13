@@ -19,12 +19,12 @@
                 <div class="col-sm-12 col-md-9 aw-main-content">
                     <div class="container">
                         <div class="content-user-icon-div">
-                            <a href="#" class="content-user-icon">
+                            <a href="${PATH}userHomePage/${article.user.userId}/read" class="content-user-icon" target="_blank">
                                 <img src="${PATH}static/images/${article.user.icon.url}" alt="">
                             </a>
                         </div>
                         <div class="user-and-time-div">
-                            <a href="#" class="content-user-name">
+                            <a href="${PATH}userHomePage/${article.user.userId}/read" class="content-user-name" target="_blank">
                                 ${article.user.userName}
                             </a>
                             <div style="margin-top: 10px;">
@@ -39,6 +39,7 @@
                         </div>
                     </div>
                     <div class="article-comment">
+                        <a name="comment-anchor"></a>
                         <div class="article-comment-head">
                             <h3>${fn:length(article.commentList)}&nbsp;个&nbsp;评&nbsp;论</h3>
                         </div>

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("detail")
@@ -20,8 +22,12 @@ public class ArticleDetailController {
     private UserArticleReadDao userArticleReadDao;
 
     @RequestMapping("/get/{id}")
-    public String detail(@PathVariable("id") Integer articleId, HttpServletRequest request) {
-        Article article = articleDetailService.findById(articleId);
+    public String detail(@PathVariable("id") Integer articleId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Article article = articleDetailService.findById(articleId, (Integer)request.getSession().getAttribute("userId"));
+        if (article == null) {
+            response.sendRedirect("/community/error.html");
+            return null;
+        }
         request.setAttribute("article", article);
         Integer userId = (Integer)request.getSession().getAttribute("userId");
         if (userId != null) {

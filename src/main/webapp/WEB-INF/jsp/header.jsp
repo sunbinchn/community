@@ -45,18 +45,19 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">${username} <span class="caret"></span></a>
+                           aria-expanded="false">${sessionScope.username} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/community/writeArticle/index">写文章</a></li>
-                            <li><a href="/community/userHomePage/${userId}/read">我的主页</a></li>
-                            <li><a href="/community/userHomePage/${userId}/love">我喜欢的</a></li>
-                            <li><a href="/community/userHomePage/${userId}/keep">我的收藏</a></li>
+                            <li><a href="/community/userHomePage/${sessionScope.userId}/read">我的主页</a></li>
+                            <li><a href="/community/userHomePage/${sessionScope.userId}/love">我喜欢的</a></li>
+                            <li><a href="/community/userHomePage/${sessionScope.userId}/keep">我的收藏</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/community/userInfo/profile">个人信息</a></li>
                             <li><a href="/community/userInfo/password">修改密码</a></li>
                             <li role="separator" class="divider"></li>
                             <c:if test="${role eq 2}">
                                 <li><a href="/community/manage/user/index">用户管理</a></li>
+                                <li><a href="/community/manage/article/index">文章管理</a></li>
                             </c:if>
                             <li><a href="/community/login/logOut">退出登录</a></li>
                         </ul>

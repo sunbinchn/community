@@ -14,12 +14,12 @@
         delete from tb_user_article_keep where  article_id = #{articleId} and user_id = #{userId}
     </delete>
     <select id="countGroupByArticleId" resultType="com.community.vo.ArticleCalculate">
-        select article_id,count(*) as amount from tb_user_article_keep GROUP BY article_id
+        select article_id,count(*) as amount from tb_user_article_keep keep,tb_article a where keep.article_id = a.id and a.is_pass = 1 GROUP BY article_id
     </select>
     <select id="findLoveArticleListByUserId" parameterType="Integer" resultMap="com.community.dao.ArticleDao.articleMapper">
-        select a.* from tb_user_article_keep keep,tb_article a where keep.article_id = a.id and keep.user_id = #{param} ORDER BY keep.create_time desc
+        select a.* from tb_user_article_keep keep,tb_article a where keep.article_id = a.id and keep.user_id = #{param} and a.is_pass = 1 ORDER BY keep.create_time desc
     </select>
     <select id="countByUserId" parameterType="Integer" resultType="Integer">
-        select count(id) from tb_user_article_keep where user_id = #{param}
+        select count(a.id) from tb_user_article_keep keep,tb_article a where keep.article_id = a.id and a.is_pass = 1 and keep.user_id = #{param}
     </select>
 </mapper>

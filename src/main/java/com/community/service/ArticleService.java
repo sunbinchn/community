@@ -1,7 +1,11 @@
 package com.community.service;
 
-import com.community.dao.*;
+import com.community.dao.ArticleDao;
+import com.community.dao.UserArticleKeepDao;
+import com.community.dao.UserArticleLoveDao;
+import com.community.dao.UserArticleReadDao;
 import com.community.entity.Article;
+import com.community.entity.User;
 import com.community.enums.ArticleShowTypeConstant;
 import com.community.utils.ArticleUtil;
 import com.community.vo.ArticleCalculate;
@@ -9,14 +13,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+import static com.community.utils.PageContants.NAVIGATE_PAGES_FIVE;
+import static com.community.utils.PageContants.PAGE_SIZE_TEN;
+
 @Service
 public class ArticleService {
-    private static final Integer PAGE_SIZE = 10;
-    private static final Integer NAVIGATE_PAGES = 5;
     private final static int READ_SCORE = 1;
     private final static int LOVE_SCORE = 3;
     private final static int KEEP_SCORE = 5;
@@ -29,38 +35,30 @@ public class ArticleService {
     @Autowired
     private UserArticleKeepDao userArticleKeepDao;
 
-    public PageInfo<Article> findLoveArticleListByUserId(Integer pn, Integer userId) {
-        PageHelper.startPage(pn, PAGE_SIZE);
-        PageInfo<Article> pageInfo = new PageInfo<>(userArticleLoveDao.findLoveArticleListByUserId(userId), NAVIGATE_PAGES);
-        ArticleUtil.setIsKeepCurrentUser(pageInfo, userId);
+    public PageInfo<Article> findLoveArticleListByUserId(Integer pn, Integer userId, HttpServletRequest request) {
+        PageHelper.startPage(pn, PAGE_SIZE_TEN);
+        PageInfo<Article> pageInfo = new PageInfo<>(userArticleLoveDao.findLoveArticleListByUserId(userId), NAVIGATE_PAGES_FIVE);
+        if (request.getSession().getAttribute("userId") != null) {
+            ArticleUtil.setIsKeepCurrentUser(pageInfo, (Integer)request.getSession().getAttribute("userId"));
+        }
         return pageInfo;
     }
-    public PageInfo<Article> findKeepArticleListByUserId(Integer pn, Integer userId) {
-        PageHelper.startPage(pn, PAGE_SIZE);
-        PageInfo<Article> pageInfo = new PageInfo<>(userArticleKeepDao.findLoveArticleListByUserId(userId), NAVIGATE_PAGES);
-        ArticleUtil.setIsLovedCurrentUser(pageInfo, userId);
+    public PageInfo<Article> findKeepArticleListByUserId(Integer pn, Integer userId, HttpServletRequest request) {
+        PageHelper.startPage(pn, PAGE_SIZE_TEN);
+        PageInfo<Article> pageInfo = new PageInfo<>(userArticleKeepDao.findLoveArticleListByUserId(userId), NAVIGATE_PAGES_FIVE);
+        if (request.getSession().getAttribute("userId") != null) {
+            ArticleUtil.setIsLovedCurrentUser(pageInfo, (Integer)request.getSession().getAttribute("userId"));
+        }
         return pageInfo;
     }
-    public PageInfo<Article> findReadArticleListByUserId(Integer pn, Integer userId) {
-        PageHelper.startPage(pn, PAGE_SIZE);
-        PageInfo<Article> pageInfo = new PageInfo<>(userArticleReadDao.findLoveArticleListByUserId(userId), NAVIGATE_PAGES);
-        ArticleUtil.setIsLovedAndkeepCurrentUser(pageInfo, userId);
+    public PageInfo<Article> findReadArticleListByUserId(Integer pn, Integer userId, HttpServletRequest request) {
+        PageHelper.startPage(pn, PAGE_SIZE_TEN);
+        PageInfo<Article> pageInfo = new PageInfo<>(userArticleReadDao.findLoveArticleListByUserId(userId), NAVIGATE_PAGES_FIVE);
+        if (request.getSession().getAttribute("userId") != null) {
+            ArticleUtil.setIsLovedAndkeepCurrentUser(pageInfo, (Integer)request.getSession().getAttribute("userId"));
+        }
         return pageInfo;
     }
-
-//    public List<Article> findArticleListByArticleType() {
-//        return findArticleListByArticleType(null);
-//    }
-//
-//    public List<Article> findArticleListByArticleType(Integer typeId) {
-//        List<Article> list;
-//        if (typeId != null) {
-//            list = articleDao.findAllByArticleTypeId(typeId);
-//        } else {
-//            list = articleDao.findAll();
-//        }
-//        return list;
-//    }
 
     public List<Article> findArticleListByArticleTypeAndShowType(Integer articleTypeId, ArticleShowTypeConstant articleShowTypeConstant) {
         List<Article> list;
@@ -98,8 +96,10 @@ public class ArticleService {
         for(Map.Entry<Integer,Integer> mapping:list){
             articleIds.add(mapping.getKey());
         }
-        request.setAttribute("interestingUserList", articleDao.findAllUserByArticleIds(articleIds));
-        request.setAttribute("interestingArticleList", articleDao.findAllArticleListByArticleIds(articleIds));
+        if (!CollectionUtils.isEmpty(articleIds)) {
+            request.setAttribute("interestingUserList", articleDao.findAllUserByArticleIds(articleIds));
+            request.setAttribute("interestingArticleList", articleDao.findAllArticleListByArticleIds(articleIds));
+        }
 //        if (userId == null) { //未登录
 //        } else {
 //        }
@@ -115,5 +115,14 @@ public class ArticleService {
                 map.put(articleId, map.get(articleId) + amount * rate);
             }
         }
+    }
+
+    public PageInfo<Article> findAllByUserId(Integer pn, Integer userId, HttpServletRequest request) {
+        PageHelper.startPage(pn, PAGE_SIZE_TEN);
+        PageInfo<Article> pageInfo = new PageInfo<>(articleDao.findAllByUserId(userId), NAVIGATE_PAGES_FIVE);
+        if (request.getSession().getAttribute("userId") != null) {
+            ArticleUtil.setIsLovedAndkeepCurrentUser(pageInfo, (Integer)request.getSession().getAttribute("userId"));
+        }
+        return pageInfo;
     }
 }

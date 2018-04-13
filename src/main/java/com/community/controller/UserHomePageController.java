@@ -1,10 +1,6 @@
 package com.community.controller;
 
-import com.community.dao.UserArticleKeepDao;
-import com.community.dao.UserArticleLoveDao;
-import com.community.dao.UserArticleReadDao;
-import com.community.dao.UserDao;
-import com.community.dao.UserRelationDao;
+import com.community.dao.*;
 import com.community.entity.User;
 import com.community.entity.UserRelation;
 import com.community.service.ArticleService;
@@ -30,6 +26,8 @@ public class UserHomePageController {
     @Autowired
     private UserRelationDao userRelationDao;
     @Autowired
+    private ArticleDao articleDao;
+    @Autowired
     private UserArticleReadDao userArticleReadDao;
     @Autowired
     private UserArticleLoveDao userArticleLoveDao;
@@ -46,6 +44,7 @@ public class UserHomePageController {
         request.setAttribute("readCount", userArticleReadDao.countByUserId(userId));
         request.setAttribute("loveCount", userArticleLoveDao.countByUserId(userId));
         request.setAttribute("keepCount", userArticleKeepDao.countByUserId(userId));
+        request.setAttribute("articleCount", articleDao.countByUserId(userId));
     }
     private boolean isIdolOfCurrentUser(HttpServletRequest request, Integer userId) {
         UserRelation userRelation = new UserRelation();
@@ -64,23 +63,30 @@ public class UserHomePageController {
     @RequestMapping("{userId}/read")
     public String read(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
         commonSetting(request, userId);
-        request.setAttribute("pageInfo", articleService.findReadArticleListByUserId(pn, userId));
+        request.setAttribute("pageInfo", articleService.findReadArticleListByUserId(pn, userId, request));
         return "user_home_page";
     }
 
     @RequestMapping("{userId}/love")
     public String love(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
         commonSetting(request, userId);
-        request.setAttribute("pageInfo", articleService.findLoveArticleListByUserId(pn, userId));
+        request.setAttribute("pageInfo", articleService.findLoveArticleListByUserId(pn, userId, request));
         return "user_home_page";
     }
 
     @RequestMapping("{userId}/keep")
     public String keep(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
         commonSetting(request, userId);
-        request.setAttribute("pageInfo", articleService.findKeepArticleListByUserId(pn, userId));
+        request.setAttribute("pageInfo", articleService.findKeepArticleListByUserId(pn, userId, request));
         return "user_home_page";
     }
+    @RequestMapping("{userId}/article")
+    public String article(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
+        commonSetting(request, userId);
+        request.setAttribute("pageInfo", articleService.findAllByUserId(pn, userId, request));
+        return "user_home_page";
+    }
+
     @RequestMapping("{userId}/idol")
     public String idol(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
         commonSetting(request, userId);

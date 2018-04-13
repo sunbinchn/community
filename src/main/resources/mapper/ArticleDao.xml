@@ -23,6 +23,9 @@
     <select id="findById" resultMap="articleMapper" parameterType="Integer">
         select * from tb_article where id = #{param} and is_pass = 1
     </select>
+    <select id="findForceById" resultMap="articleMapper" parameterType="Integer">
+        select * from tb_article where id = #{param} and is_pass != -1
+    </select>
     <select id="findAll" resultMap="articleMapper">
         select * from tb_article where is_pass = 1
     </select>
@@ -33,8 +36,7 @@
                 order by create_time desc
             </when>
             <when test="showTypeId == 2">
-                select * from tb_article  where is_pass = 1
-                where is_recommend = 1
+                select * from tb_article  where is_pass = 1 and is_recommend = 1
             </when>
             <when test="showTypeId == 3">
                 select *,
@@ -88,6 +90,12 @@
     </select>
     <select id="findNotIsPassAll" resultMap="articleMapper">
         select * from tb_article where is_pass = 0 order by create_time asc
+    </select>
+    <select id="findAllByUserId"  resultMap="articleMapper" parameterType="Integer">
+        select * from tb_article where is_pass = 1 and user_id = #{param} order by create_time desc
+    </select>
+    <select id="countByUserId"  resultType="Integer" parameterType="Integer">
+        select count(id) from tb_article where is_pass = 1 and user_id = #{param}
     </select>
 
 </mapper>

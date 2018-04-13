@@ -21,13 +21,13 @@
                         <div class="explore-common-list">
                             <c:forEach items="${pageInfo.list}" var="article" varStatus="articleStatus">
                                 <div class="item" style="<c:if test="${articleStatus.count eq 1}">border-top: 0;</c:if>" data-id="${article.id}">
-                                    <a class="user-icon">
+                                    <a class="user-icon" href="${PATH}userHomePage/${article.user.userId}/read" target="_blank">
                                         <img src="${PATH}static/images/${article.user.icon.url}" alt="">
                                     </a>
                                     <div class="explore-title">
                                         <p>
-                                            <a href="${PATH}people/${article.user.userName}" class="user-name">${article.user.userName}</a>
-                                            <span class="text-color-999">发表了文章 • ${fn:length(article.commentList)} 个评论 • ${fn:length(article.readUserList)} 次浏览 •
+                                            <a href="${PATH}userHomePage/${article.user.userId}/read" class="user-name" target="_blank">${article.user.userName}</a>
+                                            <span class="text-color-999">发表了文章 • <a href="${PATH}detail/get/${article.id}#comment-anchor" target="_blank">${fn:length(article.commentList)}</a> 个评论 • ${fn:length(article.readUserList)} 次浏览 •
                                                 <fmt:formatDate value="${article.createTime}"  type="both" /></span>
                                         </p>
                                         <h4><a href="${PATH}detail/get/${article.id}" target="_blank">${article.title}</a></h4>
@@ -104,7 +104,7 @@
                     <h4>你可能感兴趣的人</h4>
                     <ul class="list-group">
                         <c:forEach items="${interestingUserList}" var="interestingUser">
-                            <a class="list-group-item" href="#">
+                            <a class="list-group-item" href="${PATH}userHomePage/${interestingUser.userId}/read">
                                 <img src="${PATH}static/images/${interestingUser.icon.url}" style="margin-right: 10px; width: 30px;">${interestingUser.userName}
                             </a>
                         </c:forEach>
@@ -112,7 +112,7 @@
                     <h4>你可能感兴趣的文章</h4>
                     <ul class="list-group">
                         <c:forEach items="${interestingArticleList}" var="interestingArticle">
-                            <a class="list-group-item" href="${PATH}/detail/get/${interestingArticle.id}">
+                            <a class="list-group-item" href="${PATH}detail/get/${interestingArticle.id}">
                                 ${interestingArticle.title}
                             </a>
                         </c:forEach>

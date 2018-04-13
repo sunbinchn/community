@@ -19,6 +19,13 @@ public interface ArticleDao {
 
     Article findById(Integer id);
 
+    /**
+     * 没有审核的限制
+     * @param id
+     * @return
+     */
+    Article findForceById(Integer id);
+
     boolean insert(Article article);
 
     boolean update(Article article);
@@ -26,4 +33,8 @@ public interface ArticleDao {
     List<Article> findAllArticleListByArticleIds(List<Integer> articleIds);
 
     List<Article> findNotIsPassAll();
+
+    List<Article> findAllByUserId(Integer userId);
+
+    Integer countByUserId(Integer userId);
 }

@@ -17,13 +17,19 @@ public class ArticleDetailService {
     @Autowired
     private CommentDao commentDao;
 
-    public Article findById(Integer id) {
-        Article article = articleDao.findById(id);
-        List<Comment> commentList = article.getCommentList();
-        if (!CollectionUtils.isEmpty(commentList)) {
-            for (Comment comment : commentList) {
-                Integer integer = commentDao.countAllByOwnerCommentId(comment.getId());
-                comment.setNestCommentSize(integer);
+    public Article findById(Integer id, Integer currentUserId) {
+        Article article;
+        article = articleDao.findForceById(id);
+        if (article.getIsPass() != 1 && !article.getUser().getUserId().equals(currentUserId)) { //审核未通过且不是自己的文章
+            return null;
+        }
+        if (article != null) {
+            List<Comment> commentList = article.getCommentList();
+            if (!CollectionUtils.isEmpty(commentList)) {
+                for (Comment comment : commentList) {
+                    Integer integer = commentDao.countAllByOwnerCommentId(comment.getId());
+                    comment.setNestCommentSize(integer);
+                }
             }
         }
         return article;

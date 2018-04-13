@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../taglib.jsp" %>
 <%
     //The path starts with a "/" character but does not end with a "/"
     pageContext.setAttribute("PATH", request.getContextPath() + "/");
@@ -24,17 +24,14 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th style="min-width: 50px;">标题</th>
-                <th style="min-width: 50px;">内容</th>
+                <th style="width: 150px;">标题</th>
                 <th style="min-width: 50px;">类型</th>
                 <th style="min-width: 50px;">分类</th>
                 <th style="min-width: 50px;">是否推荐</th>
                 <th style="min-width: 50px;">发表时间</th>
                 <th style="min-width: 50px;">最后更新时间</th>
                 <th style="min-width: 50px;">作者名</th>
-                <th style="min-width: 50px;">作者昵称</th>
-                <th style="min-width: 50px;">作者邮箱</th>
-                <th style="min-width: 50px;">作者电话</th>
+                <th style="min-width: 80px;">状态</th>
                 <th style="min-width: 80px;">操作</th>
             </tr>
             </thead>
@@ -42,40 +39,38 @@
             <c:forEach var="articleItem" items="${pageInfo.list}" varStatus="status">
                 <c:choose>
                     <c:when test="${status.count%2 eq 1}">
-                        <tr class="success" data-id="${articleItem.userId}">
+                        <tr class="success" data-id="${articleItem.id}">
                             <td>${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}</td>
-                            <td>${articleItem.title}</td>
-                            <td>content<%--${articleItem.content}--%></td>
-                            <td>${articleItem.original}</td>
+                            <td><a href="${PATH}">${articleItem.title}</a></td>
+                            <td>${articleItem.original eq 1 ? "原创" : "转载"}</td>
                             <td>${articleItem.articleType.name}</td>
-                            <td>${articleItem.isRecommend}</td>
-                            <td>${articleItem.createTime}</td>
-                            <td>${articleItem.updateTime}</td>
+                            <td>${articleItem.isRecommend eq 1 ? "是" : "否"}</td>
+                            <td><fmt:formatDate value="${articleItem.createTime}"  type="DATE" /></td>
+                            <td><fmt:formatDate value="${articleItem.updateTime}"  type="DATE" /></td>
                             <td>${articleItem.user.userName}</td>
-                            <td>${articleItem.user.nickname}</td>
-                            <td>${articleItem.user.email}</td>
-                            <td>${articleItem.user.phone}</td>
+                            <td>${articleItem.isPass eq 1 ? "已审核" : (articleItem.isPass eq 0 ? "未审核" : "已删除")}</td>
                             <td>
-                                <a class="shutUpClass">通过</a>
+                                <a class="shutUpClass">未审核</a>
+                                <a class="shutUpClass">审核</a>
+                                <a class="shutUpClass">删除</a>
                             </td>
                         </tr>
                     </c:when>
                     <c:otherwise>
-                        <tr  class="info" data-id="${articleItem.userId}">
+                        <tr  class="info" data-id="${articleItem.id}">
                             <td>${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}</td>
                             <td>${articleItem.title}</td>
-                            <td>content<%--${articleItem.content}--%></td>
-                            <td>${articleItem.original}</td>
+                            <td>${articleItem.original eq 1 ? "原创" : "转载"}</td>
                             <td>${articleItem.articleType.name}</td>
-                            <td>${articleItem.isRecommend}</td>
-                            <td>${articleItem.createTime}</td>
-                            <td>${articleItem.updateTime}</td>
+                            <td>${articleItem.isRecommend eq 1 ? "是" : "否"}</td>
+                            <td><fmt:formatDate value="${articleItem.createTime}"  type="DATE" /></td>
+                            <td><fmt:formatDate value="${articleItem.updateTime}"  type="DATE" /></td>
                             <td>${articleItem.user.userName}</td>
-                            <td>${articleItem.user.nickname}</td>
-                            <td>${articleItem.user.email}</td>
-                            <td>${articleItem.user.phone}</td>
+                            <td>${articleItem.isPass eq 1 ? "已审核" : (articleItem.isPass eq 0 ? "未审核" : "已删除")}</td>
                             <td>
-                                <a class="shutUpClass">通过</a>
+                                <a class="shutUpClass">未审核</a>
+                                <a class="shutUpClass">审核</a>
+                                <a class="shutUpClass">删除</a>
                             </td>
                     </c:otherwise>
                 </c:choose>
