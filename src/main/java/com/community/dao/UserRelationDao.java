@@ -11,7 +11,11 @@ public interface UserRelationDao {
 
     List<User> findAllByUserId(Integer userId);
 
+    Integer countAllByUserId(Integer userId);
+
     List<User> findAllByTargetUserId(Integer userId);
+
+    Integer countAllByTargetUserId(Integer userId);
 
     Integer find(UserRelation userRelation);
 

@@ -5,7 +5,6 @@ import com.community.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ArticleDao {
     List<User> findAllUserByArticleIds(List<Integer> list);
@@ -25,4 +24,6 @@ public interface ArticleDao {
     boolean update(Article article);
 
     List<Article> findAllArticleListByArticleIds(List<Integer> articleIds);
+
+    List<Article> findNotIsPassAll();
 }

@@ -1,13 +1,30 @@
 package com.community.vo;
 
 import com.community.entity.User;
-
-import java.util.List;
+import com.github.pagehelper.PageInfo;
 
 public class UserRelationVo {
-    private List<User> idolUserList;
-    private List<User> fansUserList;
+    private Integer idolCount;
+    private Integer fansCount;
+    private PageInfo<User> idolUserPageInfo;
+    private PageInfo<User> fansUserPageInfo;
     private boolean isIdolOfCurrentUser;
+
+    public Integer getIdolCount() {
+        return idolCount;
+    }
+
+    public void setIdolCount(Integer idolCount) {
+        this.idolCount = idolCount;
+    }
+
+    public Integer getFansCount() {
+        return fansCount;
+    }
+
+    public void setFansCount(Integer fansCount) {
+        this.fansCount = fansCount;
+    }
 
     public boolean getIsIdolOfCurrentUser() {
         return isIdolOfCurrentUser;
@@ -17,19 +34,19 @@ public class UserRelationVo {
         isIdolOfCurrentUser = idolOfCurrentUser;
     }
 
-    public List<User> getIdolUserList() {
-        return idolUserList;
+    public PageInfo<User> getIdolUserPageInfo() {
+        return idolUserPageInfo;
     }
 
-    public void setIdolUserList(List<User> idolUserList) {
-        this.idolUserList = idolUserList;
+    public void setIdolUserPageInfo(PageInfo<User> idolUserPageInfo) {
+        this.idolUserPageInfo = idolUserPageInfo;
     }
 
-    public List<User> getFansUserList() {
-        return fansUserList;
+    public PageInfo<User> getFansUserPageInfo() {
+        return fansUserPageInfo;
     }
 
-    public void setFansUserList(List<User> fansUserList) {
-        this.fansUserList = fansUserList;
+    public void setFansUserPageInfo(PageInfo<User> fansUserPageInfo) {
+        this.fansUserPageInfo = fansUserPageInfo;
     }
 }

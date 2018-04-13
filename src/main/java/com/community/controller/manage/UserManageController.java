@@ -2,6 +2,7 @@ package com.community.controller.manage;
 
 import com.community.dao.UserDao;
 import com.community.entity.User;
+import com.community.utils.PageContants;
 import com.community.vo.result.BaseResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -17,17 +18,15 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("manage/user")
 @Controller
 public class UserManageController {
-    private static final Integer PAGE_SIZE = 15;
-    private static final Integer NAVIGATE_PAGES = 5;
     @Autowired
     private UserDao userDao;
 
     @RequestMapping("index")
     public String index(@RequestParam(value = "pn", defaultValue = "1") Integer pn, HttpServletRequest request) {
         Integer role = 2;
-        PageHelper.startPage(pn, PAGE_SIZE); // PageHelper 只对紧跟着的第一个 SQL 语句起作用
+        PageHelper.startPage(pn, PageContants.PAGE_SIZE_FIFTEEN); // PageHelper 只对紧跟着的第一个 SQL 语句起作用
         PageInfo<User> pageInfo;
-        pageInfo = new PageInfo<>(userDao.findAllByRole(role), NAVIGATE_PAGES);
+        pageInfo = new PageInfo<>(userDao.findAllByRole(role), PageContants.NAVIGATE_PAGES_FIVE);
         request.setAttribute("pageInfo", pageInfo);
         return "manage/userManage";
     }

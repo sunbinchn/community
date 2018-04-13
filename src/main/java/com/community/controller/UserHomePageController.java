@@ -1,10 +1,17 @@
 package com.community.controller;
 
-import com.community.dao.*;
+import com.community.dao.UserArticleKeepDao;
+import com.community.dao.UserArticleLoveDao;
+import com.community.dao.UserArticleReadDao;
+import com.community.dao.UserDao;
+import com.community.dao.UserRelationDao;
 import com.community.entity.User;
 import com.community.entity.UserRelation;
 import com.community.service.ArticleService;
+import com.community.utils.PageContants;
 import com.community.vo.UserRelationVo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,10 +38,11 @@ public class UserHomePageController {
 
     private void commonSetting(HttpServletRequest request, Integer userId) {
         UserRelationVo userRelationVo = new UserRelationVo();
-        userRelationVo.setIdolUserList(userRelationDao.findAllByUserId(userId));
-        userRelationVo.setFansUserList(userRelationDao.findAllByTargetUserId(userId));
+        userRelationVo.setIdolCount(userRelationDao.countAllByUserId(userId));
+        userRelationVo.setFansCount(userRelationDao.countAllByTargetUserId(userId));
         userRelationVo.setIdolOfCurrentUser(isIdolOfCurrentUser(request, userId));
         request.setAttribute("userRelationVo",userRelationVo);
+        request.setAttribute("userInfo", userDao.findById(userId));
         request.setAttribute("readCount", userArticleReadDao.countByUserId(userId));
         request.setAttribute("loveCount", userArticleLoveDao.countByUserId(userId));
         request.setAttribute("keepCount", userArticleKeepDao.countByUserId(userId));
@@ -56,7 +64,6 @@ public class UserHomePageController {
     @RequestMapping("{userId}/read")
     public String read(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
         commonSetting(request, userId);
-        request.setAttribute("userInfo", userDao.findById(userId));
         request.setAttribute("pageInfo", articleService.findReadArticleListByUserId(pn, userId));
         return "user_home_page";
     }
@@ -64,7 +71,6 @@ public class UserHomePageController {
     @RequestMapping("{userId}/love")
     public String love(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
         commonSetting(request, userId);
-        request.setAttribute("userInfo", userDao.findById(userId));
         request.setAttribute("pageInfo", articleService.findLoveArticleListByUserId(pn, userId));
         return "user_home_page";
     }
@@ -72,8 +78,23 @@ public class UserHomePageController {
     @RequestMapping("{userId}/keep")
     public String keep(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
         commonSetting(request, userId);
-        request.setAttribute("userInfo", userDao.findById(userId));
         request.setAttribute("pageInfo", articleService.findKeepArticleListByUserId(pn, userId));
+        return "user_home_page";
+    }
+    @RequestMapping("{userId}/idol")
+    public String idol(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
+        commonSetting(request, userId);
+        UserRelationVo userRelationVo = (UserRelationVo) request.getAttribute("userRelationVo");
+        PageHelper.startPage(pn, PageContants.PAGE_SIZE_TEN);
+        userRelationVo.setIdolUserPageInfo(new PageInfo<>(userRelationDao.findAllByUserId(userId), PageContants.NAVIGATE_PAGES_FIVE));
+        return "user_home_page";
+    }
+    @RequestMapping("{userId}/fans")
+    public String fans(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
+        commonSetting(request, userId);
+        UserRelationVo userRelationVo = (UserRelationVo) request.getAttribute("userRelationVo");
+        PageHelper.startPage(pn, PageContants.PAGE_SIZE_TEN);
+        userRelationVo.setFansUserPageInfo(new PageInfo<>(userRelationDao.findAllByTargetUserId(userId), PageContants.NAVIGATE_PAGES_FIVE));
         return "user_home_page";
     }
 

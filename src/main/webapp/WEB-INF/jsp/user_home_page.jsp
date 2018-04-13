@@ -47,13 +47,13 @@
         <div class="half-div" style="border-right: 1px solid #EDEDED;">
             <a>
                 <div>关注了</div>
-                <div><span  id="idolCount">${fn:length(userRelationVo.idolUserList)}</span></div>
+                <div><span  id="idolCount">${fn:length(userRelationVo.idolCount)}</span></div>
             </a>
         </div>
         <div class="half-div">
             <a>
                 <div>关注者</div>
-                <div><span id="fansCount">${fn:length(userRelationVo.fansUserList)}</span></div>
+                <div><span id="fansCount">${fn:length(userRelationVo.fansCount)}</span></div>
             </a>
         </div>
     </div>
@@ -63,7 +63,8 @@
             <li role="presentation"  id="readLi"><a href="/community/userHomePage/${userInfo.userId}/read">浏览记录<span class="badge">${readCount}</span></a></li>
             <li role="presentation"  id="loveLi"><a href="/community/userHomePage/${userInfo.userId}/love">喜欢<span class="badge">${loveCount}</span></a></li>
             <li role="presentation"  id="keepLi"><a href="/community/userHomePage/${userInfo.userId}/keep">收藏<span class="badge">${keepCount}</span></a></li>
-            <li role="presentation"  id=""><a href="">关注</a></li>
+            <li role="presentation"  id="idolLi"><a href="/community/userHomePage/${userInfo.userId}/idol">我的关注</a></li>
+            <li role="presentation"  id="fansLi"><a href="/community/userHomePage/${userInfo.userId}/fans">我的粉丝</a></li>
         </ul>
 
         <div class="content-explore-list">

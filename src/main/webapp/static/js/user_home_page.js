@@ -7,6 +7,10 @@ $(function () {
         $("#loveLi").addClass('active');
     } else if (subUrl == 'keep') {
         $("#keepLi").addClass('active');
+    } else if (subUrl == 'idol') {
+        $("#idolLi").addClass('active');
+    } else if (subUrl == 'fans') {
+        $("#fansLi").addClass('active');
     }
     init_event();
 

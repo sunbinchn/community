@@ -19,6 +19,7 @@ public class Article {
     private Date updateTime;
     private List<Comment> commentList;
     private List<Tag> tagList;
+    private Integer isPass;
 
     //仅供显示使用，不对应数据库的字段
     private boolean isLovedCurrentUser;
@@ -142,6 +143,14 @@ public class Article {
 
     public void setTagList(List<Tag> tagList) {
         this.tagList = tagList;
+    }
+
+    public Integer getIsPass() {
+        return isPass;
+    }
+
+    public void setIsPass(Integer isPass) {
+        this.isPass = isPass;
     }
 
     public boolean getIsLovedCurrentUser() {

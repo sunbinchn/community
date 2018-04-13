@@ -21,45 +21,45 @@
                     select="com.community.dao.TagDao.findAllByArticleId"></collection>
     </resultMap>
     <select id="findById" resultMap="articleMapper" parameterType="Integer">
-        select * from tb_article where id = #{param}
+        select * from tb_article where id = #{param} and is_pass = 1
     </select>
     <select id="findAll" resultMap="articleMapper">
-        select * from tb_article
+        select * from tb_article where is_pass = 1
     </select>
     <select id="findAllByShowType" resultMap="articleMapper" parameterType="Integer">
         <choose>
             <when test="showTypeId == 1">
-                select * from tb_article
+                select * from tb_article where is_pass = 1
                 order by create_time desc
             </when>
             <when test="showTypeId == 2">
-                select * from tb_article
+                select * from tb_article  where is_pass = 1
                 where is_recommend = 1
             </when>
             <when test="showTypeId == 3">
                 select *,
                 (select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
-                from tb_article a order by count_b desc
+                from tb_article a  where a.is_pass = 1 order by count_b desc
             </when>
         </choose>
     </select>
     <select id="findAllByArticleTypeId" resultMap="articleMapper" parameterType="Integer">
-        select * from tb_article where article_type_id = #{param}
+        select * from tb_article where article_type_id = #{param} and is_pass = 1
     </select>
     <select id="findAllByArticleTypeIdAndShowType" resultMap="articleMapper">
         <choose>
             <when test="showTypeId == 1">
-                select * from tb_article where article_type_id = #{articleTypeId}
+                select * from tb_article where article_type_id = #{articleTypeId} and is_pass = 1
                 order by create_time desc
             </when>
             <when test="showTypeId == 2">
-                select * from tb_article where article_type_id = #{articleTypeId}
+                select * from tb_article where article_type_id = #{articleTypeId} and is_pass = 1
                 and is_recommend = 1
             </when>
             <when test="showTypeId == 3">
                 select *,
                 (select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
-                from tb_article a where article_type_id = #{articleTypeId} order by count_b desc
+                from tb_article a where article_type_id = #{articleTypeId} and is_pass = 1 order by count_b desc
             </when>
         </choose>
     </select>
@@ -80,11 +80,14 @@
         LIMIT 5
     </select>
     <select id="findAllArticleListByArticleIds" parameterType="java.util.List" resultType="com.community.entity.Article">
-        select * from tb_article where id in
+        select * from tb_article where is_pass = 1 and id in
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
         LIMIT 5
+    </select>
+    <select id="findNotIsPassAll" resultMap="articleMapper">
+        select * from tb_article where is_pass = 0 order by create_time asc
     </select>
 
 </mapper>
