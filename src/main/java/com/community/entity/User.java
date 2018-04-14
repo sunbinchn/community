@@ -20,6 +20,8 @@ public class User {
     private Integer role;
     private Integer isShutUp;
     private Integer isBan;
+    //供显示使用
+    private boolean isIdolOfCurrentUser;
 
     public Integer getUserId() {
         return userId;
@@ -139,5 +141,13 @@ public class User {
 
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
+    }
+
+    public boolean getIsIdolOfCurrentUser() {
+        return isIdolOfCurrentUser;
+    }
+
+    public void setIsIdolOfCurrentUser(boolean idolOfCurrentUser) {
+        isIdolOfCurrentUser = idolOfCurrentUser;
     }
 }

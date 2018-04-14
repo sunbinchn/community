@@ -67,7 +67,7 @@
     </select>
 
     <insert id="insert" parameterType="com.community.entity.Article"  keyProperty="id" useGeneratedKeys="true" >
-        insert into tb_article(article_type_id,title,content,original,user_id,create_time) values(#{articleType.id},#{title},#{content},#{original},#{user.userId},#{createTime})
+        insert into tb_article(article_type_id,title,content,original,user_id,create_time) values(#{articleType.id},#{title},#{content},#{original},#{user.userId},now())
     </insert>
     <update id="update" parameterType="com.community.entity.Article">
         update tb_article set  title = #{title}, article_type_id = #{articleType.id},content = #{content},
@@ -79,7 +79,7 @@
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
-        LIMIT 5
+        LIMIT 6
     </select>
     <select id="findAllArticleListByArticleIds" parameterType="java.util.List" resultType="com.community.entity.Article">
         select * from tb_article where is_pass = 1 and id in
@@ -97,5 +97,7 @@
     <select id="countByUserId"  resultType="Integer" parameterType="Integer">
         select count(id) from tb_article where is_pass = 1 and user_id = #{param}
     </select>
-
+    <update id="updatePassById">
+        update tb_article set is_pass = #{isPassValue} where id = #{articleId}
+    </update>
 </mapper>

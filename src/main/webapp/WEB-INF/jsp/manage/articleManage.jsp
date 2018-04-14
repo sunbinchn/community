@@ -41,7 +41,7 @@
                     <c:when test="${status.count%2 eq 1}">
                         <tr class="success" data-id="${articleItem.id}">
                             <td>${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}</td>
-                            <td><a href="${PATH}">${articleItem.title}</a></td>
+                            <td><a href="${PATH}detail/get/${articleItem.id}">${articleItem.title}</a></td>
                             <td>${articleItem.original eq 1 ? "原创" : "转载"}</td>
                             <td>${articleItem.articleType.name}</td>
                             <td>${articleItem.isRecommend eq 1 ? "是" : "否"}</td>
@@ -50,16 +50,17 @@
                             <td>${articleItem.user.userName}</td>
                             <td>${articleItem.isPass eq 1 ? "已审核" : (articleItem.isPass eq 0 ? "未审核" : "已删除")}</td>
                             <td>
-                                <a class="shutUpClass">未审核</a>
-                                <a class="shutUpClass">审核</a>
-                                <a class="shutUpClass">删除</a>
+                                <a class="toggle-pass">${articleItem.isPass eq 1 ? "取消审核" : "通过审核"}</a>
+                                <c:if test="${articleItem.isPass != -1}">
+                                    <a class="delete-article">${articleItem.isPass eq -1 ? "取消删除" : "删除"}</a>
+                                </c:if>
                             </td>
                         </tr>
                     </c:when>
                     <c:otherwise>
                         <tr  class="info" data-id="${articleItem.id}">
                             <td>${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}</td>
-                            <td>${articleItem.title}</td>
+                            <td><a href="${PATH}detail/get/${articleItem.id}">${articleItem.title}</a></td>
                             <td>${articleItem.original eq 1 ? "原创" : "转载"}</td>
                             <td>${articleItem.articleType.name}</td>
                             <td>${articleItem.isRecommend eq 1 ? "是" : "否"}</td>
@@ -68,9 +69,10 @@
                             <td>${articleItem.user.userName}</td>
                             <td>${articleItem.isPass eq 1 ? "已审核" : (articleItem.isPass eq 0 ? "未审核" : "已删除")}</td>
                             <td>
-                                <a class="shutUpClass">未审核</a>
-                                <a class="shutUpClass">审核</a>
-                                <a class="shutUpClass">删除</a>
+                                <a class="toggle-pass">${articleItem.isPass eq 1 ? "取消审核" : "通过审核"}</a>
+                                <c:if test="${articleItem.isPass != -1}">
+                                    <a class="delete-article">${articleItem.isPass eq -1 ? "取消删除" : "删除"}</a>
+                                </c:if>
                             </td>
                     </c:otherwise>
                 </c:choose>

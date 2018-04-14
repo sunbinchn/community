@@ -32,10 +32,10 @@
                 <c:otherwise>
                     <c:choose>
                         <c:when test="${userRelationVo.isIdolOfCurrentUser}">
-                            <button type="button" class="btn btn-primary toggle-user-relation">已关注</button>
+                            <button type="button" class="btn btn-success toggle-user-relation">已关注</button>
                         </c:when>
                         <c:otherwise>
-                            <button type="button" class="btn btn-primary toggle-user-relation">关注</button>
+                            <button type="button" class="btn btn-default toggle-user-relation">关注</button>
                         </c:otherwise>
                     </c:choose>
                 </c:otherwise>
@@ -71,6 +71,50 @@
         <div class="content-explore-list">
             <div class="explore-body">
                 <div class="explore-common-list">
+                    <c:if test="${!empty userRelationVo.idolUserPageInfo}">
+                        <ul class="list-group">
+                            <c:forEach items="${userRelationVo.idolUserPageInfo.list}" var="idolUser">
+                                <a class="list-group-item" href="${PATH}userHomePage/${idolUser.userId}/read" style="height:80px">
+                                    <div style="margin-top: 10px">
+                                        <img src="${PATH}static/images/${idolUser.icon.url}" style="margin-right: 10px; width: 45px;">
+                                        <span style="font-size:x-large;">${idolUser.userName}</span>
+                                        <span style="margin-left: 20px;font-family: monospace;">${idolUser.signature}</span>
+                                        <c:choose>
+                                            <c:when test="${idolUser.isIdolOfCurrentUser}">
+                                                <button type="button" class="btn btn-success list-user-relation-toggle" data-id="${idolUser.userId}">已关注
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button type="button" class="btn btn-default list-user-relation-toggle" data-id="${idolUser.userId}">关注
+                                             </c:otherwise>
+                                         </c:choose>
+                                        </button>
+                                    </div>
+                                </a>
+                            </c:forEach>
+                        </ul>
+                    </c:if>
+                    <c:if test="${!empty userRelationVo.fansUserPageInfo}">
+                        <ul class="list-group">
+                            <c:forEach items="${userRelationVo.fansUserPageInfo.list}" var="fansUser">
+                                <a class="list-group-item" href="${PATH}userHomePage/${fansUser.userId}/read" style="height:80px">
+                                    <div style="margin-top: 10px">
+                                        <img src="${PATH}static/images/${fansUser.icon.url}" style="margin-right: 10px; width: 45px;">
+                                        <span style="font-size:x-large;">${fansUser.userName}</span>
+                                        <span style="margin-left: 20px;font-family: monospace;">${fansUser.signature}</span>
+                                        <c:choose>
+                                            <c:when test="${fansUser.isIdolOfCurrentUser}">
+                                                <button type="button" class="btn btn-success list-user-relation-toggle" data-id="${fansUser.userId}">已关注
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button type="button" class="btn btn-default list-user-relation-toggle" data-id="${fansUser.userId}">关注
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </a>
+                            </c:forEach>
+                        </ul>
+                    </c:if>
+
                     <c:forEach items="${pageInfo.list}" var="article" varStatus="articleStatus">
                         <div class="item" style="<c:if test="${articleStatus.count eq 1}">border-top: 0;</c:if>" data-id="${article.id}">
                             <a class="user-icon" href="${PATH}userHomePage/${article.user.userId}/read" target="_blank">

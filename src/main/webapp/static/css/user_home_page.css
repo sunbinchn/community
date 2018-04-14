@@ -43,3 +43,6 @@
     float: left;
     text-align: center;
 }
+.list-user-relation-toggle {
+    float: right;
+}

@@ -37,4 +37,6 @@ public interface ArticleDao {
     List<Article> findAllByUserId(Integer userId);
 
     Integer countByUserId(Integer userId);
+
+    boolean updatePassById(@Param("isPassValue") Integer isPassValue, @Param("articleId") Integer articleId);
 }

@@ -97,7 +97,16 @@ public class ArticleService {
             articleIds.add(mapping.getKey());
         }
         if (!CollectionUtils.isEmpty(articleIds)) {
-            request.setAttribute("interestingUserList", articleDao.findAllUserByArticleIds(articleIds));
+            List<User> allUserByArticleIds = articleDao.findAllUserByArticleIds(articleIds);
+            Integer currentUserId = (Integer)request.getSession().getAttribute("userId");
+            for (User user : allUserByArticleIds) { //排除看到自己
+                if (user.getUserId().equals(currentUserId)) {
+                    allUserByArticleIds.remove(user);
+                    break;
+                }
+            }
+            allUserByArticleIds = allUserByArticleIds.size() > 5 ? allUserByArticleIds.subList(0, 5) : allUserByArticleIds;
+            request.setAttribute("interestingUserList", allUserByArticleIds);
             request.setAttribute("interestingArticleList", articleDao.findAllArticleListByArticleIds(articleIds));
         }
 //        if (userId == null) { //未登录

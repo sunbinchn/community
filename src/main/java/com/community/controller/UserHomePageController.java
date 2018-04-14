@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/userHomePage")
@@ -39,13 +41,14 @@ public class UserHomePageController {
         userRelationVo.setIdolCount(userRelationDao.countAllByUserId(userId));
         userRelationVo.setFansCount(userRelationDao.countAllByTargetUserId(userId));
         userRelationVo.setIdolOfCurrentUser(isIdolOfCurrentUser(request, userId));
-        request.setAttribute("userRelationVo",userRelationVo);
+        request.setAttribute("userRelationVo", userRelationVo);
         request.setAttribute("userInfo", userDao.findById(userId));
         request.setAttribute("readCount", userArticleReadDao.countByUserId(userId));
         request.setAttribute("loveCount", userArticleLoveDao.countByUserId(userId));
         request.setAttribute("keepCount", userArticleKeepDao.countByUserId(userId));
         request.setAttribute("articleCount", articleDao.countByUserId(userId));
     }
+
     private boolean isIdolOfCurrentUser(HttpServletRequest request, Integer userId) {
         UserRelation userRelation = new UserRelation();
         User user = new User();
@@ -80,6 +83,7 @@ public class UserHomePageController {
         request.setAttribute("pageInfo", articleService.findKeepArticleListByUserId(pn, userId, request));
         return "user_home_page";
     }
+
     @RequestMapping("{userId}/article")
     public String article(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
         commonSetting(request, userId);
@@ -92,16 +96,49 @@ public class UserHomePageController {
         commonSetting(request, userId);
         UserRelationVo userRelationVo = (UserRelationVo) request.getAttribute("userRelationVo");
         PageHelper.startPage(pn, PageContants.PAGE_SIZE_TEN);
-        userRelationVo.setIdolUserPageInfo(new PageInfo<>(userRelationDao.findAllByUserId(userId), PageContants.NAVIGATE_PAGES_FIVE));
+        PageInfo<User> userPageInfo = new PageInfo<>(userRelationDao.findAllByUserId(userId), PageContants.NAVIGATE_PAGES_FIVE);
+        for (User user : userPageInfo.getList()) {
+            for (User idolOfCurrentUser : findIdolListOfcurrentUser(request)) {
+                if (user.getUserId().equals(idolOfCurrentUser.getUserId())) {
+                    user.setIsIdolOfCurrentUser(true);
+                    break;
+                }
+            }
+        }
+        userRelationVo.setIdolUserPageInfo(userPageInfo);
         return "user_home_page";
     }
+
     @RequestMapping("{userId}/fans")
     public String fans(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
         commonSetting(request, userId);
         UserRelationVo userRelationVo = (UserRelationVo) request.getAttribute("userRelationVo");
         PageHelper.startPage(pn, PageContants.PAGE_SIZE_TEN);
-        userRelationVo.setFansUserPageInfo(new PageInfo<>(userRelationDao.findAllByTargetUserId(userId), PageContants.NAVIGATE_PAGES_FIVE));
+        PageInfo<User> userPageInfo = new PageInfo<>(userRelationDao.findAllByTargetUserId(userId), PageContants.NAVIGATE_PAGES_FIVE);
+        for (User user : userPageInfo.getList()) {
+            for (User idolOfCurrentUser : findIdolListOfcurrentUser(request)) {
+                if (user.getUserId().equals(idolOfCurrentUser.getUserId())) {
+                    user.setIsIdolOfCurrentUser(true);
+                    break;
+                }
+            }
+        }
+        userRelationVo.setFansUserPageInfo(userPageInfo);
         return "user_home_page";
+    }
+
+    /**
+     * 需要判断该主页用户的关注/粉丝集合是否是当前用户的关注对象
+     *
+     * @param request
+     */
+    private List<User> findIdolListOfcurrentUser(HttpServletRequest request) {
+        Integer currentUserId = (Integer) request.getSession().getAttribute("userId");
+        if (currentUserId == null) {
+            return new ArrayList<>();
+        } else {
+            return userRelationDao.findAllByUserId(currentUserId);
+        }
     }
 
 }

@@ -29,6 +29,6 @@ public class UserRelationDaoTest {
     }
     @Test
     public void findAll() {
-        List<User> allByTargetUserId = userRelationDao.findAllByTargetUserId(62);
+        List<User> allByTargetUserId = userRelationDao.findAllByTargetUserId(55);
     }
 }

@@ -9,13 +9,13 @@
         insert into tb_user_relation(user_id,target_user_id) values(#{user.userId},#{targetUser.userId})
     </insert>
     <select id="findAllByUserId" parameterType="Integer" resultMap="com.community.dao.UserDao.userMapper">
-      select id,user_name,nickname,phone,email,company,job_title,signature,visits,is_shut_up,is_ban from tb_user where id in (select target_user_id from tb_user_relation where user_id = #{param})
+      select id,user_name,nickname,phone,email,icon_id,company,job_title,signature,visits,is_shut_up,is_ban from tb_user where id in (select target_user_id from tb_user_relation where user_id = #{param})
     </select>
     <select id="countAllByUserId" parameterType="Integer" resultType="Integer">
       select count(id) from tb_user_relation where user_id = #{param}
     </select>
     <select id="findAllByTargetUserId" parameterType="Integer" resultMap="com.community.dao.UserDao.userMapper">
-        select id,user_name,nickname,phone,email,company,job_title,signature,visits,is_shut_up,is_ban from tb_user where id in (select user_id from tb_user_relation where target_user_id = #{param})
+        select id,user_name,nickname,phone,email,icon_id,company,job_title,signature,visits,is_shut_up,is_ban from tb_user where id in (select user_id from tb_user_relation where target_user_id = #{param})
     </select>
     <select id="countAllByTargetUserId" parameterType="Integer" resultType="Integer">
       select count(id) from tb_user_relation where target_user_id = #{param}
