@@ -137,7 +137,7 @@
                                 <c:otherwise>
                                     <c:choose>
                                         <c:when test="${!empty CRITERIA}">
-                                            <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}&criteria=<%=request.getParameter("criteria")%>">${curNum}</a></li>
+                                            <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}&criteria=${CRITERIA}">${curNum}</a></li>
                                         </c:when>
                                         <c:otherwise>
                                             <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}">${curNum}</a></li>
@@ -150,7 +150,7 @@
                             <li>
                             <c:choose>
                                 <c:when test="${!empty CRITERIA}">
-                                    <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum+1}&criteria=<%=request.getParameter("criteria")%>" aria-label="Next">
+                                    <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum+1}&criteria=${CRITERIA}" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </c:when>
@@ -160,7 +160,6 @@
                                     </a>
                                 </c:otherwise>
                             </c:choose>
-
                             </li>
                         </c:if>
                     </ul>

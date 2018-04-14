@@ -43,7 +43,7 @@ public class CategoryListController {
         request.setAttribute("articleTypeList", articleTypeService.findAll());
         PageHelper.startPage(pn, PAGE_SIZE); // PageHelper 只对紧跟着的第一个 SQL 语句起作用
         PageInfo<Article> pageInfo;
-        pageInfo = new PageInfo<>(articleService.findArticleListByArticleTypeAndShowType(articleTypeId, articleShowTypeConstant), NAVIGATE_PAGES);
+        pageInfo = new PageInfo<>(articleService.findArticleListByArticleTypeAndShowType(articleTypeId, articleShowTypeConstant, request.getParameter("query")), NAVIGATE_PAGES);
         ArticleUtil.setIsLovedAndkeepCurrentUser(pageInfo, userId);
         request.setAttribute("pageInfo", pageInfo);
     }

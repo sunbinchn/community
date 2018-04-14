@@ -36,6 +36,11 @@ public class ArticleDaoTest {
 		articleDao.insert(article);
 	}
 	@Test
+	public void queryTest() {
+		articleDao.findAllByArticleTypeIdAndShowTypeAndQuery(2, 1, "admin");
+//		articleDao.findAllByShowTypeAndQuery(1, "Mysql");
+	}
+	@Test
 	public void findById() {
 		Article article = articleDao.findById(1);
 		logger.info(article.getTitle());

@@ -45,6 +45,25 @@
             </when>
         </choose>
     </select>
+    <select id="findAllByShowTypeAndQuery" resultMap="articleMapper" parameterType="Integer">
+        <choose>
+            <when test="showTypeId == 1">
+                select a.* from tb_article a, tb_user u where a.user_id = u.id
+                and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%'))
+                order by create_time desc
+            </when>
+            <when test="showTypeId == 2">
+                select a.* from tb_article a, tb_user u where a.user_id = u.id
+                and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%'))
+                and is_recommend = 1
+            </when>
+            <when test="showTypeId == 3">
+                select a.*,(select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
+                from tb_article a, tb_user u
+                where a.user_id = u.id and is_pass = 1 and (a.title like #{query} or u.user_name like #{query}) order by count_b desc
+            </when>
+        </choose>
+    </select>
     <select id="findAllByArticleTypeId" resultMap="articleMapper" parameterType="Integer">
         select * from tb_article where article_type_id = #{param} and is_pass = 1
     </select>
@@ -62,6 +81,25 @@
                 select *,
                 (select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
                 from tb_article a where article_type_id = #{articleTypeId} and is_pass = 1 order by count_b desc
+            </when>
+        </choose>
+    </select>
+    <select id="findAllByArticleTypeIdAndShowTypeAndQuery" resultMap="articleMapper">
+        <choose>
+            <when test="showTypeId == 1">
+                select a.* from tb_article a, tb_user u where a.user_id = u.id and article_type_id = #{articleTypeId}
+                and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%'))
+                order by create_time desc
+            </when>
+            <when test="showTypeId == 2">
+                select a.* from tb_article a, tb_user u where a.user_id = u.id and article_type_id = #{articleTypeId}
+                and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%'))
+                and is_recommend = 1
+            </when>
+            <when test="showTypeId == 3">
+                select a.*,(select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
+                from tb_article a, tb_user u
+                where a.user_id = u.id and  article_type_id = #{articleTypeId} and is_pass = 1 and (a.title like #{query} or u.user_name like #{query}) order by count_b desc
             </when>
         </choose>
     </select>

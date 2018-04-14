@@ -18,9 +18,15 @@ $(function () {
         var subUrl = url.substring(0,url.lastIndexOf('/'));
         var $showTypeList = $('.aw-nav-tabs > li > a');
         //$showTypeList.eq(0),$($showTypeList[0]),$($showTypeList)三种都可以操作，但是他们是不相等的，可以在debugger中看到,content,prevObject不尽相同
-        $showTypeList.eq(0).attr('href', subUrl+'/latest');
-        $showTypeList.eq(1).attr('href', subUrl+'/hot');
-        $showTypeList.eq(2).attr('href', subUrl+'/recommend');
+        if (_.isEmpty(query)) {
+            $showTypeList.eq(0).attr('href', subUrl+'/latest');
+            $showTypeList.eq(1).attr('href', subUrl+'/hot');
+            $showTypeList.eq(2).attr('href', subUrl+'/recommend');
+        } else {
+            $showTypeList.eq(0).attr('href', subUrl+'/latest?query='+query);
+            $showTypeList.eq(1).attr('href', subUrl+'/hot?query='+query);
+            $showTypeList.eq(2).attr('href', subUrl+'/recommend?query='+query);
+        }
         if (url.endsWith("latest") || url.endsWith("latest#")) {
             $showTypeList.eq(0).parent().addClass('active');
         } else if (url.endsWith("hot") || url.endsWith("hot#")) {

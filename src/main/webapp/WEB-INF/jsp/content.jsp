@@ -72,15 +72,24 @@
                             </c:forEach>
                         </div>
                     </div>
-                    <div class="explore-foot">
+                    <div class="explore-foot"> <!-- 分页 -->
                         <c:if test="${pageInfo.pages gt 1}">
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
                                 <c:if test="${pageInfo.hasPreviousPage}">
                                     <li>
-                                        <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum-1}" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
+                                        <c:choose>
+                                            <c:when test="${!empty QUERY}">
+                                                <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum-1}&query=${QUERY}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum-1}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </li>
                                 </c:if>
                                 <c:forEach items="${pageInfo.navigatepageNums}" var="curNum">
@@ -89,16 +98,32 @@
                                             <li class="active"><span>${curNum}</span></li>
                                         </c:when>
                                         <c:otherwise>
-                                            <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}">${curNum}</a></li>
+                                                <c:choose>
+                                                    <c:when test="${!empty QUERY}">
+                                                        <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}&query=${QUERY}">${curNum}</a></li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}">${curNum}</a></li>
+                                                    </c:otherwise>
+                                                </c:choose>
                                         </c:otherwise>
                                     </c:choose>
 
                                 </c:forEach>
                                 <c:if test="${pageInfo.hasNextPage}">
                                     <li>
-                                        <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum+1}" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
+                                        <c:choose>
+                                            <c:when test="${!empty QUERY}">
+                                                <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum+1}&query=${QUERY}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum+1}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </li>
                                 </c:if>
                             </ul>

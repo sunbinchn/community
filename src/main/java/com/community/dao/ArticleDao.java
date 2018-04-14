@@ -21,6 +21,7 @@ public interface ArticleDao {
 
     /**
      * 没有审核的限制
+     *
      * @param id
      * @return
      */
@@ -34,7 +35,7 @@ public interface ArticleDao {
 
     List<Article> findAllByIsPass(Integer isPass);
 
-    List<Article> findAllByIsPassAndCriteria(@Param("isPass") Integer isPass,@Param("criteria")  String criteria);
+    List<Article> findAllByIsPassAndCriteria(@Param("isPass") Integer isPass, @Param("criteria") String criteria);
 
     List<Article> findAllByCriteria(String criteria);
 
@@ -44,4 +45,7 @@ public interface ArticleDao {
 
     boolean updatePassById(@Param("isPassValue") Integer isPassValue, @Param("articleId") Integer articleId);
 
+    List<Article> findAllByArticleTypeIdAndShowTypeAndQuery(@Param("articleTypeId") Integer articleTypeId, @Param("showTypeId") Integer showTypeId, @Param("query") String query);
+
+    List<Article> findAllByShowTypeAndQuery(@Param("showTypeId") Integer showTypeId, @Param("query") String query);
 }

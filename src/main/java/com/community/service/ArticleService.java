@@ -11,6 +11,7 @@ import com.community.utils.ArticleUtil;
 import com.community.vo.ArticleCalculate;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -60,12 +61,21 @@ public class ArticleService {
         return pageInfo;
     }
 
-    public List<Article> findArticleListByArticleTypeAndShowType(Integer articleTypeId, ArticleShowTypeConstant articleShowTypeConstant) {
+    public List<Article> findArticleListByArticleTypeAndShowType(Integer articleTypeId, ArticleShowTypeConstant articleShowTypeConstant, String query) {
         List<Article> list;
-        if (articleTypeId != null) {
-            list = articleDao.findAllByArticleTypeIdAndShowType(articleTypeId, articleShowTypeConstant.getId());
-        } else {
-            list = articleDao.findAllByShowType(articleShowTypeConstant.getId());
+        Integer showTypeId = articleShowTypeConstant.getId();
+        if (articleTypeId != null) { //文章类型和最新/最热/推荐
+            if (StringUtils.isEmpty(query)) {
+                list = articleDao.findAllByArticleTypeIdAndShowType(articleTypeId, showTypeId);
+            } else { //有过滤条件
+                list = articleDao.findAllByArticleTypeIdAndShowTypeAndQuery(articleTypeId, showTypeId, query);
+            }
+        } else {//文章类型
+            if (StringUtils.isEmpty(query)) {
+                list = articleDao.findAllByShowType(showTypeId);
+            } else { //有过滤条件
+                list = articleDao.findAllByShowTypeAndQuery(showTypeId, query);
+            }
         }
         return list;
     }
