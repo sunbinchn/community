@@ -21,7 +21,7 @@
                     select="com.community.dao.TagDao.findAllByArticleId"></collection>
     </resultMap>
     <select id="findById" resultMap="articleMapper" parameterType="Integer">
-        select * from tb_article where id = #{param} and is_pass = 1
+        select * from tb_article where id = #{param}
     </select>
     <select id="findForceById" resultMap="articleMapper" parameterType="Integer">
         select * from tb_article where id = #{param} and is_pass != -1
@@ -88,8 +88,14 @@
         </foreach>
         LIMIT 5
     </select>
-    <select id="findNotIsPassAll" resultMap="articleMapper">
-        select * from tb_article where is_pass = 0 order by create_time asc
+    <select id="findAllByIsPass" resultMap="articleMapper" parameterType="Integer">
+        select * from tb_article where is_pass = #{param} order by create_time asc
+    </select>
+    <select id="findAllByIsPassAndCriteria" resultMap="articleMapper">
+        select a.* from tb_article a,tb_user u  where a.user_id = u.id and is_pass = #{isPass} and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
+    </select>
+    <select id="findAllByCriteria" resultMap="articleMapper">
+        select a.* from tb_article a,tb_user u  where a.user_id = u.id and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
     </select>
     <select id="findAllByUserId"  resultMap="articleMapper" parameterType="Integer">
         select * from tb_article where is_pass = 1 and user_id = #{param} order by create_time desc

@@ -38,8 +38,16 @@ $(function () {
             var reg_username = $("#reg_username").val();
             var reg_email = $("#reg_email").val();
             var reg_password = $("#reg_password").val();
-            if (!((reg_username || reg_email) && reg_password)){
-                $('#register_error_msg').text('用户名/邮箱或密码不能为空');
+            if (_.isEmpty(reg_username)) {
+                $('#register_error_msg').text('用户名不能为空');
+                return false;
+            }
+            if (_.isEmpty(reg_email)) {
+                $('#register_error_msg').text('邮箱不能为空');
+                return false;
+            }
+            if (_.isEmpty(reg_password)) {
+                $('#register_error_msg').text('密码不能为空');
                 return false;
             }
             var data = 'userName=' + reg_username + '&' + 'email=' + reg_email + '&password=' + reg_password;

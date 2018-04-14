@@ -1,8 +1,17 @@
 $(function () {
+    var query = $("#queryInput").val();
+    var server_request_url = $("#server_request_url").val();
     init_category();
     init_event();
     init_show_type();
+    init_UIShow();
 
+
+    function init_UIShow() {
+        if (!_.isEmpty(query)) {
+            $("#head-criteria-input").val(query);
+        }
+    }
 
     function init_show_type() {
         var url = window.location.href.split('?')[0];
@@ -22,6 +31,17 @@ $(function () {
     }
 
     function init_event() {
+        $('#head-criteria-input').bind('keypress', function (event) {
+            if (event.keyCode == "13") { //enter
+                var queryVal = $("#head-criteria-input").val();
+                if (_.isEmpty(queryVal)) {
+                    window.location.href = server_request_url;
+                } else {
+                    window.location.href = server_request_url + '?query='+queryVal;
+                }
+                return false;
+            }
+        });
         //article title click
         $(".explore-title > h4 > a").click(function() {
             $(this).addClass("color-999");

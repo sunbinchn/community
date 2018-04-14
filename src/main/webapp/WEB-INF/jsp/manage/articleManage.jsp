@@ -3,8 +3,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../taglib.jsp" %>
 <%
-    //The path starts with a "/" character but does not end with a "/"
-    pageContext.setAttribute("PATH", request.getContextPath() + "/");
+    if (request.getParameter("criteria") != null) {
+        pageContext.setAttribute("CRITERIA", request.getParameter("criteria"));
+    }
 %>
 
 <html>
@@ -16,10 +17,37 @@
 </head>
 <body>
 <%@ include file="../header.jsp" %>
+    <c:choose>
+        <c:when test="${!empty CRITERIA}">
+            <input value="${CRITERIA}" hidden="true" id="criteriaInput"/>
+        </c:when>
+        <c:otherwise>
+            <input hidden="true" id="criteriaInput"/>
+        </c:otherwise>
+    </c:choose>
+
+    <input value="${SERVER_REQUEST_URL}" hidden="true" id="server_request_url"/>
     <div class="container">
     <!-- 右侧内容栏 -->
     <div class="col-md-12">
         <h1>文章管理</h1>
+        <div style="margin-bottom: 10px">
+            <label class="radio-inline">
+                <input type="radio" name="unchecked" id="unchecked">未审核
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="deleted" id="deleted">已删除
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="checked" id="checked" >已审核
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="all" id="all">全部
+            </label>
+            <label for="criteria" style="margin-left:20px">过滤条件：</label>
+            <input type="text" class="col-sm-2" id="criteria" placeholder="文章名或用户名" style="float: none;">
+            <button type="button" class="btn btn-info btn-sm" id="criteria-button">过滤</button>
+        </div>
         <table class="table table-bordered table-hover" id="emp_table_id" style="margin-top: 5px; margin-bottom: 0px;">
             <thead>
             <tr>
@@ -32,7 +60,7 @@
                 <th style="min-width: 50px;">最后更新时间</th>
                 <th style="min-width: 50px;">作者名</th>
                 <th style="min-width: 80px;">状态</th>
-                <th style="min-width: 80px;">操作</th>
+                <th style="min-width: 120px;">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -41,13 +69,13 @@
                     <c:when test="${status.count%2 eq 1}">
                         <tr class="success" data-id="${articleItem.id}">
                             <td>${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}</td>
-                            <td><a href="${PATH}detail/get/${articleItem.id}">${articleItem.title}</a></td>
+                            <td><a href="${PATH}detail/get/${articleItem.id}"  target="_blank">${articleItem.title}</a></td>
                             <td>${articleItem.original eq 1 ? "原创" : "转载"}</td>
                             <td>${articleItem.articleType.name}</td>
                             <td>${articleItem.isRecommend eq 1 ? "是" : "否"}</td>
                             <td><fmt:formatDate value="${articleItem.createTime}"  type="DATE" /></td>
                             <td><fmt:formatDate value="${articleItem.updateTime}"  type="DATE" /></td>
-                            <td>${articleItem.user.userName}</td>
+                            <td><a href="${PATH}userHomePage/${articleItem.user.userId}/read" target="_blank">${articleItem.user.userName}</a></td>
                             <td>${articleItem.isPass eq 1 ? "已审核" : (articleItem.isPass eq 0 ? "未审核" : "已删除")}</td>
                             <td>
                                 <a class="toggle-pass">${articleItem.isPass eq 1 ? "取消审核" : "通过审核"}</a>
@@ -60,13 +88,13 @@
                     <c:otherwise>
                         <tr  class="info" data-id="${articleItem.id}">
                             <td>${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}</td>
-                            <td><a href="${PATH}detail/get/${articleItem.id}">${articleItem.title}</a></td>
+                            <td><a href="${PATH}detail/get/${articleItem.id}" target="_blank">${articleItem.title}</a></td>
                             <td>${articleItem.original eq 1 ? "原创" : "转载"}</td>
                             <td>${articleItem.articleType.name}</td>
                             <td>${articleItem.isRecommend eq 1 ? "是" : "否"}</td>
                             <td><fmt:formatDate value="${articleItem.createTime}"  type="DATE" /></td>
                             <td><fmt:formatDate value="${articleItem.updateTime}"  type="DATE" /></td>
-                            <td>${articleItem.user.userName}</td>
+                            <td><a href="${PATH}userHomePage/${articleItem.user.userId}/read" target="_blank">${articleItem.user.userName}</a></td>
                             <td>${articleItem.isPass eq 1 ? "已审核" : (articleItem.isPass eq 0 ? "未审核" : "已删除")}</td>
                             <td>
                                 <a class="toggle-pass">${articleItem.isPass eq 1 ? "取消审核" : "通过审核"}</a>
@@ -87,9 +115,18 @@
                     <ul class="pagination">
                         <c:if test="${pageInfo.hasPreviousPage}">
                             <li>
-                                <a href="${PATH}manage/article/index?pn=${pageInfo.pageNum-1}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
+                                <c:choose>
+                                    <c:when test="${!empty CRITERIA}">
+                                        <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum-1}&criteria=${CRITERIA}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum-1}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </c:otherwise>
+                                </c:choose>
                             </li>
                         </c:if>
                         <c:forEach items="${pageInfo.navigatepageNums}" var="curNum">
@@ -98,16 +135,32 @@
                                     <li class="active"><span>${curNum}</span></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li><a href="${PATH}manage/article/index?pn=${curNum}">${curNum}</a></li>
+                                    <c:choose>
+                                        <c:when test="${!empty CRITERIA}">
+                                            <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}&criteria=<%=request.getParameter("criteria")%>">${curNum}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}">${curNum}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:otherwise>
                             </c:choose>
-
                         </c:forEach>
                         <c:if test="${pageInfo.hasNextPage}">
                             <li>
-                                <a href="${PATH}manage/article/index?pn=${pageInfo.pageNum+1}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
+                            <c:choose>
+                                <c:when test="${!empty CRITERIA}">
+                                    <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum+1}&criteria=<%=request.getParameter("criteria")%>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum+1}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
+
                             </li>
                         </c:if>
                     </ul>

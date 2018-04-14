@@ -2,10 +2,6 @@
          pageEncoding="UTF-8" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../taglib.jsp" %>
-<%
-    //The path starts with a "/" character but does not end with a "/"
-    pageContext.setAttribute("PATH", request.getContextPath() + "/");
-%>
 
 <html>
 <head>
@@ -31,7 +27,6 @@
                 <th style="min-width: 50px;">公司</th>
                 <th style="min-width: 50px;">职位</th>
                 <th style="min-width: 50px;">个性签名</th>
-                <th style="min-width: 50px;">访问数</th>
                 <th style="min-width: 80px;">操作</th>
             </tr>
             </thead>
@@ -48,7 +43,6 @@
                             <td>${userItem.company}</td>
                             <td>${userItem.jobTitle}</td>
                             <td>${userItem.signature}</td>
-                            <td>${userItem.visits}</td>
                             <td>
                                 <c:choose>
                                     <c:when test="${userItem.isShutUp eq 0}">
@@ -79,7 +73,6 @@
                             <td>${userItem.company}</td>
                             <td>${userItem.jobTitle}</td>
                             <td>${userItem.signature}</td>
-                            <td>${userItem.visits}</td>
                             <td>
                                 <c:choose>
                                     <c:when test="${userItem.isShutUp eq 0}">

@@ -32,11 +32,16 @@ public interface ArticleDao {
 
     List<Article> findAllArticleListByArticleIds(List<Integer> articleIds);
 
-    List<Article> findNotIsPassAll();
+    List<Article> findAllByIsPass(Integer isPass);
+
+    List<Article> findAllByIsPassAndCriteria(@Param("isPass") Integer isPass,@Param("criteria")  String criteria);
+
+    List<Article> findAllByCriteria(String criteria);
 
     List<Article> findAllByUserId(Integer userId);
 
     Integer countByUserId(Integer userId);
 
     boolean updatePassById(@Param("isPassValue") Integer isPassValue, @Param("articleId") Integer articleId);
+
 }

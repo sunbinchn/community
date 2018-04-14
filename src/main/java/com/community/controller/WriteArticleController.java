@@ -32,9 +32,9 @@ public class WriteArticleController {
 
     @RequestMapping(value = "get", method = RequestMethod.GET)
     @ResponseBody
-    public ArticleVo getAritcle(@RequestParam("articleId") Integer articleId) {
+    public ArticleVo getArticle(@RequestParam("articleId") Integer articleId) {
         ArticleVo articleVo = new ArticleVo();
-        Article article = articleDao.findById(articleId);
+        Article article = articleDao.findForceById(articleId);
         articleVo.setOriginal(article.getOriginal());
         articleVo.setTitle(article.getTitle());
         articleVo.setContent(article.getContent());
