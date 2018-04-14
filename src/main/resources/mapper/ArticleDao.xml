@@ -60,7 +60,7 @@
             <when test="showTypeId == 3">
                 select a.*,(select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
                 from tb_article a, tb_user u
-                where a.user_id = u.id and is_pass = 1 and (a.title like #{query} or u.user_name like #{query}) order by count_b desc
+                where a.user_id = u.id and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%')) order by count_b desc
             </when>
         </choose>
     </select>
@@ -99,7 +99,7 @@
             <when test="showTypeId == 3">
                 select a.*,(select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
                 from tb_article a, tb_user u
-                where a.user_id = u.id and  article_type_id = #{articleTypeId} and is_pass = 1 and (a.title like #{query} or u.user_name like #{query}) order by count_b desc
+                where a.user_id = u.id and  article_type_id = #{articleTypeId} and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%')) order by count_b desc
             </when>
         </choose>
     </select>
@@ -138,8 +138,14 @@
     <select id="findAllByUserId"  resultMap="articleMapper" parameterType="Integer">
         select * from tb_article where is_pass = 1 and user_id = #{param} order by create_time desc
     </select>
+    <select id="findNotPassAllByUserId"  resultMap="articleMapper" parameterType="Integer">
+        select * from tb_article where is_pass = 0 and user_id = #{param} order by create_time desc
+    </select>
     <select id="countByUserId"  resultType="Integer" parameterType="Integer">
         select count(id) from tb_article where is_pass = 1 and user_id = #{param}
+    </select>
+    <select id="countNotPassByUserId"  resultType="Integer" parameterType="Integer">
+        select count(id) from tb_article where is_pass = 0 and user_id = #{param}
     </select>
     <update id="updatePassById">
         update tb_article set is_pass = #{isPassValue} where id = #{articleId}

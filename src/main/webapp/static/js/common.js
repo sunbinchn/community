@@ -1,7 +1,30 @@
 $(function () {
+    var query = $("#queryInput").val();
     init_event();
     init_date();
+    init_UIShow();
+
+
+    function init_UIShow() {
+        if (!_.isEmpty(query)) {
+            $("#head-criteria-input").val(query);
+        }
+    }
     function init_event() {
+        $('#head-criteria-input').bind('keypress', function (event) {
+            if (event.keyCode == "13") { //enter
+                var serverRequestUrl = $("#server_request_url").val();
+                var server_request_url = serverRequestUrl.indexOf('community/explore/') > -1 ?
+                    serverRequestUrl : serverRequestUrl.substr(0,serverRequestUrl.indexOf('/community')) + '/community/explore/all/latest';
+                var queryVal = $("#head-criteria-input").val();
+                if (_.isEmpty(queryVal)) {
+                    window.location.href = server_request_url;
+                } else {
+                    window.location.href = server_request_url + '?query='+queryVal;
+                }
+                return false;
+            }
+        });
         //write-article-button
         $("#write-article-button").click(function () {
             if (_.isEmpty($("#user_id_input").val())) {

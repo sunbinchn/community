@@ -47,6 +47,9 @@ public class UserHomePageController {
         request.setAttribute("loveCount", userArticleLoveDao.countByUserId(userId));
         request.setAttribute("keepCount", userArticleKeepDao.countByUserId(userId));
         request.setAttribute("articleCount", articleDao.countByUserId(userId));
+        if (userId.equals(request.getSession().getAttribute("userId"))) {
+            request.setAttribute("notPassArticleCount", articleDao.countNotPassByUserId(userId));
+        }
     }
 
     private boolean isIdolOfCurrentUser(HttpServletRequest request, Integer userId) {
@@ -88,6 +91,13 @@ public class UserHomePageController {
     public String article(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
         commonSetting(request, userId);
         request.setAttribute("pageInfo", articleService.findAllByUserId(pn, userId, request));
+        return "user_home_page";
+    }
+    @RequestMapping("{userId}/notPassOfArticle")
+    public String notPassOfArticle(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
+        commonSetting(request, userId);
+        //todo pageInfo -> notPassPageInfo就可以共用一个页面了
+        request.setAttribute("notPassPageInfo", articleService.findNotPassAllByUserId(pn, userId));
         return "user_home_page";
     }
 

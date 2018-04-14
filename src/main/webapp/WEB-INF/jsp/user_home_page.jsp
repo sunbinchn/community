@@ -45,13 +45,13 @@
     <!-- 右侧栏 -->
     <div class="col-sm-12 col-md-3" style="margin-top: 30px;border-bottom: 1px solid #EDEDED;">
         <div class="half-div" style="border-right: 1px solid #EDEDED;">
-            <a>
+            <a href="${PATH}userHomePage/${userInfo.userId}/idol">
                 <div>关注了</div>
                 <div><span  id="idolCount">${userRelationVo.idolCount}</span></div>
             </a>
         </div>
         <div class="half-div">
-            <a>
+            <a href="${PATH}userHomePage/${userInfo.userId}/fans">
                 <div>关注者</div>
                 <div><span id="fansCount">${userRelationVo.fansCount}</span></div>
             </a>
@@ -60,12 +60,15 @@
     <!-- 左侧内容栏 -->
     <div class="col-sm-12 col-md-9 aw-main-content" style="margin-top: -30px">
         <ul class="nav nav-tabs aw-nav-tabs">
-            <li role="presentation"  id="readLi"><a href="/community/userHomePage/${userInfo.userId}/read">浏览记录<span class="badge">${readCount}</span></a></li>
-            <li role="presentation"  id="loveLi"><a href="/community/userHomePage/${userInfo.userId}/love">喜欢<span class="badge">${loveCount}</span></a></li>
-            <li role="presentation"  id="keepLi"><a href="/community/userHomePage/${userInfo.userId}/keep">收藏<span class="badge">${keepCount}</span></a></li>
-            <li role="presentation"  id="articleLi"><a href="/community/userHomePage/${userInfo.userId}/article">文章<span class="badge">${articleCount}</span></a></li>
-            <li role="presentation"  id="idolLi"><a href="/community/userHomePage/${userInfo.userId}/idol">关注<span class="badge">${userRelationVo.idolCount}</span></a></li>
-            <li role="presentation"  id="fansLi"><a href="/community/userHomePage/${userInfo.userId}/fans">粉丝<span class="badge">${userRelationVo.fansCount}</span></a></li>
+            <li role="presentation"  id="readLi"><a href="${PATH}userHomePage/${userInfo.userId}/read">浏览记录<span class="badge">${readCount}</span></a></li>
+            <li role="presentation"  id="loveLi"><a href="${PATH}userHomePage/${userInfo.userId}/love">喜欢<span class="badge">${loveCount}</span></a></li>
+            <li role="presentation"  id="keepLi"><a href="${PATH}userHomePage/${userInfo.userId}/keep">收藏<span class="badge">${keepCount}</span></a></li>
+            <li role="presentation"  id="articleLi"><a href="${PATH}userHomePage/${userInfo.userId}/article">文章<span class="badge">${articleCount}</span></a></li>
+            <c:if test="${sessionScope.userId eq userInfo.userId}">
+                <li role="presentation"  id="notPassArticleLi"><a href="${PATH}userHomePage/${userInfo.userId}/notPassOfArticle">待审核<span class="badge">${notPassArticleCount}</span></a></li>
+            </c:if>
+            <li role="presentation"  id="idolLi"><a href="${PATH}userHomePage/${userInfo.userId}/idol">关注<span class="badge">${userRelationVo.idolCount}</span></a></li>
+            <li role="presentation"  id="fansLi"><a href="${PATH}userHomePage/${userInfo.userId}/fans">粉丝<span class="badge">${userRelationVo.fansCount}</span></a></li>
         </ul>
 
         <div class="content-explore-list">
@@ -154,6 +157,15 @@
                             </div>
                         </div>
                     </c:forEach>
+                    <c:forEach items="${notPassPageInfo.list}" var="article" varStatus="articleStatus"> <!-- 待审核div -->
+                        <div class="not-pass-article-item" style="<c:if test="${articleStatus.count eq 1}">border-top: 0;</c:if>" data-id="${article.id}">
+                            <h5>
+                                <a href="${PATH}detail/get/${article.id}" target="_blank" style="color: #5f5b57;">${article.title}</a>
+                                <button type="button" class="btn btn-info btn-sm" style="float: right">编辑</button>
+                            </h5>
+
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
             <div class="explore-foot">
@@ -181,6 +193,37 @@
                         <c:if test="${pageInfo.hasNextPage}">
                             <li>
                                 <a href="${SERVER_REQUEST_URL}?pn=${pageInfo.pageNum+1}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </nav>
+            </c:if>
+            <c:if test="${notPassPageInfo.pages gt 1}"> <!-- 待审核分页 -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <c:if test="${notPassPageInfo.hasPreviousPage}">
+                            <li>
+                                <a href="${SERVER_REQUEST_URL}?pn=${notPassPageInfo.pageNum-1}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+                        <c:forEach items="${notPassPageInfo.navigatepageNums}" var="curNum">
+                            <c:choose>
+                                <c:when test="${notPassPageInfo.pageNum eq curNum}" >
+                                    <li class="active"><span>${curNum}</span></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}">${curNum}</a></li>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </c:forEach>
+                        <c:if test="${notPassPageInfo.hasNextPage}">
+                            <li>
+                                <a href="${SERVER_REQUEST_URL}?pn=${notPassPageInfo.pageNum+1}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>

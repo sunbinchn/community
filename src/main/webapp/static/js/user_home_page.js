@@ -14,6 +14,8 @@ $(function () {
         $("#fansLi").addClass('active');
     } else if (subUrl == 'article') {
         $("#articleLi").addClass('active');
+    } else if (subUrl == 'notPassOfArticle') {
+        $("#notPassArticleLi").addClass('active');
     }
     init_event();
 

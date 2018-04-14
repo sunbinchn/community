@@ -26,7 +26,6 @@
         </c:otherwise>
     </c:choose>
 
-    <input value="${SERVER_REQUEST_URL}" hidden="true" id="server_request_url"/>
     <div class="container">
     <!-- 右侧内容栏 -->
     <div class="col-md-12">

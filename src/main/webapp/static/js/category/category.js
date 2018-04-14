@@ -1,22 +1,14 @@
 $(function () {
-    var query = $("#queryInput").val();
-    var server_request_url = $("#server_request_url").val();
     init_category();
     init_event();
     init_show_type();
-    init_UIShow();
 
-
-    function init_UIShow() {
-        if (!_.isEmpty(query)) {
-            $("#head-criteria-input").val(query);
-        }
-    }
 
     function init_show_type() {
         var url = window.location.href.split('?')[0];
         var subUrl = url.substring(0,url.lastIndexOf('/'));
         var $showTypeList = $('.aw-nav-tabs > li > a');
+        var query = $("#queryInput").val();
         //$showTypeList.eq(0),$($showTypeList[0]),$($showTypeList)三种都可以操作，但是他们是不相等的，可以在debugger中看到,content,prevObject不尽相同
         if (_.isEmpty(query)) {
             $showTypeList.eq(0).attr('href', subUrl+'/latest');
@@ -37,17 +29,6 @@ $(function () {
     }
 
     function init_event() {
-        $('#head-criteria-input').bind('keypress', function (event) {
-            if (event.keyCode == "13") { //enter
-                var queryVal = $("#head-criteria-input").val();
-                if (_.isEmpty(queryVal)) {
-                    window.location.href = server_request_url;
-                } else {
-                    window.location.href = server_request_url + '?query='+queryVal;
-                }
-                return false;
-            }
-        });
         //article title click
         $(".explore-title > h4 > a").click(function() {
             $(this).addClass("color-999");

@@ -41,11 +41,17 @@ public interface ArticleDao {
 
     List<Article> findAllByUserId(Integer userId);
 
+    List<Article> findNotPassAllByUserId(Integer userId);
+
     Integer countByUserId(Integer userId);
+
+    Integer countNotPassByUserId(Integer userId);
 
     boolean updatePassById(@Param("isPassValue") Integer isPassValue, @Param("articleId") Integer articleId);
 
     List<Article> findAllByArticleTypeIdAndShowTypeAndQuery(@Param("articleTypeId") Integer articleTypeId, @Param("showTypeId") Integer showTypeId, @Param("query") String query);
 
     List<Article> findAllByShowTypeAndQuery(@Param("showTypeId") Integer showTypeId, @Param("query") String query);
+
+
 }

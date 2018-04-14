@@ -62,6 +62,9 @@ public class ArticleService {
     }
 
     public List<Article> findArticleListByArticleTypeAndShowType(Integer articleTypeId, ArticleShowTypeConstant articleShowTypeConstant, String query) {
+        if (query != null) {
+            query = query.trim();
+        }
         List<Article> list;
         Integer showTypeId = articleShowTypeConstant.getId();
         if (articleTypeId != null) { //文章类型和最新/最热/推荐
@@ -142,6 +145,12 @@ public class ArticleService {
         if (request.getSession().getAttribute("userId") != null) {
             ArticleUtil.setIsLovedAndkeepCurrentUser(pageInfo, (Integer)request.getSession().getAttribute("userId"));
         }
+        return pageInfo;
+    }
+
+    public PageInfo<Article> findNotPassAllByUserId(Integer pn, Integer userId) {
+        PageHelper.startPage(pn, PAGE_SIZE_TEN);
+        PageInfo<Article> pageInfo = new PageInfo<>(articleDao.findNotPassAllByUserId(userId), NAVIGATE_PAGES_FIVE);
         return pageInfo;
     }
 }

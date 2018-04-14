@@ -1,9 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<%
+    if (request.getParameter("query") != null) {
+        pageContext.setAttribute("QUERY", request.getParameter("query"));
+    }
+%>
 <div class="container">
     <input id="user_id_input" hidden="true" value="${sessionScope.userId}"/>
+    <c:choose>
+        <c:when test="${!empty QUERY}">
+            <input value="${QUERY}" hidden="true" id="queryInput"/>
+        </c:when>
+        <c:otherwise>
+            <input hidden="true" id="queryInput"/>
+        </c:otherwise>
+    </c:choose>
+    <input value="${SERVER_REQUEST_URL}" hidden="true" id="server_request_url"/>
     <nav class="navbar navbar-default">
         <div class="container-fluid" style="background-color: antiquewhite;">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -51,6 +64,7 @@
                             <li><a href="/community/userHomePage/${sessionScope.userId}/read">我的主页</a></li>
                             <li><a href="/community/userHomePage/${sessionScope.userId}/love">我喜欢的</a></li>
                             <li><a href="/community/userHomePage/${sessionScope.userId}/keep">我的收藏</a></li>
+                            <li><a href="/community/userHomePage/${sessionScope.userId}/article">我的文章</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/community/userInfo/profile">个人信息</a></li>
                             <li><a href="/community/userInfo/password">修改密码</a></li>
