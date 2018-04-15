@@ -22,4 +22,11 @@ public interface UserArticleLoveDao {
     List<Article> findLoveArticleListByUserId(Integer userId);
 
     Integer countByUserId(Integer userId);
+
+    /**
+     * 计算用户总共获得的喜欢数
+     * @param userId
+     * @return
+     */
+    Integer countLoveOfUser(Integer userId);
 }

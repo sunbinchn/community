@@ -3,6 +3,8 @@ package com.community.entity;
 
 import org.hibernate.validator.constraints.Email;
 
+import java.util.Date;
+
 public class User {
     private Integer userId;
     private String userNameOrEmail;
@@ -20,6 +22,8 @@ public class User {
     private Integer role;
     private Integer isShutUp;
     private Integer isBan;
+    private String token;
+    private Date activateTime;
     //供显示使用
     private boolean isIdolOfCurrentUser;
 
@@ -149,5 +153,21 @@ public class User {
 
     public void setIsIdolOfCurrentUser(boolean idolOfCurrentUser) {
         isIdolOfCurrentUser = idolOfCurrentUser;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Date getActivateTime() {
+        return activateTime;
+    }
+
+    public void setActivateTime(Date activateTime) {
+        this.activateTime = activateTime;
     }
 }

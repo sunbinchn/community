@@ -19,4 +19,7 @@
     <select id="countByUserId" parameterType="Integer" resultType="Integer">
         select count(a.id) from tb_user_article_read aread,tb_article a where aread.article_id = a.id and a.is_pass = 1 and aread.user_id = #{param}
     </select>
+    <select id="countReadOfUser" parameterType="Integer" resultType="Integer">
+        select count(DISTINCT aread.article_id,aread.user_id) from tb_user_article_read aread,tb_article a where aread.article_id = a.id and a.is_pass = 1 and a.user_id = #{param}
+    </select>
 </mapper>

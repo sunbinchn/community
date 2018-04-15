@@ -44,6 +44,9 @@
     </div>
     <!-- 右侧栏 -->
     <div class="col-sm-12 col-md-3" style="margin-top: 30px;border-bottom: 1px solid #EDEDED;">
+        <h4 style="border-bottom: 1px solid #eeeeee;color:#31445b">个人成就</h4>
+        <p><img src="${PATH}/static/images/user_home_love.png" style="width: 30px;margin-right: 20px;">获得喜欢${countLoveOfUser}次</p>
+        <p style="border-bottom: 1px solid #eeeeee;"><img src="${PATH}/static/images/user_home_read.png" style="width: 30px;margin-right: 20px;">文章被阅读${countReadOfUser}次</p>
         <div class="half-div" style="border-right: 1px solid #EDEDED;">
             <a href="${PATH}userHomePage/${userInfo.userId}/idol">
                 <div>关注了</div>

@@ -91,7 +91,7 @@
                             </div>
                             <div class="modal-footer">
                                 <div style="width: 100%;text-align: left;">
-                                    没有账号？<a id="model_login_to_register">注册</a><a herf="#" style="float: right">忘记密码</a>
+                                    没有账号？<a id="model_login_to_register">注册</a><a href="${PATH}userRecoverPassword/index" style="float: right">忘记密码</a>
                                 </div>
                             </div>
                         </div><!-- /.modal-content -->

@@ -43,4 +43,10 @@
         update tb_user set icon_id = #{icon.id},phone = #{phone},email = #{email},
         nickname = #{nickname},company=#{company},signature=#{signature},job_title=#{jobTitle} where id = #{userId}
     </update>
+    <update id="updateTokenAndActivateTime" parameterType="com.community.entity.User">
+        update tb_user set activate_time = #{activateTime},token=#{token} where id = #{userId}
+    </update>
+    <select id="findByToken" resultMap="userMapper">
+        select * from tb_user where token = #{param}
+    </select>
 </mapper>

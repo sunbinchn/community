@@ -37,4 +37,8 @@ public interface UserDao {
     boolean updatePassword(UserVo userVo);
 
     boolean update(User user);
+
+    boolean updateTokenAndActivateTime(User byName);
+
+    User findByToken(String token);
 }

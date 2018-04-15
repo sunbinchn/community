@@ -19,4 +19,11 @@ public interface UserArticleReadDao {
     List<Article> findLoveArticleListByUserId(Integer userId);
 
     Integer countByUserId(Integer userId);
+
+    /**
+     * 计算用户总共获得的阅读数
+     * @param userId
+     * @return
+     */
+    Integer countReadOfUser(Integer userId);
 }

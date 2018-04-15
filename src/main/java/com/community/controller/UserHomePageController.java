@@ -53,6 +53,8 @@ public class UserHomePageController {
         userRelationVo.setIdolCount(userRelationDao.countAllByUserId(userId));
         userRelationVo.setFansCount(userRelationDao.countAllByTargetUserId(userId));
         userRelationVo.setIdolOfCurrentUser(isIdolOfCurrentUser(request, userId));
+        request.setAttribute("countLoveOfUser", userArticleLoveDao.countLoveOfUser(userId));
+        request.setAttribute("countReadOfUser", userArticleReadDao.countReadOfUser(userId));
         request.setAttribute("userRelationVo", userRelationVo);
         request.setAttribute("readCount", userArticleReadDao.countByUserId(userId));
         request.setAttribute("loveCount", userArticleLoveDao.countByUserId(userId));
@@ -110,7 +112,6 @@ public class UserHomePageController {
     @RequestMapping("{userId}/notPassOfArticle")
     public String notPassOfArticle(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request, HttpServletResponse response) {
         commonSetting(request, response, userId);
-        //todo pageInfo -> notPassPageInfo就可以共用一个页面了
         request.setAttribute("notPassPageInfo", articleService.findNotPassAllByUserId(pn, userId));
         return "user_home_page";
     }
