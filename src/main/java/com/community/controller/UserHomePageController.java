@@ -47,6 +47,7 @@ public class UserHomePageController {
         request.setAttribute("loveCount", userArticleLoveDao.countByUserId(userId));
         request.setAttribute("keepCount", userArticleKeepDao.countByUserId(userId));
         request.setAttribute("articleCount", articleDao.countByUserId(userId));
+        request.setAttribute("SERVER_REQUEST_URL", request.getRequestURL());
         if (userId.equals(request.getSession().getAttribute("userId"))) {
             request.setAttribute("notPassArticleCount", articleDao.countNotPassByUserId(userId));
         }

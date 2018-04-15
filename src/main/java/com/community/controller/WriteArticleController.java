@@ -32,9 +32,13 @@ public class WriteArticleController {
 
     @RequestMapping(value = "get", method = RequestMethod.GET)
     @ResponseBody
-    public ArticleVo getArticle(@RequestParam("articleId") Integer articleId) {
-        ArticleVo articleVo = new ArticleVo();
+    public ArticleVo getArticle(@RequestParam("articleId") Integer articleId, HttpServletRequest request) {
+        Integer userId = (Integer)request.getSession().getAttribute("userId");
         Article article = articleDao.findForceById(articleId);
+        if (!article.getUser().getUserId().equals(userId)) { //更新别人的文章，不允许
+            return null;
+        }
+        ArticleVo articleVo = new ArticleVo();
         articleVo.setOriginal(article.getOriginal());
         articleVo.setTitle(article.getTitle());
         articleVo.setContent(article.getContent());
@@ -53,6 +57,13 @@ public class WriteArticleController {
             result.setMessage("未登陆，请先登陆！");
             return result;
         }
+        if (articleVo.getArticleId() != null) { //更新需要判断是否是自己的文章
+            Article byId = articleDao.findById(articleVo.getArticleId());
+            if (!byId.getUser().getUserId().equals(userId)) {
+                result.setSuccess(false);
+                result.setMessage("自能更新自己的文章");
+            }
+        }
         Article article = new Article();
         User user = new User();
         user.setUserId(userId);
@@ -63,15 +74,15 @@ public class WriteArticleController {
         ArticleType articleType = new ArticleType();
         articleType.setId(articleVo.getArticleTypeId());
         article.setArticleType(articleType);
-        boolean updateOrinsert = false;
+        boolean updateOrInsert;
         if (articleVo.getArticleId() != null) { //update
             article.setId(articleVo.getArticleId());
-            updateOrinsert = articleDao.update(article);
+            updateOrInsert = articleDao.update(article);
         } else { //create
-            updateOrinsert = articleDao.insert(article);
+            updateOrInsert = articleDao.insert(article);
         }
-        if (updateOrinsert) {
-            result.setSuccess(updateOrinsert);
+        if (updateOrInsert) {
+            result.setSuccess(updateOrInsert);
             result.setMessage(String.valueOf(article.getId()));
         }
         return result;

@@ -80,7 +80,7 @@
                                 <a class="list-group-item" href="${PATH}userHomePage/${idolUser.userId}/read" style="height:80px">
                                     <div style="margin-top: 10px">
                                         <img src="${PATH}static/images/${idolUser.icon.url}" style="margin-right: 10px; width: 45px;">
-                                        <span style="font-size:x-large;">${idolUser.userName}</span>
+                                        <span style="font-size:large;">${idolUser.userName}</span>
                                         <span style="margin-left: 20px;font-family: monospace;">${idolUser.signature}</span>
                                         <c:choose>
                                             <c:when test="${idolUser.isIdolOfCurrentUser}">
@@ -102,7 +102,7 @@
                                 <a class="list-group-item" href="${PATH}userHomePage/${fansUser.userId}/read" style="height:80px">
                                     <div style="margin-top: 10px">
                                         <img src="${PATH}static/images/${fansUser.icon.url}" style="margin-right: 10px; width: 45px;">
-                                        <span style="font-size:x-large;">${fansUser.userName}</span>
+                                        <span style="font-size:large;">${fansUser.userName}</span>
                                         <span style="margin-left: 20px;font-family: monospace;">${fansUser.signature}</span>
                                         <c:choose>
                                             <c:when test="${fansUser.isIdolOfCurrentUser}">
@@ -117,7 +117,6 @@
                             </c:forEach>
                         </ul>
                     </c:if>
-
                     <c:forEach items="${pageInfo.list}" var="article" varStatus="articleStatus">
                         <div class="item" style="<c:if test="${articleStatus.count eq 1}">border-top: 0;</c:if>" data-id="${article.id}">
                             <a class="user-icon" href="${PATH}userHomePage/${article.user.userId}/read" target="_blank">
@@ -129,7 +128,12 @@
                                     <span class="text-color-999">发表了文章 • <a href="${PATH}detail/get/${article.id}#comment-anchor" target="_blank">${fn:length(article.commentList)}</a> 个评论 • ${fn:length(article.readUserList)} 次浏览 •
                                                 <fmt:formatDate value="${article.createTime}"  type="both" /></span>
                                 </p>
-                                <h4><a href="${PATH}detail/get/${article.id}" target="_blank">${article.title}</a></h4>
+                                <h4>
+                                    <a href="${PATH}detail/get/${article.id}" target="_blank">${article.title}</a>
+                                    <c:if test="${sessionScope.userId eq userInfo.userId and fn:endsWith(SERVER_REQUEST_URL, '/article')}">
+                                        <button type="button" class="btn btn-info btn-sm edit-article-button" style="float: right" data-id="${article.id}">编辑</button>
+                                    </c:if>
+                                </h4>
                             </div>
 
                             <div class="explore-buttons">
@@ -158,18 +162,17 @@
                         </div>
                     </c:forEach>
                     <c:forEach items="${notPassPageInfo.list}" var="article" varStatus="articleStatus"> <!-- 待审核div -->
-                        <div class="not-pass-article-item" style="<c:if test="${articleStatus.count eq 1}">border-top: 0;</c:if>" data-id="${article.id}">
+                        <div class="not-pass-article-item" style="<c:if test="${articleStatus.count eq 1}">border-top: 0;</c:if>" >
                             <h5>
-                                <a href="${PATH}detail/get/${article.id}" target="_blank" style="color: #5f5b57;">${article.title}</a>
-                                <button type="button" class="btn btn-info btn-sm" style="float: right">编辑</button>
+                                <a href="${PATH}detail/get/${article.id}" target="_blank">${article.title}</a>
+                                <button type="button" class="btn btn-info btn-sm edit-article-button" style="float: right" data-id="${article.id}">编辑</button>
                             </h5>
-
                         </div>
                     </c:forEach>
                 </div>
             </div>
             <div class="explore-foot">
-            <c:if test="${pageInfo.pages gt 1}">
+            <c:if test="${pageInfo.pages gt 1}"> <!-- 浏览记录、喜欢、收藏、文章的分页 -->
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <c:if test="${pageInfo.hasPreviousPage}">
@@ -224,6 +227,68 @@
                         <c:if test="${notPassPageInfo.hasNextPage}">
                             <li>
                                 <a href="${SERVER_REQUEST_URL}?pn=${notPassPageInfo.pageNum+1}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </nav>
+            </c:if>
+            <c:if test="${userRelationVo.idolUserPageInfo.pages gt 1}"> <!-- 关注分页 -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <c:if test="${userRelationVo.idolUserPageInfo.hasPreviousPage}">
+                            <li>
+                                <a href="${SERVER_REQUEST_URL}?pn=${userRelationVo.idolUserPageInfo.pageNum-1}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+                        <c:forEach items="${userRelationVo.idolUserPageInfo.navigatepageNums}" var="curNum">
+                            <c:choose>
+                                <c:when test="${userRelationVo.idolUserPageInfo.pageNum eq curNum}" >
+                                    <li class="active"><span>${curNum}</span></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}">${curNum}</a></li>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </c:forEach>
+                        <c:if test="${userRelationVo.idolUserPageInfo.hasNextPage}">
+                            <li>
+                                <a href="${SERVER_REQUEST_URL}?pn=${userRelationVo.idolUserPageInfo.pageNum+1}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </nav>
+            </c:if>
+            <c:if test="${userRelationVo.fansUserPageInfo.pages gt 1}"> <!-- 粉丝分页 -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <c:if test="${userRelationVo.fansUserPageInfo.hasPreviousPage}">
+                            <li>
+                                <a href="${SERVER_REQUEST_URL}?pn=${userRelationVo.fansUserPageInfo.pageNum-1}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+                        <c:forEach items="${userRelationVo.fansUserPageInfo.navigatepageNums}" var="curNum">
+                            <c:choose>
+                                <c:when test="${userRelationVo.fansUserPageInfo.pageNum eq curNum}" >
+                                    <li class="active"><span>${curNum}</span></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="${SERVER_REQUEST_URL}?pn=${curNum}">${curNum}</a></li>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </c:forEach>
+                        <c:if test="${userRelationVo.fansUserPageInfo.hasNextPage}">
+                            <li>
+                                <a href="${SERVER_REQUEST_URL}?pn=${userRelationVo.fansUserPageInfo.pageNum+1}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>

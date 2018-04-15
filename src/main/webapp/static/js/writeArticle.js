@@ -42,6 +42,9 @@ $(function () {
             if (_.isEmpty(data.title)) {
                 $("#error-msg-span").text('文章标题不能为空');
                 return false;
+            } else if (data.title.length > 50){
+                $("#error-msg-span").text('标题最大长度为50！');
+                return false;
             }
             if (_.isEmpty(data.content)) {
                 $("#error-msg-span").text('文章内容不能为空');

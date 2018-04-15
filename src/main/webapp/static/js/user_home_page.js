@@ -20,6 +20,9 @@ $(function () {
     init_event();
 
     function init_event() {
+        $(".edit-article-button").click(function () {
+           window.open('/community/writeArticle/index?articleId='+$(this).attr('data-id'));
+        });
         $(".edit-my-profile").click(function () {
            window.location.href = '/community/userInfo/profile';
         });
