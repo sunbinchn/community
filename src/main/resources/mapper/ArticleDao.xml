@@ -132,6 +132,12 @@
     <select id="findAllByIsPassAndCriteria" resultMap="articleMapper">
         select a.* from tb_article a,tb_user u  where a.user_id = u.id and is_pass = #{isPass} and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
     </select>
+    <select id="findAllByIsRecommend" resultMap="articleMapper" parameterType="Integer">
+        select * from tb_article where is_recommend = #{param} order by create_time asc
+    </select>
+    <select id="findAllByIsRecommendAndCriteria" resultMap="articleMapper">
+        select a.* from tb_article a,tb_user u  where a.user_id = u.id and is_recommend = #{isRecommend} and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
+    </select>
     <select id="findAllByCriteria" resultMap="articleMapper">
         select a.* from tb_article a,tb_user u  where a.user_id = u.id and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
     </select>
@@ -149,5 +155,8 @@
     </select>
     <update id="updatePassById">
         update tb_article set is_pass = #{isPassValue} where id = #{articleId}
+    </update>
+    <update id="updateIsRecommend">
+        update tb_article set is_recommend = #{isRecommend} where id = #{articleId}
     </update>
 </mapper>

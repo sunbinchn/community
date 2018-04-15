@@ -3,6 +3,7 @@ package com.community.controller;
 import com.community.dao.UserArticleReadDao;
 import com.community.entity.Article;
 import com.community.service.ArticleDetailService;
+import com.community.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ public class ArticleDetailController {
     @Autowired
     private ArticleDetailService articleDetailService;
     @Autowired
+    private ArticleService articleService;
+    @Autowired
     private UserArticleReadDao userArticleReadDao;
 
     @RequestMapping("/get/{id}")
@@ -28,6 +31,7 @@ public class ArticleDetailController {
             response.sendRedirect("/community/error.html");
             return null;
         }
+        articleService.setInterestingUserAndArticleList(request);
         request.setAttribute("article", article);
         Integer userId = (Integer)request.getSession().getAttribute("userId");
         if (userId != null) {

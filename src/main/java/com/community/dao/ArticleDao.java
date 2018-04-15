@@ -37,6 +37,10 @@ public interface ArticleDao {
 
     List<Article> findAllByIsPassAndCriteria(@Param("isPass") Integer isPass, @Param("criteria") String criteria);
 
+    List<Article> findAllByIsRecommend(Integer isRecommend);
+
+    List<Article> findAllByIsRecommendAndCriteria(@Param("isRecommend") Integer isRecommend,@Param("criteria")  String criteria);
+
     List<Article> findAllByCriteria(String criteria);
 
     List<Article> findAllByUserId(Integer userId);
@@ -49,9 +53,12 @@ public interface ArticleDao {
 
     boolean updatePassById(@Param("isPassValue") Integer isPassValue, @Param("articleId") Integer articleId);
 
+    boolean updateIsRecommend(@Param("isRecommend") Integer isRecommend, @Param("articleId") Integer articleId);
+
     List<Article> findAllByArticleTypeIdAndShowTypeAndQuery(@Param("articleTypeId") Integer articleTypeId, @Param("showTypeId") Integer showTypeId, @Param("query") String query);
 
     List<Article> findAllByShowTypeAndQuery(@Param("showTypeId") Integer showTypeId, @Param("query") String query);
+
 
 
 }

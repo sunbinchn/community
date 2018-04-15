@@ -3,13 +3,6 @@ $(function () {
     init_event();
     init_date();
     init_UIShow();
-
-
-    function init_UIShow() {
-        if (!_.isEmpty(query)) {
-            $("#head-criteria-input").val(query);
-        }
-    }
     function init_event() {
         $('#head-criteria-input').bind('keypress', function (event) {
             if (event.keyCode == "13") { //enter
@@ -68,6 +61,11 @@ $(function () {
             if (_.isEmpty(reg_email)) {
                 $('#register_error_msg').text('邮箱不能为空');
                 return false;
+            } else {
+                if (!/^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g.test(reg_email)) {
+                    $('#register_error_msg').text('邮箱格式不正确');
+                    return false;
+                }
             }
             if (_.isEmpty(reg_password)) {
                 $('#register_error_msg').text('密码不能为空');
@@ -120,6 +118,39 @@ $(function () {
                 if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             return fmt;
         }
+    }
+    function init_UIShow() {
+        if (!_.isEmpty(query)) {
+            $("#head-criteria-input").val(query);
+        }
+        var serverRequestUrl = $("#server_request_url").val();
+        if (serverRequestUrl.indexOf('explore/category-7') > -1) {
+            $("#homePageLi").removeClass('active');
+            $("#resourceLi").addClass('active');
+        }
+        resizeFooter();
+    }
+    function resizeFooter() {
+        var footerHeight = 0,
+            footerTop = 0,
+            $footer = $("#footer");
+        positionFooter();
+        function positionFooter() {
+            footerHeight = $footer.height();
+            footerTop = ($(window).scrollTop()+$(window).height()-footerHeight)+"px";
+            if ( ($(document.body).height()+footerHeight) < $(window).height()) {
+                $footer.css({
+                    position: "absolute"
+                }).stop().animate({
+                    top: footerTop
+                });
+            } else {
+                $footer.css({
+                    position: "static"
+                });
+            }
+        }
+        $(window).scroll(positionFooter).resize(positionFooter);
     }
 })
 

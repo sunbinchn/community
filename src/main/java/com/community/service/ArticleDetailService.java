@@ -25,6 +25,9 @@ public class ArticleDetailService {
     public Article findById(Integer id, Integer currentUserId) {
         Article article;
         article = articleDao.findForceById(id);
+        if (article == null) {
+            return null;
+        }
         boolean currentUserIsAdmin = false;
         if (currentUserId != null) {
             User currentUser = userDao.findById(currentUserId);

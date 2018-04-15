@@ -55,6 +55,20 @@ public class ArticleManageController {
         commonSetting(pn, request, CHECKED.getValue());
         return "manage/articleManage";
     }
+    @RequestMapping("recommend")
+    public String recommend(@RequestParam(value = "pn", defaultValue = "1") Integer pn, HttpServletRequest request) {
+        request.setAttribute("SERVER_REQUEST_URL", request.getRequestURL());
+        PageHelper.startPage(pn, PageContants.PAGE_SIZE_TEN);
+        List<Article> articleList;
+        String criteria = request.getParameter("criteria");
+        if (StringUtils.isEmpty(criteria)) {
+            articleList = articleDao.findAllByIsRecommend(1);
+        } else {
+            articleList = articleDao.findAllByIsRecommendAndCriteria(0, criteria.trim());
+        }
+        request.setAttribute("pageInfo", new PageInfo<>(articleList, PageContants.NAVIGATE_PAGES_FIVE));
+        return "manage/articleManage";
+    }
     @RequestMapping("all")
     public String all(@RequestParam(value = "pn", defaultValue = "1") Integer pn, HttpServletRequest request) {
         request.setAttribute("SERVER_REQUEST_URL", request.getRequestURL());
@@ -75,10 +89,26 @@ public class ArticleManageController {
         BaseResult result = new BaseResult();
         Article article = articleDao.findById(articleId);
         boolean update;
-        if (UNCHECKED.getValue().equals(article.getIsPass())) { //未审核
+        if (UNCHECKED.getValue().equals(article.getIsPass()) || DELETED.getValue().equals(article.getIsPass()) ) { //未审核或者已删除都改为审核通过
             update = articleDao.updatePassById(CHECKED.getValue(), articleId);
         } else { //已审核
             update = articleDao.updatePassById(UNCHECKED.getValue(), articleId);
+        }
+        if (update) {
+            result.setSuccess(true);
+        }
+        return result;
+    }
+    @RequestMapping("toggleRecommend/{articleId}")
+    @ResponseBody
+    public BaseResult toggleRecommend(@PathVariable Integer articleId) {
+        BaseResult result = new BaseResult();
+        Article article = articleDao.findById(articleId);
+        boolean update;
+        if (article.getIsRecommend() == 1) { //推荐变成不推荐
+            update = articleDao.updateIsRecommend(0, articleId);
+        } else {
+            update = articleDao.updateIsRecommend(1, articleId);
         }
         if (update) {
             result.setSuccess(true);

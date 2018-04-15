@@ -41,12 +41,18 @@ public class UserController {
         }
         if (findUser != null) {
             if (findUser.getPassword().equals(user.getPassword())) {
+                if (findUser.getIsBan() == 1) { //账号被封，将无法登陆
+                    result.setSuccess(false);
+                    result.setMessage("当前账号被查封，无法登陆");
+                    return result;
+                }
                 result.setSuccess(true);
                 request.getSession().setAttribute("username", findUser.getUserName());
                 request.getSession().setAttribute("email", findUser.getEmail());
                 request.getSession().setAttribute("userIcon", findUser.getIcon().getUrl());
                 request.getSession().setAttribute("userId", findUser.getUserId());
                 request.getSession().setAttribute("role", findUser.getRole());
+                request.getSession().setAttribute("isShutUp", findUser.getIsShutUp());
             } else {
                 result.setSuccess(false);
                 result.setMessage("用户名或密码错误");

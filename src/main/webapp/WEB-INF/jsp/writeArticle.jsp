@@ -45,5 +45,6 @@
         <button id="article-sumbit-button" type="button" class="btn btn-success" style="float: right;")>提交</button>
     </div>
     </div>
+    <%@ include file="footer.jsp" %>
 </body>
 </html>

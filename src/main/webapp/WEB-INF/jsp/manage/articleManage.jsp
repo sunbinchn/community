@@ -41,6 +41,9 @@
                 <input type="radio" name="checked" id="checked" >已审核
             </label>
             <label class="radio-inline">
+                <input type="radio" name="checked" id="recommend" >已推荐
+            </label>
+            <label class="radio-inline">
                 <input type="radio" name="all" id="all">全部
             </label>
             <label for="criteria" style="margin-left:20px">过滤条件：</label>
@@ -59,7 +62,7 @@
                 <th style="min-width: 50px;">最后更新时间</th>
                 <th style="min-width: 50px;">作者名</th>
                 <th style="min-width: 80px;">状态</th>
-                <th style="min-width: 120px;">操作</th>
+                <th style="min-width: 170px;">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -79,8 +82,16 @@
                             <td>
                                 <a class="toggle-pass">${articleItem.isPass eq 1 ? "取消审核" : "通过审核"}</a>
                                 <c:if test="${articleItem.isPass != -1}">
-                                    <a class="delete-article">${articleItem.isPass eq -1 ? "取消删除" : "删除"}</a>
+                                    <a class="delete-article">删除</a>
                                 </c:if>
+                                <c:choose>
+                                    <c:when test="${articleItem.isRecommend eq 1}">
+                                        <a class="toggle-recommend">取消推荐</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="toggle-recommend">推荐</a>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                         </tr>
                     </c:when>
@@ -98,8 +109,16 @@
                             <td>
                                 <a class="toggle-pass">${articleItem.isPass eq 1 ? "取消审核" : "通过审核"}</a>
                                 <c:if test="${articleItem.isPass != -1}">
-                                    <a class="delete-article">${articleItem.isPass eq -1 ? "取消删除" : "删除"}</a>
+                                    <a class="delete-article">删除</a>
                                 </c:if>
+                                <c:choose>
+                                    <c:when test="${articleItem.isRecommend eq 1}">
+                                        <a class="toggle-recommend">取消推荐</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="toggle-recommend">推荐</a>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                     </c:otherwise>
                 </c:choose>
@@ -168,5 +187,6 @@
         </c:if>
     </div>
 </div>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +38,22 @@ public class UserHomePageController {
     @Autowired
     private UserArticleKeepDao userArticleKeepDao;
 
-    private void commonSetting(HttpServletRequest request, Integer userId) {
+    private boolean commonSetting(HttpServletRequest request, HttpServletResponse response, Integer userId) {
+        User byId = userDao.findById(userId);
+        if (byId == null) {
+            try {
+                response.sendRedirect("/community/error.html");
+                return false;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        request.setAttribute("userInfo", byId);
         UserRelationVo userRelationVo = new UserRelationVo();
         userRelationVo.setIdolCount(userRelationDao.countAllByUserId(userId));
         userRelationVo.setFansCount(userRelationDao.countAllByTargetUserId(userId));
         userRelationVo.setIdolOfCurrentUser(isIdolOfCurrentUser(request, userId));
         request.setAttribute("userRelationVo", userRelationVo);
-        request.setAttribute("userInfo", userDao.findById(userId));
         request.setAttribute("readCount", userArticleReadDao.countByUserId(userId));
         request.setAttribute("loveCount", userArticleLoveDao.countByUserId(userId));
         request.setAttribute("keepCount", userArticleKeepDao.countByUserId(userId));
@@ -51,6 +62,7 @@ public class UserHomePageController {
         if (userId.equals(request.getSession().getAttribute("userId"))) {
             request.setAttribute("notPassArticleCount", articleDao.countNotPassByUserId(userId));
         }
+        return true;
     }
 
     private boolean isIdolOfCurrentUser(HttpServletRequest request, Integer userId) {
@@ -68,43 +80,44 @@ public class UserHomePageController {
     }
 
     @RequestMapping("{userId}/read")
-    public String read(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
-        commonSetting(request, userId);
+    public String read(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request, HttpServletResponse response) {
+        commonSetting(request, response, userId);
         request.setAttribute("pageInfo", articleService.findReadArticleListByUserId(pn, userId, request));
         return "user_home_page";
     }
 
     @RequestMapping("{userId}/love")
-    public String love(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
-        commonSetting(request, userId);
+    public String love(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request, HttpServletResponse response) {
+        commonSetting(request, response, userId);
         request.setAttribute("pageInfo", articleService.findLoveArticleListByUserId(pn, userId, request));
         return "user_home_page";
     }
 
     @RequestMapping("{userId}/keep")
-    public String keep(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
-        commonSetting(request, userId);
+    public String keep(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request, HttpServletResponse response) {
+        commonSetting(request, response, userId);
         request.setAttribute("pageInfo", articleService.findKeepArticleListByUserId(pn, userId, request));
         return "user_home_page";
     }
 
     @RequestMapping("{userId}/article")
-    public String article(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
-        commonSetting(request, userId);
+    public String article(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request, HttpServletResponse response) {
+        commonSetting(request, response, userId);
         request.setAttribute("pageInfo", articleService.findAllByUserId(pn, userId, request));
         return "user_home_page";
     }
+
     @RequestMapping("{userId}/notPassOfArticle")
-    public String notPassOfArticle(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
-        commonSetting(request, userId);
+    public String notPassOfArticle(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request, HttpServletResponse response) {
+        commonSetting(request, response, userId);
         //todo pageInfo -> notPassPageInfo就可以共用一个页面了
         request.setAttribute("notPassPageInfo", articleService.findNotPassAllByUserId(pn, userId));
         return "user_home_page";
     }
 
     @RequestMapping("{userId}/idol")
-    public String idol(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
-        commonSetting(request, userId);
+    public String idol(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request, HttpServletResponse response) {
+        commonSetting(request, response, userId);
         UserRelationVo userRelationVo = (UserRelationVo) request.getAttribute("userRelationVo");
         PageHelper.startPage(pn, PageContants.PAGE_SIZE_TEN);
         PageInfo<User> userPageInfo = new PageInfo<>(userRelationDao.findAllByUserId(userId), PageContants.NAVIGATE_PAGES_FIVE);
@@ -121,8 +134,8 @@ public class UserHomePageController {
     }
 
     @RequestMapping("{userId}/fans")
-    public String fans(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request) {
-        commonSetting(request, userId);
+    public String fans(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @PathVariable Integer userId, HttpServletRequest request, HttpServletResponse response) {
+        commonSetting(request, response, userId);
         UserRelationVo userRelationVo = (UserRelationVo) request.getAttribute("userRelationVo");
         PageHelper.startPage(pn, PageContants.PAGE_SIZE_TEN);
         PageInfo<User> userPageInfo = new PageInfo<>(userRelationDao.findAllByTargetUserId(userId), PageContants.NAVIGATE_PAGES_FIVE);

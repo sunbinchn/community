@@ -141,6 +141,12 @@
                             </a>
                         </c:forEach>
                     </ul>
+                    <h4>友情链接</h4>
+                    <ul class="list-group">
+                        <a href="https://github.com/"><img src="${PATH}/static/images/github.jpg"></a>
+                        <a href="https://www.oschina.net/"><img src="${PATH}/static/images/oschina.jpg" style="margin-left: 30px;"></a>
+                        <a href="http://www.w3school.com.cn/"><img src="${PATH}/static/images/w3c.png" style="width: 150px; margin-left: 20px;"></a>
+                    </ul>
                 </div>
             </div>
         </div>

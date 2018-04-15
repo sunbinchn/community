@@ -306,6 +306,9 @@
     <div class="col-sm-12 col-md-3 aw-side-bar">
     </div>
 </div>
-</div>
+
+<%@ include file="footer.jsp" %>
+<body>
+
 </body>
 </html>

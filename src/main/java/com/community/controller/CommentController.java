@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -24,8 +25,13 @@ public class CommentController {
     private UserCommentLoveDao userCommentLoveDao;
 
     @RequestMapping("/insert")
-    public @ResponseBody BaseDataResult insert(@RequestBody Comment comment) {
+    public @ResponseBody BaseDataResult insert(@RequestBody Comment comment, HttpServletRequest request) {
         BaseDataResult result = new BaseDataResult();
+        Integer isShutUp = (Integer) request.getSession().getAttribute("isShutUp");
+        if (isShutUp == 1) { //禁言用户不能发表评论
+            result.setSuccess(false);
+            return result;
+        }
         boolean insert = commentDao.insert(comment);
         if (insert) {
             result.setSuccess(true);
@@ -44,8 +50,13 @@ public class CommentController {
     }
 
     @RequestMapping(value = "/nestComment/insert", method = RequestMethod.POST)
-    public @ResponseBody BaseDataResult insertNestComment(NestCommentVo nestCommentVo) {
+    public @ResponseBody BaseDataResult insertNestComment(NestCommentVo nestCommentVo, HttpServletRequest request) {
         BaseDataResult result = new BaseDataResult();
+        Integer isShutUp = (Integer) request.getSession().getAttribute("isShutUp");
+        if (isShutUp == 1) { //禁言用户不能发表评论
+            result.setSuccess(false);
+            return result;
+        }
         if (StringUtils.isNotEmpty(nestCommentVo.getContent()) && StringUtils.isNotEmpty(nestCommentVo.getContent()) && StringUtils.isNotEmpty(nestCommentVo.getContent())) {
             Comment comment = new Comment();
             User user = new User();

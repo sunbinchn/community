@@ -27,21 +27,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/community/explore/all/latest">首页</a></li>
-                    <li><a href="#">资源</a></li>
-                    <%--<li class="dropdown">--%>
-                        <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"--%>
-                           <%--aria-expanded="false">Dropdown <span class="caret"></span></a>--%>
-                        <%--<ul class="dropdown-menu">--%>
-                            <%--<li><a href="#">Action</a></li>--%>
-                            <%--<li><a href="#">Another action</a></li>--%>
-                            <%--<li><a href="#">Something else here</a></li>--%>
-                            <%--<li role="separator" class="divider"></li>--%>
-                            <%--<li><a href="#">Separated link</a></li>--%>
-                            <%--<li role="separator" class="divider"></li>--%>
-                            <%--<li><a href="#">One more separated link</a></li>--%>
-                        <%--</ul>--%>
-                    <%--</li>--%>
+                    <li class="active" id="homePageLi"><a href="${PATH}explore/all/latest">首页</a></li>
+                    <li id="resourceLi"><a href="${PATH}explore/category-7/latest">资源</a></li>
                 </ul>
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
@@ -123,7 +110,7 @@
                                 <form method="post" onsubmit="return;">
                                     <p id="register_error_msg" class="color-red"></p>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="reg_username" placeholder="请填写用户名">
+                                        <input type="text" class="form-control" id="reg_username" placeholder="请填写用户名(数字、字母、下划线)" maxlength="16" onkeyup="value=value.replace(/[^(\-)\w\.\/]/ig,'')">
                                     </div>
                                     <div class="form-group">
                                         <input type="email" class="form-control" id="reg_email" placeholder="请填写邮箱">

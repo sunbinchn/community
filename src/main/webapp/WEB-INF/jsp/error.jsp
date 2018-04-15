@@ -14,6 +14,9 @@
     <%@ include file="common.jsp" %>
 </head>
 <body>
-    404-错误
+<%@ include file="header.jsp" %>
+<div class="container">
+    <img src="${PATH}static/images/404_1.jpg" alt="" style="left: 13%;position:relative;">
+</div>
 </body>
 </html>

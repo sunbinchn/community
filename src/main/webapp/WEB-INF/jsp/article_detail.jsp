@@ -96,7 +96,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <textarea cols="2" rows="1" placeholder="你想对ta说的话" class="comment-inner-content" data-target-id=""></textarea>
+                                            <c:choose>
+                                                <c:when test="${sessionScope.isShutUp eq 1}">
+                                                    <textarea cols="2" rows="1" placeholder="您当前处于禁言状态，无法发表评论" class="comment-inner-content" data-target-id="" disabled></textarea>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <textarea cols="2" rows="1" placeholder="你想对ta说的话" class="comment-inner-content" data-target-id=""></textarea>
+                                                </c:otherwise>
+                                            </c:choose>
                                             <button type="button" class="btn btn-success inner-submit-button" disabled="disabled">评论</button>
                                         </div>
 
@@ -112,7 +119,14 @@
                                         <div class="comment-form-icon">
                                             <img src="${PATH}static/images/${userIcon}">
                                         </div>
-                                        <textarea placeholder="发表你的看法" class="comment-input"></textarea>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.isShutUp eq 1}">
+                                                <textarea placeholder="您当前处于禁言状态，无法发表评论" class="comment-input" disabled></textarea>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <textarea placeholder="发表你的看法" class="comment-input"></textarea>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <div class="submit-div">
                                             <button id="comment-sumbit-button" type="button" class="btn btn-success submit-button" disabled="disabled">评论</button>
                                         </div>
@@ -126,11 +140,35 @@
                 </div>
                 <!-- 右侧栏 -->
                 <div class="col-sm-12 col-md-3 aw-side-bar">
-
+                    <div>
+                        <h4>你可能感兴趣的人</h4>
+                        <ul class="list-group">
+                            <c:forEach items="${interestingUserList}" var="interestingUser">
+                                <a class="list-group-item" href="${PATH}userHomePage/${interestingUser.userId}/read">
+                                    <img src="${PATH}static/images/${interestingUser.icon.url}" style="margin-right: 10px; width: 30px;">${interestingUser.userName}
+                                </a>
+                            </c:forEach>
+                        </ul>
+                        <h4>你可能感兴趣的文章</h4>
+                        <ul class="list-group">
+                            <c:forEach items="${interestingArticleList}" var="interestingArticle">
+                                <a class="list-group-item" href="${PATH}detail/get/${interestingArticle.id}">
+                                        ${interestingArticle.title}
+                                </a>
+                            </c:forEach>
+                        </ul>
+                        <h4>友情链接</h4>
+                        <ul class="list-group">
+                            <a href="https://github.com/"><img src="${PATH}/static/images/github.jpg"></a>
+                            <a href="https://www.oschina.net/"><img src="${PATH}/static/images/oschina.jpg" style="margin-left: 30px;"></a>
+                            <a href="http://www.w3school.com.cn/"><img src="${PATH}/static/images/w3c.png" style="width: 150px; margin-left: 20px;"></a>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<%@ include file="footer.jsp" %>
 </body>
 </html>

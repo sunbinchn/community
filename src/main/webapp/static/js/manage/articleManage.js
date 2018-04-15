@@ -13,7 +13,9 @@ $(function () {
             $("#deleted").prop("checked",true);
         } else if (showType === 'checked') {
             $("#checked").prop("checked",true);
-        } else if (showType === 'all') {
+        } else if (showType === 'recommend') {
+            $("#recommend").prop("checked",true);
+        }  else if (showType === 'all') {
             $("#all").prop("checked",true);
         }
         if (!_.isEmpty(criteria)) {
@@ -45,6 +47,9 @@ $(function () {
         $("#checked").click(function () {
             window.location.href = '/community/manage/article/checked';
         });
+        $("#recommend").click(function () {
+            window.location.href = '/community/manage/article/recommend';
+        });
         $("#all").click(function () {
             window.location.href = '/community/manage/article/all';
         });
@@ -52,6 +57,18 @@ $(function () {
             var articleId = $($(this).parents('tr')[0]).attr('data-id');
             $.ajax({
                 url: '/community/manage/article/togglePass/' + articleId,
+                type: 'GET',
+                success: function (result) {
+                    if (result.success) {
+                        window.location.reload();
+                    }
+                }
+            })
+        });
+        $(".toggle-recommend").click(function () {
+            var articleId = $($(this).parents('tr')[0]).attr('data-id');
+            $.ajax({
+                url: '/community/manage/article/toggleRecommend/' + articleId,
                 type: 'GET',
                 success: function (result) {
                     if (result.success) {
