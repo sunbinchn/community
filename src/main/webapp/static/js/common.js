@@ -138,7 +138,7 @@ $(function () {
         function positionFooter() {
             footerHeight = $footer.height();
             footerTop = ($(window).scrollTop()+$(window).height()-footerHeight)+"px";
-            if ( ($(document.body).height()+footerHeight) < $(window).height()) {
+            if ( $(document.body).height() < $(window).height()) {
                 $footer.css({
                     position: "absolute"
                 }).stop().animate({
