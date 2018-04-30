@@ -36,7 +36,7 @@
                     <c:when test="${status.count%2 eq 1}">
                         <tr class="success" data-id="${userItem.userId}">
                             <td>${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}</td>
-                            <td>${userItem.userName}</td>
+                            <td><a href="${PATH}userHomePage/${userItem.userId}/read" target="_blank">${userItem.userName}</a></td>
                             <td>${userItem.nickname}</td>
                             <td>${userItem.email}</td>
                             <td>${userItem.phone}</td>
@@ -66,7 +66,7 @@
                     <c:otherwise>
                         <tr  class="info" data-id="${userItem.userId}">
                             <td>${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}</td>
-                            <td>${userItem.userName}</td>
+                            <td><a href="${PATH}userHomePage/${userItem.userId}/read" target="_blank">${userItem.userName}</a></td>
                             <td>${userItem.nickname}</td>
                             <td>${userItem.email}</td>
                             <td>${userItem.phone}</td>

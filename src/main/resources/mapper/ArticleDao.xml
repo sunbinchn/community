@@ -27,19 +27,21 @@
         select * from tb_article where id = #{param} and is_pass != -1
     </select>
     <select id="findAll" resultMap="articleMapper">
-        select * from tb_article where is_pass = 1
+        select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time from tb_article where is_pass = 1
     </select>
     <select id="findAllByShowType" resultMap="articleMapper" parameterType="Integer">
         <choose>
             <when test="showTypeId == 1">
-                select * from tb_article where is_pass = 1
+                select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time
+                from tb_article where is_pass = 1
                 order by create_time desc
             </when>
             <when test="showTypeId == 2">
-                select * from tb_article  where is_pass = 1 and is_recommend = 1
+                select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time
+                from tb_article  where is_pass = 1 and is_recommend = 1
             </when>
             <when test="showTypeId == 3">
-                select *,
+                select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time,
                 (select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
                 from tb_article a  where a.is_pass = 1 order by count_b desc
             </when>
@@ -48,37 +50,43 @@
     <select id="findAllByShowTypeAndQuery" resultMap="articleMapper" parameterType="Integer">
         <choose>
             <when test="showTypeId == 1">
-                select a.* from tb_article a, tb_user u where a.user_id = u.id
+                select a.id,a.title,a.article_type_id,a.original,a.is_recommend,a.from_article_id,a.user_id,a.is_pass,a.create_time,a.update_time
+                from tb_article a, tb_user u where a.user_id = u.id
                 and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%'))
                 order by create_time desc
             </when>
             <when test="showTypeId == 2">
-                select a.* from tb_article a, tb_user u where a.user_id = u.id
+                select a.id,a.title,a.article_type_id,a.original,a.is_recommend,a.from_article_id,a.user_id,a.is_pass,a.create_time,a.update_time
+                from tb_article a, tb_user u where a.user_id = u.id
                 and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%'))
                 and is_recommend = 1
             </when>
             <when test="showTypeId == 3">
-                select a.*,(select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
+                select a.id,a.title,a.article_type_id,a.original,a.is_recommend,a.from_article_id,a.user_id,a.is_pass,a.create_time,a.update_time,
+                (select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
                 from tb_article a, tb_user u
                 where a.user_id = u.id and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%')) order by count_b desc
             </when>
         </choose>
     </select>
     <select id="findAllByArticleTypeId" resultMap="articleMapper" parameterType="Integer">
-        select * from tb_article where article_type_id = #{param} and is_pass = 1
+        select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time
+         from tb_article where article_type_id = #{param} and is_pass = 1
     </select>
     <select id="findAllByArticleTypeIdAndShowType" resultMap="articleMapper">
         <choose>
             <when test="showTypeId == 1">
-                select * from tb_article where article_type_id = #{articleTypeId} and is_pass = 1
+                select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time
+                from tb_article where article_type_id = #{articleTypeId} and is_pass = 1
                 order by create_time desc
             </when>
             <when test="showTypeId == 2">
-                select * from tb_article where article_type_id = #{articleTypeId} and is_pass = 1
+                select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time
+                from tb_article where article_type_id = #{articleTypeId} and is_pass = 1
                 and is_recommend = 1
             </when>
             <when test="showTypeId == 3">
-                select *,
+                select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time,
                 (select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
                 from tb_article a where article_type_id = #{articleTypeId} and is_pass = 1 order by count_b desc
             </when>
@@ -87,17 +95,18 @@
     <select id="findAllByArticleTypeIdAndShowTypeAndQuery" resultMap="articleMapper">
         <choose>
             <when test="showTypeId == 1">
-                select a.* from tb_article a, tb_user u where a.user_id = u.id and article_type_id = #{articleTypeId}
+                select a.id,a.title,a.article_type_id,a.original,a.is_recommend,a.from_article_id,a.user_id,a.is_pass,a.create_time,a.update_time from tb_article a, tb_user u where a.user_id = u.id and article_type_id = #{articleTypeId}
                 and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%'))
                 order by create_time desc
             </when>
             <when test="showTypeId == 2">
-                select a.* from tb_article a, tb_user u where a.user_id = u.id and article_type_id = #{articleTypeId}
+                select a.id,a.title,a.article_type_id,a.original,a.is_recommend,a.from_article_id,a.user_id,a.is_pass,a.create_time,a.update_time from tb_article a, tb_user u where a.user_id = u.id and article_type_id = #{articleTypeId}
                 and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%'))
                 and is_recommend = 1
             </when>
             <when test="showTypeId == 3">
-                select a.*,(select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
+                select a.id,a.title,a.article_type_id,a.original,a.is_recommend,a.from_article_id,a.user_id,a.is_pass,a.create_time,a.update_time,
+                (select count(*) from tb_user_article_love ua where ua.article_id = a.id) AS count_b
                 from tb_article a, tb_user u
                 where a.user_id = u.id and  article_type_id = #{articleTypeId} and is_pass = 1 and (a.title like CONCAT('%', #{query}, '%') or u.user_name like CONCAT('%', #{query}, '%')) order by count_b desc
             </when>
@@ -120,32 +129,32 @@
         LIMIT 6
     </select>
     <select id="findAllArticleListByArticleIds" parameterType="java.util.List" resultType="com.community.entity.Article">
-        select * from tb_article where is_pass = 1 and id in
+        select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time from tb_article where is_pass = 1 and id in
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
         LIMIT 5
     </select>
     <select id="findAllByIsPass" resultMap="articleMapper" parameterType="Integer">
-        select * from tb_article where is_pass = #{param} order by create_time asc
+        select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time from tb_article where is_pass = #{param} order by create_time asc
     </select>
     <select id="findAllByIsPassAndCriteria" resultMap="articleMapper">
-        select a.* from tb_article a,tb_user u  where a.user_id = u.id and is_pass = #{isPass} and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
+        select a.id,a.title,a.article_type_id,a.original,a.is_recommend,a.from_article_id,a.user_id,a.is_pass,a.create_time,a.update_time from tb_article a,tb_user u  where a.user_id = u.id and is_pass = #{isPass} and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
     </select>
     <select id="findAllByIsRecommend" resultMap="articleMapper" parameterType="Integer">
-        select * from tb_article where is_recommend = #{param} order by create_time asc
+        select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time from tb_article where is_recommend = #{param} order by create_time asc
     </select>
     <select id="findAllByIsRecommendAndCriteria" resultMap="articleMapper">
-        select a.* from tb_article a,tb_user u  where a.user_id = u.id and is_recommend = #{isRecommend} and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
+        select a.id,a.title,a.article_type_id,a.original,a.is_recommend,a.from_article_id,a.user_id,a.is_pass,a.create_time,a.update_time from tb_article a,tb_user u  where a.user_id = u.id and is_recommend = #{isRecommend} and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
     </select>
     <select id="findAllByCriteria" resultMap="articleMapper">
-        select a.* from tb_article a,tb_user u  where a.user_id = u.id and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
+        select a.id,a.title,a.article_type_id,a.original,a.is_recommend,a.from_article_id,a.user_id,a.is_pass,a.create_time,a.update_time from tb_article a,tb_user u  where a.user_id = u.id and (a.title like CONCAT('%', #{criteria}, '%') or u.user_name like CONCAT('%', #{criteria}, '%')) order by a.create_time asc
     </select>
     <select id="findAllByUserId"  resultMap="articleMapper" parameterType="Integer">
-        select * from tb_article where is_pass = 1 and user_id = #{param} order by create_time desc
+        select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time from tb_article where is_pass = 1 and user_id = #{param} order by create_time desc
     </select>
     <select id="findNotPassAllByUserId"  resultMap="articleMapper" parameterType="Integer">
-        select * from tb_article where is_pass = 0 and user_id = #{param} order by create_time desc
+        select id,title,article_type_id,original,is_recommend,from_article_id,user_id,is_pass,create_time,update_time from tb_article where is_pass = 0 and user_id = #{param} order by create_time desc
     </select>
     <select id="countByUserId"  resultType="Integer" parameterType="Integer">
         select count(id) from tb_article where is_pass = 1 and user_id = #{param}
