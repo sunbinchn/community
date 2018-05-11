@@ -23,8 +23,15 @@ $(function () {
         }
     }
     function init_event() {
-        $(".nav-pills > li").click(function(){
+        $(".nav-pills > li:lt(9)").click(function(){
             $(".nav-pills > li").removeClass('active');
+            $("#otherUL > li").removeClass('active');
+            $(this).addClass('active');
+            return false;
+        });
+        $("#otherUL > li").click(function(){
+            $(".nav-pills > li").removeClass('active');
+            $("#otherUL > li").removeClass('active');
             $(this).addClass('active');
             return false;
         });
@@ -33,7 +40,11 @@ $(function () {
             data.original = $("#select-original").val() == -1 ? null : $("#select-original").val();
             data.title = $("#titleInput").val();
             data.content = ue.getContent();
-            data.articleTypeId = $(".nav-pills > li").filter('.active').attr('data-id');
+            var articleTypeId = $(".nav-pills > li").filter('.active').attr('data-id');
+            if (_.isEmpty(articleTypeId)) {
+                articleTypeId = $("#otherUL > li").filter('.active').attr('data-id');;
+            }
+            data.articleTypeId = articleTypeId;
             data.articleId = $("#container").attr('data-id');
             if (_.isEmpty(data.original)) {
                 $("#error-msg-span").text('文章类型不能为空');

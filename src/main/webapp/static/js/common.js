@@ -128,29 +128,29 @@ $(function () {
             $("#homePageLi").removeClass('active');
             $("#resourceLi").addClass('active');
         }
-        resizeFooter();
+        // resizeFooter();
     }
-    function resizeFooter() {
-        var footerHeight = 0,
-            footerTop = 0,
-            $footer = $("#footer");
-        positionFooter();
-        function positionFooter() {
-            footerHeight = $footer.height();
-            footerTop = ($(window).scrollTop()+$(window).height()-footerHeight)+"px";
-            if ( $(document.body).height() < $(window).height()) {
-                $footer.css({
-                    position: "absolute"
-                }).stop().animate({
-                    top: footerTop
-                });
-            } else {
-                $footer.css({
-                    position: "static"
-                });
-            }
-        }
-        $(window).scroll(positionFooter).resize(positionFooter);
-    }
+    // function resizeFooter() {
+    //     var footerHeight = 0,
+    //         footerTop = 0,
+    //         $footer = $("#footer");
+    //     positionFooter();
+    //     function positionFooter() {
+    //         footerHeight = $footer.height();
+    //         footerTop = ($(window).scrollTop()+$(window).height()-footerHeight)+"px";
+    //         if ( $(document.body).height() < $(window).height()) {
+    //             $footer.css({
+    //                 position: "absolute"
+    //             }).stop().animate({
+    //                 top: footerTop
+    //             });
+    //         } else {
+    //             $footer.css({
+    //                 position: "static"
+    //             });
+    //         }
+    //     }
+    //     $(window).scroll(positionFooter).resize(positionFooter);
+    // }
 })
 

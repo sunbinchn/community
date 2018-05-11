@@ -1,8 +1,6 @@
 package com.community.service;
 
-import com.community.dao.ArticleDao;
 import com.community.dao.ArticleTypeDao;
-import com.community.entity.Article;
 import com.community.entity.ArticleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

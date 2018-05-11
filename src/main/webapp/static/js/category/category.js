@@ -88,24 +88,15 @@ $(function () {
 
     function init_category() {
         var pathname = window.location.pathname;
+        var suffix = pathname.substr('/community/explore/category-'.length);
+        var articleId = suffix.substr(0,suffix.indexOf('/'))
+        pathname.substr('/community/explore/category-'.length).indexOf('/')
         if (pathname.indexOf('explore/all') > -1 || pathname.indexOf('index.html') > -1) {
             $("#category-list-id > li:eq(0)").addClass('active');
-        } else if (pathname.indexOf('explore/category-1') > -1) {
-            $("#category-list-id > li:eq(1)").addClass('active');
-        } else if (pathname.indexOf('explore/category-2') > -1) {
-            $("#category-list-id > li:eq(2)").addClass('active');
-        } else if (pathname.indexOf('explore/category-3') > -1) {
-            $("#category-list-id > li:eq(3)").addClass('active');
-        } else if (pathname.indexOf('explore/category-4') > -1) {
-            $("#category-list-id > li:eq(4)").addClass('active');
-        } else if (pathname.indexOf('explore/category-5') > -1) {
-            $("#category-list-id > li:eq(5)").addClass('active');
-        } else if (pathname.indexOf('explore/category-6') > -1) {
-            $("#category-list-id > li:eq(6)").addClass('active');
-        } else if (pathname.indexOf('explore/category-7') > -1) {
-            $("#category-list-id > li:eq(7)").addClass('active');
-        } else if (pathname.indexOf('explore/category-8') > -1) {
-            $("#category-list-id > li:eq(8)").addClass('active');
+        } else if (articleId <= 9){
+            $($("#category-list-id > li")[articleId]).addClass('active');
+        } else {
+            $($("#otherUL").children()[articleId-10]).addClass('active');
         }
         $("#category-list-h2").text($("#category-list-id .active > a").html());
     }

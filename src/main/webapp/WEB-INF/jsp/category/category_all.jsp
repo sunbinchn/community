@@ -17,11 +17,24 @@
         <div class="col-sm-12">
             <ul class="list" id="category-list-id">
                 <li><a href="${PATH}explore/all/latest">全部</a></li>
-                <c:forEach items="${articleTypeList}" var="articleType">
+                <c:forEach items="${articleTypeList}" var="articleType" varStatus="status" begin="0" end="8" step="1">
                     <li>
                         <a href="${PATH}explore/category-${articleType.id}/latest">${articleType.name}</a>
                     </li>
                 </c:forEach>
+                <c:if test="${fn:length(articleTypeList) gt 9}">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">其他<span class="caret"></span></a>
+                        <ul class="dropdown-menu" id="otherUL">
+                                <c:forEach items="${articleTypeList}" var="articleType" begin="9" step="1">
+                                    <li>
+                                        <a href="${PATH}explore/category-${articleType.id}/latest">${articleType.name}</a>
+                                    </li>
+                                </c:forEach>
+                        </ul>
+                    </li>
+                </c:if>
             </ul>
         </div>
     </div>

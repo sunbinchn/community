@@ -59,6 +59,7 @@
                             <c:if test="${role eq 2}">
                                 <li><a href="/community/manage/user/index">用户管理</a></li>
                                 <li><a href="/community/manage/article/index">文章管理</a></li>
+                                <li><a href="/community/manage/articleType/index">类型管理</a></li>
                             </c:if>
                             <li><a href="/community/login/logOut">退出登录</a></li>
                         </ul>

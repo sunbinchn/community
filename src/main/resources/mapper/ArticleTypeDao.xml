@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.dao.ArticleTypeDao">
-    <select id="findAll"  resultType="com.community.entity.ArticleType">
-        select * from tb_article_type
+    <select id="findAll"  resultType="com.community.entity.ArticleType" useCache="false">
+        select * from tb_article_type ORDER BY priority
     </select>
     <select id="findById"  resultType="com.community.entity.ArticleType" parameterType="Integer">
         select * from tb_article_type where id = #{param}
     </select>
+    <select id="findByName"  resultType="com.community.entity.ArticleType" parameterType="String">
+        select * from tb_article_type where name = #{param}
+    </select>
+    <update id="update"  parameterType="com.community.entity.ArticleType">
+        update tb_article_type set name=#{name},priority=#{priority},description=#{description} where id = #{id}
+    </update>
+    <insert id="insert" parameterType="com.community.entity.ArticleType">
+        insert into tb_article_type(name,priority,description) values(#{name},#{priority},#{description})
+    </insert>
 
 </mapper>

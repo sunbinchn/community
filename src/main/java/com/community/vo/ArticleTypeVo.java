@@ -1,6 +1,6 @@
-package com.community.entity;
+package com.community.vo;
 
-public class ArticleType {
+public class ArticleTypeVo {
     private Integer id;
     private String name;
     private Integer priority;

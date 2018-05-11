@@ -1,13 +1,12 @@
 package com.community.controller;
 
 import com.community.dao.ArticleDao;
-import com.community.dao.ArticleTypeDao;
 import com.community.entity.Article;
 import com.community.entity.ArticleType;
 import com.community.entity.User;
+import com.community.service.ArticleTypeService;
 import com.community.vo.ArticleVo;
 import com.community.vo.result.BaseResult;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +20,11 @@ public class WriteArticleController {
     @Autowired
     private ArticleDao articleDao;
     @Autowired
-    private ArticleTypeDao articleTypeDao;
+    private ArticleTypeService articleTypeService;
 
     @RequestMapping("index")
     public String index(HttpServletRequest request) {
-        List<ArticleType> articleTypeList = articleTypeDao.findAll();
+        List<ArticleType> articleTypeList = articleTypeService.findAll();
         request.setAttribute("articleTypeList", articleTypeList);
         return "writeArticle";
     }

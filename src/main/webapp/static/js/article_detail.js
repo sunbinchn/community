@@ -132,7 +132,7 @@ $(function () {
                 success: function (result) {
                     if (result && result.success) {
                         var comment = result.data;
-                        var lastItem = $('.article-comment-list .comment-item:last');
+                        // var lastItem = $('.article-comment-list .comment-item:last');
                         var commentItem = $('<div class="comment-item" data-id="'+ comment.id +'"></div>');
                         var commentHead = $('<div class="comment-head"></div>');
                         var commentBody = $('<div class="comment-body"></div>');
@@ -146,7 +146,9 @@ $(function () {
                         commentBody.appendTo(commentItem);
                         commentFoot.appendTo(commentItem);
                         nestCommentBox.appendTo(commentItem);
-                        lastItem.after(commentItem);
+                        // commentItem.appendTo($('.article-comment-list'));
+                        // lastItem.after(commentItem);
+                        $('.comment-form').before(commentItem);
                         $('.comment-input').val('');
                     } else {
                         //评论失败，系统异常

@@ -7,8 +7,13 @@
 <head>
     <title>开源技术社区</title>
     <!--http://localhost:8888/community/ -->
-    <%@ include file="common.jsp" %>
+    <script type="text/javascript" src="${PATH}static/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="${PATH}static/js/underscore.js"></script>
+    <link href="${PATH}static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${PATH}static/css/common.css" rel="stylesheet">
+    <script src="${PATH}static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="${PATH}static/js/writeArticle.js"></script>
+    <script src="${PATH}static/js/common.js"></script>
     <!-- 配置文件 -->
     <script type="text/javascript" src="${PATH}static/ueditor/ueditor.config.js"></script>
     <!-- 编辑器源码文件 -->
@@ -28,6 +33,7 @@
                     <option value="1">原创</option>
                 </select>
                 <input id="titleInput" type="text" id="title" class="col-sm-4" placeholder="请输入文章标题" required autofocus>
+                <span id="error-msg-span" class="col-sm-1" style="width:170px;padding:8px 12px;color:red"></span>
             </div>
         </div>
         <!-- 加载编辑器的容器 -->
@@ -36,15 +42,28 @@
     </div>
     <div  class="container" style="margin-top:10px">
         <span class="col-sm-1" style="width:100px;padding: 8px 12px;">选择分类：</span>
-        <ul class="nav nav-pills col-sm-8">
-            <c:forEach items="${articleTypeList}" var="articleType">
+        <ul class="nav nav-pills col-sm-9">
+            <c:forEach items="${articleTypeList}" var="articleType"  varStatus="status" begin="0" end="8" step="1">
             <li role="presentation" data-id="${articleType.id}"><a href="" style="padding: 8px 12px;">${articleType.name}</a></li>
             </c:forEach>
+            <c:if test="${fn:length(articleTypeList) gt 9}">
+                <li class="dropup">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                aria-expanded="false">其他<span class="caret"></span></a>
+                    <ul class="dropdown-menu" id="otherUL">
+                        <c:forEach items="${articleTypeList}" var="articleType" begin="9" step="1">
+                             <li role="presentation" data-id="${articleType.id}"><a href="" style="padding: 8px 12px;">${articleType.name}</a></li>
+                        </c:forEach>
+                    </ul>
+                </li>
+            </c:if>
         </ul>
-    <span id="error-msg-span" class="col-sm-1" style="width:170px;padding:8px 12px;color:red"></span>
+
+
         <button id="article-sumbit-button" type="button" class="btn btn-success" style="float: right;")>提交</button>
     </div>
     </div>
     <%@ include file="footer.jsp" %>
+
 </body>
 </html>
