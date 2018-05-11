@@ -6,6 +6,11 @@ $(function () {
     function init_event() {
         //on事件可以保证动态添加的dom节点同样拥有这个事件
         $('body').on('click', ".comment-love-btn", function(){
+            if (_.isEmpty(userId)) {
+                $(".login-modal").modal('show');
+                $("#username_or_email").focus();
+                return false;
+            }
             var $commentItem = $($(this).parents('.comment-item')[0]);
             var targetCommentId = $commentItem.attr('data-id');
             var data = 'commentId='+targetCommentId+'&userId='+userId;
@@ -90,6 +95,14 @@ $(function () {
             $(".register-modal").modal('show');
             $("#reg_username").focus();
         });
+        $('.detail_login_a1').click(function() {
+            $(".login-modal").modal('show');
+            $("#username_or_email").focus();
+        });
+        $('.detail_register_a1').click(function() {
+            $(".register-modal").modal('show');
+            $("#reg_username").focus();
+        });
         $('body').on('mouseover', '.comment-inner-content', function(){
             $(this).next('.inner-submit-button').removeAttr('disabled');
         });
@@ -167,12 +180,30 @@ $(function () {
         var innerP = $('<p><a href="">'+ comment.user.userName +'</a></p>');
         innerP.appendTo(innerA);
         innerP.appendTo(innerCommentHeadDiv);
-        var innerCommentBodyDiv = $('<div class="comment-body"><div class="markitup-box">'+ comment.content +'</div></div>');
+        var innerCommentBodyDiv = $('<div class="comment-body"><div class="markitup-box">'+ comment.content +'<span class="pull-right" style="color: #999;font-size: 12px;">'+dateFtt('yyyy-MM-dd hh:mm:ss',new Date(comment.createTime))+'</span></div></div>');
         innerCommentHeadDiv.appendTo(innerCommentItemDiv);
         innerCommentBodyDiv.appendTo(innerCommentItemDiv);
         innerCommentItemDiv.appendTo(nestCommentBox.find('.inner-comment-list'));
         nestCommentBox.find('.inner-comment-list').children().css('border-bottom','1px solid #f5f5f5');
         nestCommentBox.find('.inner-comment-list').children().last().css('border-bottom','none');
     };
+    function dateFtt(fmt,date)
+    {
+        var o = {
+            "M+" : date.getMonth()+1,                 //月份
+            "d+" : date.getDate(),                    //日
+            "h+" : date.getHours(),                   //小时
+            "m+" : date.getMinutes(),                 //分
+            "s+" : date.getSeconds(),                 //秒
+            "q+" : Math.floor((date.getMonth()+3)/3), //季度
+            "S"  : date.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    }
 
 });

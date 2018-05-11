@@ -20,7 +20,7 @@
                 <input type="password" class="form-control" name="oldPassword" id="oldPassword">
             </div>
             <span id="oldPassword_error_span" style="color:red"></span>
-            <a>忘记密码？</a>
+            <a href="${PATH}userRecoverPassword/index">忘记密码？</a>
         </div>
         <div class="form-group">
             <label for="newPassword1" class="col-sm-2 control-label">新密码：</label>

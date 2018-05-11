@@ -96,17 +96,24 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <c:choose>
-                                                <c:when test="${sessionScope.isShutUp eq 1}">
-                                                    <textarea cols="2" rows="1" placeholder="您当前处于禁言状态，无法发表评论" class="comment-inner-content" data-target-id="" disabled></textarea>
+                                                <c:when test="${empty  username}">
+                                                    <p align="center" id="no-comment-auth-warning">要评论请先<a class="detail_login_a1">登录</a>或<a class="detail_register_a1">注册</a></p>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <textarea cols="2" rows="1" placeholder="你想对ta说的话" class="comment-inner-content" data-target-id=""></textarea>
+                                                    <c:choose>
+                                                        <c:when test="${sessionScope.isShutUp eq 1}">
+                                                            <textarea cols="2" rows="1" placeholder="您当前处于禁言状态，无法发表评论" class="comment-inner-content" data-target-id="" disabled></textarea>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <textarea cols="2" rows="1" placeholder="你想对ta说的话" class="comment-inner-content" data-target-id=""></textarea>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <button type="button" class="btn btn-success inner-submit-button" disabled="disabled">评论</button>
                                                 </c:otherwise>
                                             </c:choose>
-                                            <button type="button" class="btn btn-success inner-submit-button" disabled="disabled">评论</button>
                                         </div>
-
                                     </div>
                                 </div>
                             </c:forEach>
