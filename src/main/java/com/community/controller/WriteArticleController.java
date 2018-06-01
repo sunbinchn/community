@@ -7,9 +7,15 @@ import com.community.entity.User;
 import com.community.service.ArticleTypeService;
 import com.community.vo.ArticleVo;
 import com.community.vo.result.BaseResult;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -60,7 +66,8 @@ public class WriteArticleController {
             Article byId = articleDao.findById(articleVo.getArticleId());
             if (!byId.getUser().getUserId().equals(userId)) {
                 result.setSuccess(false);
-                result.setMessage("自能更新自己的文章");
+                result.setMessage("只能更新自己的文章");
+                return result;
             }
         }
         Article article = new Article();
@@ -68,7 +75,8 @@ public class WriteArticleController {
         user.setUserId(userId);
         article.setUser(user);
         article.setTitle(articleVo.getTitle());
-        article.setContent(articleVo.getContent());
+        //防止XSS(跨站点脚本)攻击
+        article.setContent(Jsoup.clean(articleVo.getContent(), Whitelist.basic()));
         article.setOriginal(articleVo.getOriginal());
         ArticleType articleType = new ArticleType();
         articleType.setId(articleVo.getArticleTypeId());

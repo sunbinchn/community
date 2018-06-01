@@ -38,8 +38,8 @@ $(function () {
         $("#article-sumbit-button").click(function () {
             var data = {};
             data.original = $("#select-original").val() == -1 ? null : $("#select-original").val();
-            data.title = $("#titleInput").val();
-            data.content = ue.getContent();
+            data.title = xssCheck($("#titleInput").val());
+            data.content = xssCheck(ue.getContent());
             var articleTypeId = $(".nav-pills > li").filter('.active').attr('data-id');
             if (_.isEmpty(articleTypeId)) {
                 articleTypeId = $("#otherUL > li").filter('.active').attr('data-id');;

@@ -37,6 +37,7 @@ $(function () {
             if (_.isEmpty(content)) {
                 return false;
             }
+            content = xssCheck(content);
             var commentItem = $($(this).parents('.comment-item')[0]);
             var targetCommentId = commentItem.attr('data-id');
             var placeholder = textarea.attr('placeholder');
@@ -129,7 +130,7 @@ $(function () {
             var articleId = path.substr(path.lastIndexOf('/') +1);
             var target_comment_id ;
             var obj = {};
-            obj.content = content;
+            obj.content = content = xssCheck(content);
             obj.article = {};
             obj.article.id = articleId;
             obj.user = {};
